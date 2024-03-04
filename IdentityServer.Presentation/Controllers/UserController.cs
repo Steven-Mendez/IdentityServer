@@ -1,5 +1,5 @@
 ﻿using IdentityServer.Application.Users.Interfaces;
-using Microsoft.AspNetCore.Http;
+using IdentityServer.Domain.Users.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IdentityServer.Presentation.Controllers;
@@ -12,6 +12,7 @@ public class UserController(IUserService userService) : ControllerBase
     [HttpGet]
     public async Task<IActionResult> Get()
     {
+        throw new BlockedUserException();
         var users = await _userService.GetAllUsersAsync();
         return Ok(users);
     }

@@ -1,5 +1,6 @@
 using IdentityServer.Application.DependencyInjection;
 using IdentityServer.Infrastructure.DependencyInjection;
+using IdentityServer.Presentation.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,8 @@ app.Services.EnsureIdentityServerDatabaseMigrated();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseMiddleware<GlobalErrorMiddleware>();
 
 app.MapControllers();
 
