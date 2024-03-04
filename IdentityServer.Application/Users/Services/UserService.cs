@@ -1,4 +1,7 @@
 ﻿using IdentityServer.Application.Users.Interfaces;
+using IdentityServer.Application.Users.UseCases.CreateUser;
+using IdentityServer.Application.Users.UseCases.CreateUser.DTOS.Requests;
+using IdentityServer.Application.Users.UseCases.CreateUser.DTOS.Responses;
 using IdentityServer.Application.Users.UseCases.GetAllUsers;
 using IdentityServer.Application.Users.UseCases.GetAllUsers.DTO.Responses;
 using IdentityServer.Application.Users.UseCases.GetUserById;
@@ -7,10 +10,11 @@ using IdentityServer.Domain.Users.Entities;
 
 namespace IdentityServer.Application.Users.Services;
 
-public class UserService(GetAllUsersUseCase getAllUsersUseCase, GetUserByIdUseCase getUserByIdUseCase) : IUserService
+public class UserService(GetAllUsersUseCase getAllUsersUseCase, GetUserByIdUseCase getUserByIdUseCase, CreateUserUseCase createUserUseCase) : IUserService
 {
     private readonly GetAllUsersUseCase _getAllUsersUseCase = getAllUsersUseCase;
     private readonly GetUserByIdUseCase _getUserByIdUseCase = getUserByIdUseCase;
+    private readonly CreateUserUseCase _createUserUseCase = createUserUseCase;
 
     public async Task<IEnumerable<GetAllUsersResponse>> GetAllUsersAsync()
     {
@@ -18,13 +22,14 @@ public class UserService(GetAllUsersUseCase getAllUsersUseCase, GetUserByIdUseCa
         return users;
     }
 
-    public Task<GetUserByIdResponse> GetUserByIdAsync(Guid id)
+    public async Task<GetUserByIdResponse> GetUserByIdAsync(Guid id)
     {
-        return _getUserByIdUseCase.ExecuteAsync(id);
+        return await _getUserByIdUseCase.ExecuteAsync(id);
     }
-    public Task<User> AddUserAsync(User entity)
+    
+    public async Task<CreateUserResponse> AddUserAsync(CreateUserRequest request)
     {
-        throw new NotImplementedException();
+        return await _createUserUseCase.ExecuteAsync(request);
     }
 
     public Task<User> UpdateUserAsync(Guid id, User entity)

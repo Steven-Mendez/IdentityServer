@@ -1,6 +1,8 @@
 ﻿using API.Users.Repository;
+using IdentityServer.Domain.Interfaces;
 using IdentityServer.Domain.Users.Interfaces;
 using IdentityServer.Infrastructure.Data;
+using IdentityServer.Infrastructure.UnitsOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +14,7 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDataBase(configuration);
+        services.AddUnitsOfWork();
         services.AddRepositories();
         return services;
     }
@@ -22,6 +25,12 @@ public static class DependencyInjection
         {
             options.UseSqlServer(configuration.GetConnectionString("IdentityServerConnection"));
         });
+        return services;
+    }
+
+    public static IServiceCollection AddUnitsOfWork(this IServiceCollection services)
+    {
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         return services;
     }
 

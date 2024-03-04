@@ -1,5 +1,6 @@
 ﻿using IdentityServer.Application.Users.Interfaces;
 using IdentityServer.Application.Users.Services;
+using IdentityServer.Application.Users.UseCases.CreateUser;
 using IdentityServer.Application.Users.UseCases.GetAllUsers;
 using IdentityServer.Application.Users.UseCases.GetUserById;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +22,7 @@ public static class DependencyInjection
     {
         services.AddScoped<GetAllUsersUseCase>();
         services.AddScoped<GetUserByIdUseCase>();
+        services.AddScoped<CreateUserUseCase>();
         return services;
     }
 

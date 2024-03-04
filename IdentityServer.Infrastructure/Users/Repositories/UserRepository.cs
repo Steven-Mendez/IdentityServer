@@ -34,6 +34,16 @@ public class UserRepository(IdentityServerContext context) : IUserRepository
 
     public async Task<User> AddAsync(User entity)
     {
+        var isEmailUnique = await IsEmailUniqueAsync(entity.Email);
+
+        if (!isEmailUnique)
+            throw new EmailAlreadyExistsException(entity.Email);
+
+        var isUserNameUnique = await IsUserNameUniqueAsync(entity.UserName);
+
+        if (!isUserNameUnique)
+            throw new UserNameAlreadyExistsException(entity.UserName);
+
         var entityEntry = await _context.Users.AddAsync(entity);
         var adedUser = entityEntry.Entity;
         return adedUser;

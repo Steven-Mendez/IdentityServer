@@ -1,4 +1,6 @@
 ﻿using IdentityServer.Application.Users.Interfaces;
+using IdentityServer.Application.Users.UseCases.CreateUser.DTOS.Requests;
+using IdentityServer.Application.Users.UseCases.CreateUser.DTOS.Responses;
 using IdentityServer.Application.Users.UseCases.GetAllUsers.DTO.Responses;
 using IdentityServer.Application.Users.UseCases.GetUserById.DTO.Response;
 using IdentityServer.Presentation.Responses;
@@ -29,5 +31,15 @@ public class UserController(IUserService userService) : ControllerBase
         var user = await _userService.GetUserByIdAsync(id);
         var response = new Response<GetUserByIdResponse>(user);
         return Ok(response);
+    }
+
+    [HttpPost]
+    [ProducesResponseType(typeof(Response<CreateUserResponse>), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest createUserRequest)
+    {
+        var user = await _userService.AddUserAsync(createUserRequest);
+        var response = new Response<CreateUserResponse>(user);
+        return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
     }
 }
