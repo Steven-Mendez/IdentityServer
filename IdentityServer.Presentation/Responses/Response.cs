@@ -1,6 +1,6 @@
 ﻿namespace IdentityServer.Presentation.Responses;
 
-public class Response<T>
+public class Response<T>(T data)
 {
-    public T? Data { get; set; }
+    public T Data { get; set; } = data;
 }
