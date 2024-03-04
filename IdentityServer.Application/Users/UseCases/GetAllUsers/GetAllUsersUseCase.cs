@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using IdentityServer.Application.Users.UseCases.GetAllUsers.DataTransferObjects.Responses;
+using IdentityServer.Application.Users.UseCases.GetAllUsers.DTO.Responses;
 using IdentityServer.Domain.Users.Interfaces;
 
 namespace IdentityServer.Application.Users.UseCases.GetAllUsers;

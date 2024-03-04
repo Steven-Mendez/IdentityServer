@@ -1,4 +1,5 @@
-﻿using IdentityServer.Application.Users.UseCases.GetAllUsers.DataTransferObjects.Responses;
+﻿using IdentityServer.Application.Users.UseCases.GetAllUsers.DTO.Responses;
+using IdentityServer.Application.Users.UseCases.GetUserById.DTO.Response;
 using IdentityServer.Domain.Users.Entities;
 
 namespace IdentityServer.Application.Users.Interfaces;
@@ -6,7 +7,7 @@ namespace IdentityServer.Application.Users.Interfaces;
 public interface IUserService
 {
     Task<IEnumerable<GetAllUsersResponse>> GetAllUsersAsync();
-    Task<User> GetUserByIdAsync(Guid id);
+    Task<GetUserByIdResponse> GetUserByIdAsync(Guid id);
     Task<User> AddUserAsync(User entity);
     Task<User> UpdateUserAsync(Guid id, User entity);
     Task<User> DeleteUserAsync(Guid id);
