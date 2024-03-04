@@ -12,7 +12,10 @@ public class UserRepository(IdentityServerContext context) : IUserRepository
 
     public async Task<IEnumerable<User>> GetAllAsync()
     {
-        var users = await _context.Users.ToListAsync();
+        var users = await _context.Users
+            .OrderBy(u => u.FirstName)
+            .ThenBy(u => u.LastName)
+            .ToListAsync();
         return users;
     }
 
