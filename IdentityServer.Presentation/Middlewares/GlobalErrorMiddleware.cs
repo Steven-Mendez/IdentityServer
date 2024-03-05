@@ -1,4 +1,5 @@
 ﻿using IdentityServer.Presentation.Responses;
+using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Text.Json;
 
@@ -14,10 +15,18 @@ public class GlobalErrorMiddleware(RequestDelegate next)
         {
             await _next(context);
         }
+        catch (ValidationException exception)
+        {
+            var response = ApiResponse.CreateError(exception);
+            var json = JsonSerializer.Serialize(response);
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            await context.Response.WriteAsync(json);
+        }
         catch (Exception exception)
         {
-            var response = new ErrorResponse(exception);
-            var json = JsonSerializer.Serialize(response, new JsonSerializerOptions() { WriteIndented = true });
+            var response = ApiResponse.CreateError(exception);
+            var json = JsonSerializer.Serialize(response);
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             await context.Response.WriteAsync(json);

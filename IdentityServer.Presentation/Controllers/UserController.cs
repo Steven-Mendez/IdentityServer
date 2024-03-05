@@ -17,37 +17,37 @@ public class UserController(IUserService userService) : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(typeof(Response<IEnumerable<GetAllUsersResponse>>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetAllUsers()
     {
         var users = await _userService.GetAllUsersAsync();
-        var response = new Response<IEnumerable<GetAllUsersResponse>>(users);
+        var response = ApiResponse.Create(users);
         return Ok(response);
     }
 
     [HttpGet("{id:guid}")]
     [ProducesResponseType(typeof(Response<GetUserByIdResponse>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetUserById([FromRoute] Guid id)
     {
         var user = await _userService.GetUserByIdAsync(id);
-        var response = new Response<GetUserByIdResponse>(user);
+        var response = ApiResponse.Create(user);
         return Ok(response);
     }
 
     [HttpPost]
     [ProducesResponseType(typeof(Response<CreateUserResponse>), StatusCodes.Status201Created)]
-    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest createUserRequest)
     {
         var user = await _userService.AddUserAsync(createUserRequest);
-        var response = new Response<CreateUserResponse>(user);
+        var response = ApiResponse.Create(user);
         return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
     }
 
     [HttpPut("{id:guid}")]
     [ProducesResponseType(typeof(Response<UpdateUserResponse>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> UpdateUser([FromRoute] Guid id, [FromBody] UpdateUserRequest updateUserRequest)
     {
         var user = await _userService.UpdateUserAsync(id, updateUserRequest);
