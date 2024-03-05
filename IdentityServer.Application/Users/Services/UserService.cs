@@ -26,7 +26,7 @@ public class UserService(GetAllUsersUseCase getAllUsersUseCase, GetUserByIdUseCa
     {
         return await _getUserByIdUseCase.ExecuteAsync(id);
     }
-    
+
     public async Task<CreateUserResponse> AddUserAsync(CreateUserRequest request)
     {
         return await _createUserUseCase.ExecuteAsync(request);
