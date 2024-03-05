@@ -1,8 +1,10 @@
-﻿using IdentityServer.Application.Users.Interfaces;
+﻿using FluentValidation;
+using IdentityServer.Application.Users.Interfaces;
 using IdentityServer.Application.Users.Services;
 using IdentityServer.Application.Users.UseCases.CreateUser;
 using IdentityServer.Application.Users.UseCases.GetAllUsers;
 using IdentityServer.Application.Users.UseCases.GetUserById;
+using IdentityServer.Application.Users.UseCases.UpdateUser;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace IdentityServer.Application.DependencyInjection;
@@ -13,6 +15,7 @@ public static class DependencyInjection
     {
         var assembly = typeof(DependencyInjection).Assembly;
         services.AddAutoMapper(assembly);
+        services.AddValidatorsFromAssembly(assembly);
         services.AddUseCases();
         services.AddServices();
         return services;
@@ -23,6 +26,7 @@ public static class DependencyInjection
         services.AddScoped<GetAllUsersUseCase>();
         services.AddScoped<GetUserByIdUseCase>();
         services.AddScoped<CreateUserUseCase>();
+        services.AddScoped<UpdateUserUseCase>();
         return services;
     }
 

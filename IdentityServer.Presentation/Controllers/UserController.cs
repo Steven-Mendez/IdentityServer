@@ -3,6 +3,8 @@ using IdentityServer.Application.Users.UseCases.CreateUser.DTOS.Requests;
 using IdentityServer.Application.Users.UseCases.CreateUser.DTOS.Responses;
 using IdentityServer.Application.Users.UseCases.GetAllUsers.DTO.Responses;
 using IdentityServer.Application.Users.UseCases.GetUserById.DTO.Response;
+using IdentityServer.Application.Users.UseCases.UpdateUser.DTO.Requests;
+using IdentityServer.Application.Users.UseCases.UpdateUser.DTO.Responses;
 using IdentityServer.Presentation.Responses;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,5 +43,15 @@ public class UserController(IUserService userService) : ControllerBase
         var user = await _userService.AddUserAsync(createUserRequest);
         var response = new Response<CreateUserResponse>(user);
         return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
+    }
+
+    [HttpPut("{id:guid}")]
+    [ProducesResponseType(typeof(Response<UpdateUserResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> UpdateUser([FromRoute] Guid id, [FromBody] UpdateUserRequest updateUserRequest)
+    {
+        var user = await _userService.UpdateUserAsync(id, updateUserRequest);
+        var response = ApiResponse.Create(user);
+        return Ok(response);
     }
 }

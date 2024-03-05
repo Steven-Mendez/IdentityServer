@@ -54,13 +54,17 @@ public class UserRepository(IdentityServerContext context) : IUserRepository
 
     public async Task UpdateAsync(Guid id, User entity)
     {
-        var userToUpdate = await GetByIdAsync(id);
+        var anotherUserExistsWithSameEmail = await AnotherUserExistsWithSameEmailAsync(id, entity.Email);
 
-        userToUpdate!.UserName = entity.UserName;
-        userToUpdate.Email = entity.Email;
-        userToUpdate.FirstName = entity.FirstName;
-        userToUpdate.LastName = entity.LastName;
-        userToUpdate.Password = entity.Password;
+        if (anotherUserExistsWithSameEmail)
+            throw new EmailAlreadyExistsException(entity.Email);
+
+        var anotherUserExistsWithSameUserName = await AnotherUserExistsWithSameUserNameAsync(id, entity.UserName);
+
+        if (anotherUserExistsWithSameUserName)
+            throw new UserNameAlreadyExistsException(entity.UserName);
+
+        _context.Users.Update(entity);
     }
 
     public async Task DeleteAsync(Guid id)
@@ -126,6 +130,28 @@ public class UserRepository(IdentityServerContext context) : IUserRepository
     {
         var userNameExists = await _context.Users.AnyAsync(u => u.UserName == userName);
         return !userNameExists;
+    }
+
+    public async Task<bool> AnotherUserExistsWithSameEmailAsync(Guid userId, string email)
+    {
+        var user = await GetByEmailAsync(email);
+
+        var userExists = user is not null;
+
+        var anotherUserExists = userExists && user!.Id != userId;
+
+        return anotherUserExists;
+    }
+
+    public async Task<bool> AnotherUserExistsWithSameUserNameAsync(Guid userId, string userName)
+    {
+        var user = await GetByUserNameAsync(userName);
+
+        var userExists = user is not null;
+
+        var anotherUserExists = userExists && user!.Id != userId;
+
+        return anotherUserExists;
     }
 
     public async Task ToggleBlockStatusAsync(Guid userId, bool blockStatus)

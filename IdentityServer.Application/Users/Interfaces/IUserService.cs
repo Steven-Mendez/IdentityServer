@@ -2,6 +2,8 @@
 using IdentityServer.Application.Users.UseCases.CreateUser.DTOS.Responses;
 using IdentityServer.Application.Users.UseCases.GetAllUsers.DTO.Responses;
 using IdentityServer.Application.Users.UseCases.GetUserById.DTO.Response;
+using IdentityServer.Application.Users.UseCases.UpdateUser.DTO.Requests;
+using IdentityServer.Application.Users.UseCases.UpdateUser.DTO.Responses;
 using IdentityServer.Domain.Users.Entities;
 
 namespace IdentityServer.Application.Users.Interfaces;
@@ -11,7 +13,7 @@ public interface IUserService
     Task<IEnumerable<GetAllUsersResponse>> GetAllUsersAsync();
     Task<GetUserByIdResponse> GetUserByIdAsync(Guid id);
     Task<CreateUserResponse> AddUserAsync(CreateUserRequest request);
-    Task<User> UpdateUserAsync(Guid id, User entity);
+    Task<UpdateUserResponse> UpdateUserAsync(Guid id, UpdateUserRequest request);
     Task<User> DeleteUserAsync(Guid id);
     Task<User?> GetByEmailAsync(string email);
     Task<User?> GetByUserNameAsync(string userName);

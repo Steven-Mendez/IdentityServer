@@ -6,15 +6,19 @@ using IdentityServer.Application.Users.UseCases.GetAllUsers;
 using IdentityServer.Application.Users.UseCases.GetAllUsers.DTO.Responses;
 using IdentityServer.Application.Users.UseCases.GetUserById;
 using IdentityServer.Application.Users.UseCases.GetUserById.DTO.Response;
+using IdentityServer.Application.Users.UseCases.UpdateUser;
+using IdentityServer.Application.Users.UseCases.UpdateUser.DTO.Requests;
+using IdentityServer.Application.Users.UseCases.UpdateUser.DTO.Responses;
 using IdentityServer.Domain.Users.Entities;
 
 namespace IdentityServer.Application.Users.Services;
 
-public class UserService(GetAllUsersUseCase getAllUsersUseCase, GetUserByIdUseCase getUserByIdUseCase, CreateUserUseCase createUserUseCase) : IUserService
+public class UserService(GetAllUsersUseCase getAllUsersUseCase, GetUserByIdUseCase getUserByIdUseCase, CreateUserUseCase createUserUseCase, UpdateUserUseCase updateUserUseCase) : IUserService
 {
     private readonly GetAllUsersUseCase _getAllUsersUseCase = getAllUsersUseCase;
     private readonly GetUserByIdUseCase _getUserByIdUseCase = getUserByIdUseCase;
     private readonly CreateUserUseCase _createUserUseCase = createUserUseCase;
+    private readonly UpdateUserUseCase _updateUserUseCase = updateUserUseCase;
 
     public async Task<IEnumerable<GetAllUsersResponse>> GetAllUsersAsync()
     {
@@ -32,9 +36,9 @@ public class UserService(GetAllUsersUseCase getAllUsersUseCase, GetUserByIdUseCa
         return await _createUserUseCase.ExecuteAsync(request);
     }
 
-    public Task<User> UpdateUserAsync(Guid id, User entity)
+    public async Task<UpdateUserResponse> UpdateUserAsync(Guid id, UpdateUserRequest request)
     {
-        throw new NotImplementedException();
+        return await _updateUserUseCase.ExecuteAsync(id, request);
     }
 
     public Task<User> DeleteUserAsync(Guid id)
