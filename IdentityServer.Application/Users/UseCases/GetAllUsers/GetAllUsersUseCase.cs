@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
 using IdentityServer.Application.Users.UseCases.GetAllUsers.DTO.Responses;
-using IdentityServer.Domain.Users.Interfaces;
+using IdentityServer.Domain.Interfaces;
 
 namespace IdentityServer.Application.Users.UseCases.GetAllUsers;
 
-public class GetAllUsersUseCase(IUserRepository userRepository, IMapper mapper)
+public class GetAllUsersUseCase(IUnitOfWork unitOfWork, IMapper mapper)
 {
-    private readonly IUserRepository _userRepository = userRepository;
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IMapper _mapper = mapper;
 
     public async Task<IEnumerable<GetAllUsersResponse>> ExecuteAsync()
     {
-        var users = await _userRepository.GetAllAsync();
+        var users = await _unitOfWork.UserRepository.GetAllAsync();
         var response = _mapper.Map<IEnumerable<GetAllUsersResponse>>(users);
         return response;
     }
