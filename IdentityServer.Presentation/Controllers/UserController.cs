@@ -9,6 +9,7 @@ using IdentityServer.Presentation.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IdentityServer.Presentation.Controllers;
+
 [Route("api/[controller]")]
 [ApiController]
 public class UserController(IUserService userService) : ControllerBase
@@ -27,7 +28,7 @@ public class UserController(IUserService userService) : ControllerBase
 
     [HttpGet("{id:guid}")]
     [ProducesResponseType(typeof(Response<GetUserByIdResponse>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetUserById([FromRoute] Guid id)
     {
         var user = await _userService.GetUserByIdAsync(id);
@@ -37,7 +38,7 @@ public class UserController(IUserService userService) : ControllerBase
 
     [HttpPost]
     [ProducesResponseType(typeof(Response<CreateUserResponse>), StatusCodes.Status201Created)]
-    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest createUserRequest)
     {
         var user = await _userService.AddUserAsync(createUserRequest);
@@ -47,7 +48,7 @@ public class UserController(IUserService userService) : ControllerBase
 
     [HttpPut("{id:guid}")]
     [ProducesResponseType(typeof(Response<UpdateUserResponse>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> UpdateUser([FromRoute] Guid id, [FromBody] UpdateUserRequest updateUserRequest)
     {
         var user = await _userService.UpdateUserAsync(id, updateUserRequest);

@@ -1,6 +1,6 @@
 using IdentityServer.Application.DependencyInjection;
 using IdentityServer.Infrastructure.DependencyInjection;
-using IdentityServer.Presentation.Middlewares;
+using IdentityServer.Presentation.Middlewares.GlobalError;
 
 var builder = WebApplication.CreateBuilder(args);
 

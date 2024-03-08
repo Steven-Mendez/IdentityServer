@@ -1,4 +1,5 @@
 ﻿using API.Users.Repository;
+using FluentValidation;
 using IdentityServer.Domain.Users.Entities;
 using IdentityServer.Domain.Users.Exceptions;
 using IdentityServer.Infrastructure.Data;
@@ -164,16 +165,17 @@ public class UserRepositoryTests
 
         var (unitOfWork, _, context) = await SetupUnitOfWorkWithUsersAsync(users);
 
-        var notExistingUserId = Guid.Parse("a4558254-b42e-4abe-8da4-3a56441a25fb");
+        var notExistingUserId = Guid.NewGuid();
 
         // Act
 
         var exception = await Record.ExceptionAsync(async () => await unitOfWork.UserRepository.GetByIdAsync(notExistingUserId));
+        var validationException = exception as ValidationException;
+        var errorMessage = validationException?.Errors.First().ErrorMessage;
 
         // Assert
-
         Assert.IsType<UserNotFoundException>(exception);
-        Assert.Equal($"User with id '{notExistingUserId}' not found.", exception?.Message);
+        Assert.Equal($"User with id '{notExistingUserId}' not found.", errorMessage);
     }
 
     [Fact]
@@ -282,10 +284,12 @@ public class UserRepositoryTests
 
         // Act
         var exception = await Record.ExceptionAsync(async () => await unitOfWork.UserRepository.AddAsync(user));
+        var validationException = exception as ValidationException;
+        var errorMessage = validationException?.Errors.First().ErrorMessage;
 
         // Assert
         Assert.IsType<EmailAlreadyExistsException>(exception);
-        Assert.Equal("Email user1@user1 already exists.", exception?.Message);
+        Assert.Equal($"Email '{user.Email}' already exists.", errorMessage);
 
         await context.DisposeAsync();
     }
@@ -312,7 +316,7 @@ public class UserRepositoryTests
         var (unitOfWork, _, context) = await SetupUnitOfWorkWithUsersAsync([user]);
 
         // Act
-        var exception = await Record.ExceptionAsync(async () => await unitOfWork.UserRepository.AddAsync(new User
+        var newUser = new User()
         {
             Id = Guid.NewGuid(),
             UserName = "user1",
@@ -323,11 +327,14 @@ public class UserRepositoryTests
             Avatar = @"https://randomuser.me/api/port/2.jpg",
             IsBlocked = false,
             CreatedBy = Guid.Parse("6e7f4c0b-3b45-4a1c-a48d-9e531dd6931f")
-        }));
+        };
+        var exception = await Record.ExceptionAsync(async () => await unitOfWork.UserRepository.AddAsync(newUser));
+        var validationException = exception as ValidationException;
+        var errorMessage = validationException?.Errors.First().ErrorMessage;
 
         // Assert
         Assert.IsType<UserNameAlreadyExistsException>(exception);
-        Assert.Equal("User with username user1 already exists", exception?.Message);
+        Assert.Equal($"Username '{newUser.UserName}' already exists.", errorMessage);
 
         await context.DisposeAsync();
     }

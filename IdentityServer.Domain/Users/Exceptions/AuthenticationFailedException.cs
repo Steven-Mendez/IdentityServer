@@ -1,8 +1,14 @@
-﻿namespace IdentityServer.Domain.Users.Exceptions;
+﻿using FluentValidation;
+using FluentValidation.Results;
 
-public class AuthenticationFailedException : Exception
+namespace IdentityServer.Domain.Users.Exceptions;
+
+public class AuthenticationFailedException(string propertyName) : ValidationException(_errorMessage, BuildErrors(propertyName))
 {
-    public AuthenticationFailedException() : base("Authentication failed. Invalid username or password.")
-    {
-    }
+    private static readonly string _errorMessage = "Domain Exception: AuthenticationFailedException.";
+
+    private static IEnumerable<ValidationFailure> BuildErrors(string propertyName) =>
+    [
+        new(propertyName, $"Authentication failed. Invalid {propertyName} or password.")
+    ];
 }

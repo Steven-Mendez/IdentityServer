@@ -1,8 +1,15 @@
-﻿namespace IdentityServer.Domain.Users.Exceptions;
+﻿using FluentValidation;
+using FluentValidation.Results;
+using IdentityServer.Domain.Users.Entities;
 
-public class DuplicateEmailException : Exception
+namespace IdentityServer.Domain.Users.Exceptions;
+
+public class DuplicateEmailException(string email) : ValidationException(_errorMessage, BuildErrors(email))
 {
-    public DuplicateEmailException(string email) : base($"Email '{email}' is already in use.")
-    {
-    }
+    private static readonly string _errorMessage = "Domain Exception: DuplicateEmailException.";
+
+    private static IEnumerable<ValidationFailure> BuildErrors(string email) =>
+    [
+        new(nameof(User.Email), $"User with email '{email}' already exists.", email)
+    ];
 }

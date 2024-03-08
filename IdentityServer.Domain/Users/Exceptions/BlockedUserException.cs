@@ -1,8 +1,15 @@
-﻿namespace IdentityServer.Domain.Users.Exceptions;
+﻿using FluentValidation;
+using FluentValidation.Results;
+using IdentityServer.Domain.Users.Entities;
 
-public class BlockedUserException : Exception
+namespace IdentityServer.Domain.Users.Exceptions;
+
+public class BlockedUserException(string username) : ValidationException(_errorMessage, BuildErrors(username))
 {
-    public BlockedUserException() : base("User is blocked.")
-    {
-    }
+    private static readonly string _errorMessage = "Domain Exception: BlockedUserException.";
+
+    private static IEnumerable<ValidationFailure> BuildErrors(string username) =>
+    [
+        new(nameof(User.UserName), $"User '{username}' is blocked.")
+    ];
 }

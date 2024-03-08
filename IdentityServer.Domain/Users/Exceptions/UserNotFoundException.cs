@@ -1,8 +1,14 @@
-﻿namespace IdentityServer.Domain.Users.Exceptions;
+﻿using FluentValidation;
+using FluentValidation.Results;
 
-public class UserNotFoundException : Exception
+namespace IdentityServer.Domain.Users.Exceptions;
+
+public class UserNotFoundException(string propertyName, object attemptedValue) : ValidationException(_errorMessage, BuildErrors(propertyName, attemptedValue))
 {
-    public UserNotFoundException(string identifier, string identifierType) : base($"User with {identifierType} '{identifier}' not found.")
-    {
-    }
+    private static readonly string _errorMessage = "Domain Exception: UserNotFoundException.";
+
+    private static IEnumerable<ValidationFailure> BuildErrors(string propertyName, object attemptedValue) =>
+    [
+        new(propertyName, $"User with {propertyName} '{attemptedValue}' not found.", attemptedValue)
+    ];
 }

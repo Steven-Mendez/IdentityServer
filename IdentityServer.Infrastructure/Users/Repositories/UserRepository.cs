@@ -26,11 +26,7 @@ public class UserRepository(IdentityServerContext context) : IUserRepository
         var userNotExists = user is null;
 
         if (userNotExists)
-        {
-            var identifier = id.ToString();
-            var identifierType = "id";
-            throw new UserNotFoundException(identifier, identifierType);
-        }
+            throw new UserNotFoundException(nameof(id), id);
 
         return user!;
     }
@@ -72,11 +68,7 @@ public class UserRepository(IdentityServerContext context) : IUserRepository
         var userToDelete = await _context.Users.FindAsync(id);
 
         if (userToDelete is null)
-        {
-            var identifier = id.ToString();
-            var identifierType = "id";
-            throw new UserNotFoundException(identifier, identifierType);
-        }
+            throw new UserNotFoundException(nameof(id), id);
 
         userToDelete.IsDeleted = true;
     }
@@ -165,14 +157,15 @@ public class UserRepository(IdentityServerContext context) : IUserRepository
         var user = await GetByUserNameOrEmailAsync(userNameOrEmail);
 
         var userNotExists = user is null;
+        var propertyName = userNameOrEmail.Contains('@') ? "Email" : "UserName";
 
         if (userNotExists)
-            throw new AuthenticationFailedException();
+            throw new AuthenticationFailedException(propertyName);
 
         var passwordNotMatch = !password.Equals(user!.Password);
 
         if (passwordNotMatch)
-            throw new AuthenticationFailedException();
+            throw new AuthenticationFailedException(propertyName);
 
         return user;
     }

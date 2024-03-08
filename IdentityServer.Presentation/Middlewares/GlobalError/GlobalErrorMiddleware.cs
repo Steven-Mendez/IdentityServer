@@ -1,9 +1,10 @@
-﻿using IdentityServer.Presentation.Responses;
-using System.ComponentModel.DataAnnotations;
+﻿using FluentValidation;
+using IdentityServer.Presentation.Middlewares.GlobalError.ExtensionMethods;
+using IdentityServer.Presentation.Responses;
 using System.Net;
 using System.Text.Json;
 
-namespace IdentityServer.Presentation.Middlewares;
+namespace IdentityServer.Presentation.Middlewares.GlobalError;
 
 public class GlobalErrorMiddleware(RequestDelegate next)
 {
@@ -17,18 +18,17 @@ public class GlobalErrorMiddleware(RequestDelegate next)
         }
         catch (ValidationException exception)
         {
-            var response = ApiResponse.CreateError(exception);
-            var json = JsonSerializer.Serialize(response);
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            await context.Response.WriteAsync(json);
+            var error = exception.ToProblemDetails();
+            await context.Response.WriteAsJsonAsync(error);
         }
         catch (Exception exception)
         {
-            var response = ApiResponse.CreateError(exception);
-            var json = JsonSerializer.Serialize(response);
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            var response = ApiResponse.CreateError(exception);
+            var json = JsonSerializer.Serialize(response);
             await context.Response.WriteAsync(json);
         }
     }

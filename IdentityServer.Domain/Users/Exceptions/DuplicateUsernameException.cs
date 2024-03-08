@@ -1,8 +1,15 @@
-﻿namespace IdentityServer.Domain.Users.Exceptions;
+﻿using FluentValidation;
+using FluentValidation.Results;
+using IdentityServer.Domain.Users.Entities;
 
-public class DuplicateUsernameException : Exception
+namespace IdentityServer.Domain.Users.Exceptions;
+
+public class DuplicateUsernameException(string username) : ValidationException(_errorMessage, BuildErrors(username))
 {
-    public DuplicateUsernameException(string username) : base($"Username '{username}' is already in use.")
-    {
-    }
+    private static readonly string _errorMessage = "Domain Exception: DuplicateUsernameException.";
+
+    private static IEnumerable<ValidationFailure> BuildErrors(string username) =>
+    [
+        new(nameof(User.UserName), $"User with username '{username}' already exists.", username)
+    ];
 }
