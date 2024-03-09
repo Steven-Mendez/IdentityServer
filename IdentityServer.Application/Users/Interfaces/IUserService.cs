@@ -2,6 +2,7 @@
 using IdentityServer.Application.Users.UseCases.CreateUser.DTOS.Responses;
 using IdentityServer.Application.Users.UseCases.GetAllUsers.DTO.Responses;
 using IdentityServer.Application.Users.UseCases.GetUserById.DTO.Response;
+using IdentityServer.Application.Users.UseCases.SoftDeleteUser.DTO.Response;
 using IdentityServer.Application.Users.UseCases.UpdateUser.DTO.Requests;
 using IdentityServer.Application.Users.UseCases.UpdateUser.DTO.Responses;
 using IdentityServer.Domain.Users.Entities;
@@ -14,7 +15,7 @@ public interface IUserService
     Task<GetUserByIdResponse> GetUserByIdAsync(Guid id);
     Task<CreateUserResponse> AddUserAsync(CreateUserRequest request);
     Task<UpdateUserResponse> UpdateUserAsync(Guid id, UpdateUserRequest request);
-    Task<User> DeleteUserAsync(Guid id);
+    Task<SoftDeleteUserResponse> SoftDeleteUserAsync(Guid id);
     Task<User?> GetByEmailAsync(string email);
     Task<User?> GetByUserNameAsync(string userName);
     Task<User?> GetByUserNameOrEmailAsync(string userNameOrEmail);

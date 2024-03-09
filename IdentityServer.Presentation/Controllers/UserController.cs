@@ -3,6 +3,7 @@ using IdentityServer.Application.Users.UseCases.CreateUser.DTOS.Requests;
 using IdentityServer.Application.Users.UseCases.CreateUser.DTOS.Responses;
 using IdentityServer.Application.Users.UseCases.GetAllUsers.DTO.Responses;
 using IdentityServer.Application.Users.UseCases.GetUserById.DTO.Response;
+using IdentityServer.Application.Users.UseCases.SoftDeleteUser.DTO.Response;
 using IdentityServer.Application.Users.UseCases.UpdateUser.DTO.Requests;
 using IdentityServer.Application.Users.UseCases.UpdateUser.DTO.Responses;
 using IdentityServer.Presentation.Responses;
@@ -52,6 +53,16 @@ public class UserController(IUserService userService) : ControllerBase
     public async Task<IActionResult> UpdateUser([FromRoute] Guid id, [FromBody] UpdateUserRequest updateUserRequest)
     {
         var user = await _userService.UpdateUserAsync(id, updateUserRequest);
+        var response = ApiResponse.Create(user);
+        return Ok(response);
+    }
+
+    [HttpDelete("{id:guid}")]
+    [ProducesResponseType(typeof(Response<SoftDeleteUserResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> SoftDeleteUser([FromRoute] Guid id)
+    {
+        var user = await _userService.SoftDeleteUserAsync(id);
         var response = ApiResponse.Create(user);
         return Ok(response);
     }
