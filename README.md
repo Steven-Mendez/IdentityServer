@@ -2,6 +2,8 @@
 
 IdentityServer is my personal project, serving as a hands-on exploration and learning journey in various aspects of software development, particularly within the .NET ecosystem. This endeavor provides a practical platform to delve into advanced concepts and gain expertise in cutting-edge technologies.
 
+An Identity Server, also known as an Identity Provider (IdP), is a crucial component in modern authentication and authorization systems. It is responsible for managing and verifying user identities within a computer system or network. In the context of this project, IdentityServer plays a central role in handling authentication, authorization, and access control.
+
 ## 1.1. Table of Contents
 
 - [1. IdentityServer](#1-identityserver)
