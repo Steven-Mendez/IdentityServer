@@ -4,6 +4,7 @@ using IdentityServer.Application.Users.UseCases.CreateUser.DTOS.Requests;
 using IdentityServer.Application.Users.UseCases.CreateUser.DTOS.Responses;
 using IdentityServer.Application.Users.UseCases.GetAllUsers;
 using IdentityServer.Application.Users.UseCases.GetAllUsers.DTO.Responses;
+using IdentityServer.Application.Users.UseCases.GetFilteredSortedPaginatedUsers;
 using IdentityServer.Application.Users.UseCases.GetUserById;
 using IdentityServer.Application.Users.UseCases.GetUserById.DTO.Response;
 using IdentityServer.Application.Users.UseCases.SoftDeleteUser;
@@ -15,9 +16,10 @@ using IdentityServer.Domain.Users.Entities;
 
 namespace IdentityServer.Application.Users.Services;
 
-public class UserService(GetAllUsersUseCase getAllUsersUseCase, GetUserByIdUseCase getUserByIdUseCase, CreateUserUseCase createUserUseCase, UpdateUserUseCase updateUserUseCase, SoftDeleteUserUseCase softDeleteUserUseCase) : IUserService
+public class UserService(GetAllUsersUseCase getAllUsersUseCase, GetFilteredSortedPaginatedUsersUseCase getFilteredSortedPaginatedUsersUseCase, GetUserByIdUseCase getUserByIdUseCase, CreateUserUseCase createUserUseCase, UpdateUserUseCase updateUserUseCase, SoftDeleteUserUseCase softDeleteUserUseCase) : IUserService
 {
     private readonly GetAllUsersUseCase _getAllUsersUseCase = getAllUsersUseCase;
+    private readonly GetFilteredSortedPaginatedUsersUseCase _getFilteredSortedPaginatedUsersUseCase = getFilteredSortedPaginatedUsersUseCase;
     private readonly GetUserByIdUseCase _getUserByIdUseCase = getUserByIdUseCase;
     private readonly CreateUserUseCase _createUserUseCase = createUserUseCase;
     private readonly UpdateUserUseCase _updateUserUseCase = updateUserUseCase;
@@ -27,6 +29,11 @@ public class UserService(GetAllUsersUseCase getAllUsersUseCase, GetUserByIdUseCa
     {
         var users = await _getAllUsersUseCase.ExecuteAsync();
         return users;
+    }
+
+    public async Task<GetFilteredSortedPaginatedUsersResponse> GetFilteredSortedPaginatedUsersAsync(GetFilteredSortedPaginatedUsersRequest request)
+    {
+        return await _getFilteredSortedPaginatedUsersUseCase.ExecuteAsync(request);
     }
 
     public async Task<GetUserByIdResponse> GetUserByIdAsync(Guid id)

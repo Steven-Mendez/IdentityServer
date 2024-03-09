@@ -1,4 +1,6 @@
-﻿using IdentityServer.Domain.Users.Entities;
+﻿using IdentityServer.Domain.Helpers;
+using IdentityServer.Domain.Interfaces;
+using IdentityServer.Domain.Users.Entities;
 using IdentityServer.Domain.Users.Exceptions;
 using IdentityServer.Domain.Users.Interfaces;
 using IdentityServer.Infrastructure.Data;
@@ -17,6 +19,24 @@ public class UserRepository(IdentityServerContext context) : IUserRepository
             .ThenBy(u => u.LastName)
             .ToListAsync();
         return users;
+    }
+
+    public async Task<(IEnumerable<User> Users, int TotalRecords)> GetFilteredSortedPaginatedAsync(IUserFilter? filter, ISorter? sorting, IPagination pagination)
+    {
+        var userQuery = _context.Users.AsNoTracking().AsSplitQuery();
+        var orignalQuery = userQuery;
+        if (filter is not null)
+            userQuery = userQuery.ApplyFilters(filter);
+
+        if (sorting is not null)
+            userQuery = userQuery.ApplySorting(sorting);
+
+        userQuery = userQuery.ApplyPagination(pagination);
+
+        var users = await userQuery.ToListAsync();
+        var totalRecords = await orignalQuery.CountAsync();
+
+        return (users, totalRecords);
     }
 
     public async Task<User> GetByIdAsync(Guid id)

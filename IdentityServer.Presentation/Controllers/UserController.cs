@@ -1,7 +1,10 @@
-﻿using IdentityServer.Application.Users.Interfaces;
+﻿using IdentityServer.Application.Implementations;
+using IdentityServer.Application.Users.Filters;
+using IdentityServer.Application.Users.Interfaces;
 using IdentityServer.Application.Users.UseCases.CreateUser.DTOS.Requests;
 using IdentityServer.Application.Users.UseCases.CreateUser.DTOS.Responses;
 using IdentityServer.Application.Users.UseCases.GetAllUsers.DTO.Responses;
+using IdentityServer.Application.Users.UseCases.GetFilteredSortedPaginatedUsers;
 using IdentityServer.Application.Users.UseCases.GetUserById.DTO.Response;
 using IdentityServer.Application.Users.UseCases.SoftDeleteUser.DTO.Response;
 using IdentityServer.Application.Users.UseCases.UpdateUser.DTO.Requests;
@@ -25,6 +28,17 @@ public class UserController(IUserService userService) : ControllerBase
         var users = await _userService.GetAllUsersAsync();
         var response = ApiResponse.Create(users);
         return Ok(response);
+    }
+
+    [HttpGet("Filter-Sort-Pagination")]
+    [ProducesResponseType(typeof(PagedResponse<GetFilteredSortedPaginatedUserResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetWithFilterSortAndPagination([FromQuery] UserFilter? filter, [FromQuery] Sorter? sorter, [FromQuery] Pagination pagination)
+    {
+        var request = new GetFilteredSortedPaginatedUsersRequest(filter, sorter, pagination);
+        var pagedUsers = await _userService.GetFilteredSortedPaginatedUsersAsync(request);
+        var pagedResponse = ApiResponse.CreatePaged(pagedUsers.Users, request.Pagination.Page, request.Pagination.PageSize, pagedUsers.TotalRecords);
+        return Ok(pagedResponse);
     }
 
     [HttpGet("{id:guid}")]

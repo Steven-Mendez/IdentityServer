@@ -7,7 +7,7 @@ public class ApiResponse
         return new Response<T>(data);
     }
 
-    public static PagedResponse<T> CreatePaged<T>(List<T> data, int pageNumber, int pageSize, int totalCount)
+    public static PagedResponse<T> CreatePaged<T>(IEnumerable<T> data, int pageNumber, int pageSize, int totalCount)
     {
         return new PagedResponse<T>(data, pageNumber, pageSize, totalCount);
     }
