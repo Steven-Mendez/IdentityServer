@@ -1,6 +1,8 @@
 ﻿using API.Users.Repository;
+using IdentityServer.Application.Authentiacion.Interfaces;
 using IdentityServer.Domain.Interfaces;
 using IdentityServer.Domain.Users.Interfaces;
+using IdentityServer.Infrastructure.Cryptography;
 using IdentityServer.Infrastructure.Data;
 using IdentityServer.Infrastructure.UnitsOfWork;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +18,7 @@ public static class DependencyInjection
         services.AddDataBase(configuration);
         services.AddUnitsOfWork();
         services.AddRepositories();
+        services.AddScoped<IPasswordHasher, PasswordHasher>();
         return services;
     }
 

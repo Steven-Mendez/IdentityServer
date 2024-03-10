@@ -1,4 +1,7 @@
 ﻿using FluentValidation;
+using IdentityServer.Application.Authentiacion.Interfaces;
+using IdentityServer.Application.Authentiacion.Services;
+using IdentityServer.Application.Authentiacion.UseCase.Authenticate;
 using IdentityServer.Application.Users.Interfaces;
 using IdentityServer.Application.Users.Services;
 using IdentityServer.Application.Users.UseCases.CreateUser;
@@ -18,12 +21,19 @@ public static class DependencyInjection
         var assembly = typeof(DependencyInjection).Assembly;
         services.AddAutoMapper(assembly);
         services.AddValidatorsFromAssembly(assembly);
-        services.AddUseCases();
+        services.AddAuthenticationUseCases();
+        services.AddUserUseCases();
         services.AddServices();
         return services;
     }
 
-    public static IServiceCollection AddUseCases(this IServiceCollection services)
+    public static IServiceCollection AddAuthenticationUseCases(this IServiceCollection services)
+    {
+        services.AddScoped<AuthenticateUseCase>();
+        return services;
+    }
+
+    public static IServiceCollection AddUserUseCases(this IServiceCollection services)
     {
         services.AddScoped<GetAllUsersUseCase>();
         services.AddScoped<GetFilteredSortedPaginatedUsersUseCase>();
@@ -37,6 +47,7 @@ public static class DependencyInjection
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IAuthenticationService, AuthenticationService>();
         return services;
     }
 }

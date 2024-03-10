@@ -1,4 +1,5 @@
-﻿using IdentityServer.Domain.Helpers;
+﻿using IdentityServer.Application.Authentiacion.Interfaces;
+using IdentityServer.Domain.Helpers;
 using IdentityServer.Domain.Interfaces;
 using IdentityServer.Domain.Users.Entities;
 using IdentityServer.Domain.Users.Exceptions;
@@ -8,9 +9,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Users.Repository;
 
-public class UserRepository(IdentityServerContext context) : IUserRepository
+public class UserRepository(IdentityServerContext context, IPasswordHasher passwordHasher) : IUserRepository
 {
     private readonly IdentityServerContext _context = context;
+    private readonly IPasswordHasher _passwordHasher = passwordHasher;
 
     public async Task<IEnumerable<User>> GetAllAsync()
     {
@@ -62,6 +64,8 @@ public class UserRepository(IdentityServerContext context) : IUserRepository
 
         if (!isUserNameUnique)
             throw new UserNameAlreadyExistsException(entity.UserName);
+
+        entity.Password = _passwordHasher.Hash(entity.Password);
 
         var entityEntry = await _context.Users.AddAsync(entity);
         var adedUser = entityEntry.Entity;
@@ -182,7 +186,7 @@ public class UserRepository(IdentityServerContext context) : IUserRepository
         if (userNotExists)
             throw new AuthenticationFailedException(propertyName);
 
-        var passwordNotMatch = !password.Equals(user!.Password);
+        var passwordNotMatch = !_passwordHasher.Verify(password, user!.Password);
 
         if (passwordNotMatch)
             throw new AuthenticationFailedException(propertyName);
