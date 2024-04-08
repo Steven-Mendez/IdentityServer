@@ -2,6 +2,7 @@
 using IdentityServer.Application.Authentiacion.Interfaces;
 using IdentityServer.Application.Authentiacion.Services;
 using IdentityServer.Application.Authentiacion.UseCase.Authenticate;
+using IdentityServer.Application.Authentiacion.UseCase.JsonWebTokenGeneration;
 using IdentityServer.Application.Users.Interfaces;
 using IdentityServer.Application.Users.Services;
 using IdentityServer.Application.Users.UseCases.CreateUser;
@@ -30,6 +31,7 @@ public static class DependencyInjection
     public static IServiceCollection AddAuthenticationUseCases(this IServiceCollection services)
     {
         services.AddScoped<AuthenticateUseCase>();
+        services.AddScoped<JsonWebTokenGenerationUseCase>();
         return services;
     }
 
