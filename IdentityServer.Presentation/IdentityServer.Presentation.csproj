@@ -7,12 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\IdentityServer.Application\IdentityServer.Application.csproj"/>
-        <ProjectReference Include="..\IdentityServer.Infrastructure\IdentityServer.Infrastructure.csproj"/>
+        <ProjectReference Include="..\IdentityServer.Application\IdentityServer.Application.csproj" />
+        <ProjectReference Include="..\IdentityServer.Infrastructure\IdentityServer.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>
