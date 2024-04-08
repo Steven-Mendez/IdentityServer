@@ -6,8 +6,8 @@ namespace IdentityServer.Application.Users.UseCases.GetAllUsers;
 
 public class GetAllUsersUseCase(IUnitOfWork unitOfWork, IMapper mapper)
 {
-    private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IMapper _mapper = mapper;
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
     public async Task<IEnumerable<GetAllUsersResponse>> ExecuteAsync()
     {

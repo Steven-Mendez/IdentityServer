@@ -1,13 +1,12 @@
-﻿using IdentityServer.Application.Authentiacion.Interfaces;
-using IdentityServer.Domain.Helpers;
+﻿using IdentityServer.Domain.Helpers;
 using IdentityServer.Domain.Interfaces;
 using IdentityServer.Domain.Users.Entities;
 using IdentityServer.Domain.Users.Exceptions;
 using IdentityServer.Domain.Users.Interfaces;
-using IdentityServer.Infrastructure.Data;
+using IdentityServer.Infrastructure.DatabaseContexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.Users.Repository;
+namespace IdentityServer.Infrastructure.Users.Repositories;
 
 public class UserRepository(IdentityServerContext context, IPasswordHasher passwordHasher) : IUserRepository
 {
@@ -23,10 +22,11 @@ public class UserRepository(IdentityServerContext context, IPasswordHasher passw
         return users;
     }
 
-    public async Task<(IEnumerable<User> Users, int TotalRecords)> GetFilteredSortedPaginatedAsync(IUserFilter? filter, ISorter? sorting, IPagination pagination)
+    public async Task<(IEnumerable<User> Users, int TotalRecords)> GetFilteredSortedPaginatedAsync(IUserFilter? filter,
+        ISorter? sorting, IPagination pagination)
     {
         var userQuery = _context.Users.AsNoTracking().AsSplitQuery();
-        var orignalQuery = userQuery;
+        var originalQuery = userQuery;
         if (filter is not null)
             userQuery = userQuery.ApplyFilters(filter);
 
@@ -36,7 +36,7 @@ public class UserRepository(IdentityServerContext context, IPasswordHasher passw
         userQuery = userQuery.ApplyPagination(pagination);
 
         var users = await userQuery.ToListAsync();
-        var totalRecords = await orignalQuery.CountAsync();
+        var totalRecords = await originalQuery.CountAsync();
 
         return (users, totalRecords);
     }
@@ -68,8 +68,8 @@ public class UserRepository(IdentityServerContext context, IPasswordHasher passw
         entity.Password = _passwordHasher.Hash(entity.Password);
 
         var entityEntry = await _context.Users.AddAsync(entity);
-        var adedUser = entityEntry.Entity;
-        return adedUser;
+        var addedUser = entityEntry.Entity;
+        return addedUser;
     }
 
     public async Task UpdateAsync(Guid id, User entity)
@@ -111,7 +111,8 @@ public class UserRepository(IdentityServerContext context, IPasswordHasher passw
 
     public async Task<User?> GetByUserNameOrEmailAsync(string userNameOrEmail)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == userNameOrEmail || u.Email == userNameOrEmail);
+        var user = await _context.Users.FirstOrDefaultAsync(u =>
+            u.UserName == userNameOrEmail || u.Email == userNameOrEmail);
         return user;
     }
 

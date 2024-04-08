@@ -12,9 +12,7 @@ public class ErrorResponse(Exception exception)
     private static string GetErrorDetails(Exception exception)
     {
         if (exception is ValidationException validationException)
-        {
             return validationException.ValidationResult.ErrorMessage!;
-        }
 
         return exception.Message;
     }

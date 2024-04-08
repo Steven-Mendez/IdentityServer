@@ -1,5 +1,5 @@
-﻿using IdentityServer.Domain.Interfaces;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
+using IdentityServer.Domain.Interfaces;
 
 namespace IdentityServer.Domain.Helpers;
 
@@ -8,7 +8,7 @@ public static class QueryHelper
     public static IQueryable<TEntity> ApplyPagination<TEntity>(this IQueryable<TEntity> query, IPagination pagination)
     {
         query = query.Skip((pagination.Page - 1) * pagination.PageSize)
-                     .Take(pagination.PageSize);
+            .Take(pagination.PageSize);
         return query;
     }
 
@@ -23,6 +23,7 @@ public static class QueryHelper
             else
                 query = query.OrderByDescending(sortExpression);
         }
+
         return query;
     }
 
@@ -51,7 +52,8 @@ public static class QueryHelper
             Expression comparisonExpression;
 
             if (entityProperty.PropertyType == typeof(string))
-                comparisonExpression = Expression.Call(Expression.Call(property, "ToLower", null), "Contains", null, Expression.Call(value, "ToLower", null));
+                comparisonExpression = Expression.Call(Expression.Call(property, "ToLower", null), "Contains", null,
+                    Expression.Call(value, "ToLower", null));
             else
                 comparisonExpression = Expression.Equal(property, value);
 

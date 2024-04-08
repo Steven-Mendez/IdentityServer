@@ -16,14 +16,23 @@ using IdentityServer.Domain.Users.Entities;
 
 namespace IdentityServer.Application.Users.Services;
 
-public class UserService(GetAllUsersUseCase getAllUsersUseCase, GetFilteredSortedPaginatedUsersUseCase getFilteredSortedPaginatedUsersUseCase, GetUserByIdUseCase getUserByIdUseCase, CreateUserUseCase createUserUseCase, UpdateUserUseCase updateUserUseCase, SoftDeleteUserUseCase softDeleteUserUseCase) : IUserService
+public class UserService(
+    GetAllUsersUseCase getAllUsersUseCase,
+    GetFilteredSortedPaginatedUsersUseCase getFilteredSortedPaginatedUsersUseCase,
+    GetUserByIdUseCase getUserByIdUseCase,
+    CreateUserUseCase createUserUseCase,
+    UpdateUserUseCase updateUserUseCase,
+    SoftDeleteUserUseCase softDeleteUserUseCase) : IUserService
 {
-    private readonly GetAllUsersUseCase _getAllUsersUseCase = getAllUsersUseCase;
-    private readonly GetFilteredSortedPaginatedUsersUseCase _getFilteredSortedPaginatedUsersUseCase = getFilteredSortedPaginatedUsersUseCase;
-    private readonly GetUserByIdUseCase _getUserByIdUseCase = getUserByIdUseCase;
     private readonly CreateUserUseCase _createUserUseCase = createUserUseCase;
-    private readonly UpdateUserUseCase _updateUserUseCase = updateUserUseCase;
+    private readonly GetAllUsersUseCase _getAllUsersUseCase = getAllUsersUseCase;
+
+    private readonly GetFilteredSortedPaginatedUsersUseCase _getFilteredSortedPaginatedUsersUseCase =
+        getFilteredSortedPaginatedUsersUseCase;
+
+    private readonly GetUserByIdUseCase _getUserByIdUseCase = getUserByIdUseCase;
     private readonly SoftDeleteUserUseCase _softDeleteUserUseCase = softDeleteUserUseCase;
+    private readonly UpdateUserUseCase _updateUserUseCase = updateUserUseCase;
 
     public async Task<IEnumerable<GetAllUsersResponse>> GetAllUsersAsync()
     {
@@ -31,7 +40,8 @@ public class UserService(GetAllUsersUseCase getAllUsersUseCase, GetFilteredSorte
         return users;
     }
 
-    public async Task<GetFilteredSortedPaginatedUsersResponse> GetFilteredSortedPaginatedUsersAsync(GetFilteredSortedPaginatedUsersRequest request)
+    public async Task<GetFilteredSortedPaginatedUsersResponse> GetFilteredSortedPaginatedUsersAsync(
+        GetFilteredSortedPaginatedUsersRequest request)
     {
         return await _getFilteredSortedPaginatedUsersUseCase.ExecuteAsync(request);
     }

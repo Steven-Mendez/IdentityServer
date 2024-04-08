@@ -5,8 +5,8 @@ namespace IdentityServer.Application.Users.UseCases.GetFilteredSortedPaginatedUs
 
 public class GetFilteredSortedPaginatedUsersUseCase
 {
-    private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
 
     public GetFilteredSortedPaginatedUsersUseCase(IUnitOfWork unitOfWork, IMapper mapper)
     {
@@ -14,7 +14,8 @@ public class GetFilteredSortedPaginatedUsersUseCase
         _mapper = mapper;
     }
 
-    public async Task<GetFilteredSortedPaginatedUsersResponse> ExecuteAsync(GetFilteredSortedPaginatedUsersRequest request)
+    public async Task<GetFilteredSortedPaginatedUsersResponse> ExecuteAsync(
+        GetFilteredSortedPaginatedUsersRequest request)
     {
         var filter = request.Filter;
         var sorter = request.Sorter;

@@ -1,9 +1,10 @@
-﻿using API.Users.Repository;
-using FluentValidation;
+﻿using FluentValidation;
 using IdentityServer.Domain.Users.Entities;
 using IdentityServer.Domain.Users.Exceptions;
-using IdentityServer.Infrastructure.Data;
+using IdentityServer.Infrastructure.Cryptography;
+using IdentityServer.Infrastructure.DatabaseContexts;
 using IdentityServer.Infrastructure.UnitsOfWork;
+using IdentityServer.Infrastructure.Users.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace IdentityServer.InfrastructureTests.Users;
@@ -13,20 +14,22 @@ public class UserRepositoryTests
     private static IdentityServerContext GetInMemoryDbContext()
     {
         var options = new DbContextOptionsBuilder<IdentityServerContext>()
-            .UseInMemoryDatabase(databaseName: $"InMemoryDatabase-{Guid.NewGuid()}")
+            .UseInMemoryDatabase($"InMemoryDatabase-{Guid.NewGuid()}")
             .Options;
 
         return new IdentityServerContext(options);
     }
 
-    private static async Task<(UnitOfWork unitOfWork, UserRepository userRepository, IdentityServerContext context)> SetupUnitOfWorkWithUsersAsync(List<User> users)
+    private static async Task<(UnitOfWork unitOfWork, UserRepository userRepository, IdentityServerContext context)>
+        SetupUnitOfWorkWithUsersAsync(List<User> users)
     {
         var context = GetInMemoryDbContext();
 
         context.Users.AddRange(users);
         await context.SaveChangesAsync();
 
-        var userRepository = new UserRepository(context);
+        var passwordHasher = new PasswordHasher();
+        var userRepository = new UserRepository(context, passwordHasher);
         var unitOfWork = new UnitOfWork(context, userRepository);
 
         return (unitOfWork, userRepository, context);
@@ -38,31 +41,31 @@ public class UserRepositoryTests
         // Arrange
         List<User> users =
         [
-                new User
-                {
-                    Id = Guid.Parse("aa435ca3-4924-4433-88de-f27758f05a64"),
-                    UserName = "user1",
-                    Email = "user1@user1.com",
-                    Password = @"P@ssw0rd",
-                    FirstName = "user1",
-                    LastName = "user1",
-                    Avatar = @"https://randomuser.me/api/portraits/men/2.jpg",
-                    IsBlocked = true,
-                    CreatedBy = Guid.Parse("6e7f4c0b-3b45-4a1c-a48d-9e531dd6931f")
-                },
-                new User
-                {
-                    Id = Guid.Parse("6e7f4c0b-3b45-4a1c-a48d-9e531dd6931f"),
-                    UserName = "admin",
-                    Email = "admin@admin.com",
-                    Password = @"P@ssw0rd",
-                    FirstName = "Admin",
-                    LastName = "Admin",
-                    Avatar = @"https://randomuser.me/api/portraits/men/1.jpg",
-                    IsBlocked = false,
-                    CreatedBy = Guid.Parse("6e7f4c0b-3b45-4a1c-a48d-9e531dd6931f")
-                },
-            ];
+            new User
+            {
+                Id = Guid.Parse("aa435ca3-4924-4433-88de-f27758f05a64"),
+                UserName = "user1",
+                Email = "user1@user1.com",
+                Password = @"P@ssw0rd",
+                FirstName = "user1",
+                LastName = "user1",
+                Avatar = @"https://randomuser.me/api/portraits/men/2.jpg",
+                IsBlocked = true,
+                CreatedBy = Guid.Parse("6e7f4c0b-3b45-4a1c-a48d-9e531dd6931f")
+            },
+            new User
+            {
+                Id = Guid.Parse("6e7f4c0b-3b45-4a1c-a48d-9e531dd6931f"),
+                UserName = "admin",
+                Email = "admin@admin.com",
+                Password = @"P@ssw0rd",
+                FirstName = "Admin",
+                LastName = "Admin",
+                Avatar = @"https://randomuser.me/api/portraits/men/1.jpg",
+                IsBlocked = false,
+                CreatedBy = Guid.Parse("6e7f4c0b-3b45-4a1c-a48d-9e531dd6931f")
+            }
+        ];
 
         var (unitOfWork, _, context) = await SetupUnitOfWorkWithUsersAsync(users);
 
@@ -106,7 +109,7 @@ public class UserRepositoryTests
                 Avatar = @"https://randomuser.me/api/portraits/men/1.jpg",
                 IsBlocked = false,
                 CreatedBy = Guid.Parse("6e7f4c0b-3b45-4a1c-a48d-9e531dd6931f")
-            },
+            }
         ];
 
         var (unitOfWork, _, context) = await SetupUnitOfWorkWithUsersAsync(users);
@@ -160,16 +163,17 @@ public class UserRepositoryTests
                 Avatar = @"https://randomuser.me/api/portraits/men/1.jpg",
                 IsBlocked = false,
                 CreatedBy = Guid.Parse("6e7f4c0b-3b45-4a1c-a48d-9e531dd6931f")
-            },
+            }
         ];
 
-        var (unitOfWork, _, context) = await SetupUnitOfWorkWithUsersAsync(users);
+        var (unitOfWork, _, _) = await SetupUnitOfWorkWithUsersAsync(users);
 
         var notExistingUserId = Guid.NewGuid();
 
         // Act
 
-        var exception = await Record.ExceptionAsync(async () => await unitOfWork.UserRepository.GetByIdAsync(notExistingUserId));
+        var exception =
+            await Record.ExceptionAsync(async () => await unitOfWork.UserRepository.GetByIdAsync(notExistingUserId));
         var validationException = exception as ValidationException;
         var errorMessage = validationException?.Errors.First().ErrorMessage;
 
@@ -316,7 +320,7 @@ public class UserRepositoryTests
         var (unitOfWork, _, context) = await SetupUnitOfWorkWithUsersAsync([user]);
 
         // Act
-        var newUser = new User()
+        var newUser = new User
         {
             Id = Guid.NewGuid(),
             UserName = "user1",

@@ -1,8 +1,8 @@
-﻿using FluentValidation;
+﻿using System.Net;
+using System.Text.Json;
+using FluentValidation;
 using IdentityServer.Presentation.Middlewares.GlobalError.ExtensionMethods;
 using IdentityServer.Presentation.Responses;
-using System.Net;
-using System.Text.Json;
 
 namespace IdentityServer.Presentation.Middlewares.GlobalError;
 

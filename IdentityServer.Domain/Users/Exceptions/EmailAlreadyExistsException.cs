@@ -4,12 +4,15 @@ using IdentityServer.Domain.Users.Entities;
 
 namespace IdentityServer.Domain.Users.Exceptions;
 
-public class EmailAlreadyExistsException(string email) : ValidationException(_errorMessage, BuildErrors(email))
+public class EmailAlreadyExistsException(string email) : ValidationException(ErrorMessage, BuildErrors(email))
 {
-    private static readonly string _errorMessage = "Domain Exception: EmailAlreadyExistsException.";
+    private const string ErrorMessage = "Domain Exception: EmailAlreadyExistsException.";
 
-    private static IEnumerable<ValidationFailure> BuildErrors(string email) =>
-    [
-        new(nameof(User.Email), $"Email '{email}' already exists.", email)
-    ];
+    private static IEnumerable<ValidationFailure> BuildErrors(string email)
+    {
+        return
+        [
+            new ValidationFailure(nameof(User.Email), $"Email '{email}' already exists.", email)
+        ];
+    }
 }

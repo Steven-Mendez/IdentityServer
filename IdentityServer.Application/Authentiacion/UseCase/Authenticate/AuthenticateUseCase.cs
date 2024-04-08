@@ -15,7 +15,7 @@ public class AuthenticateUseCase
     // TODO: Token Generation
     public async Task<bool> ExecuteAsync(AuthenticateRequest request)
     {
-        var user = await _unitOfWork.UserRepository.AuthenticateAsync(request.Login, request.Password);
-        return user is not null;
+        await _unitOfWork.UserRepository.AuthenticateAsync(request.Login, request.Password);
+        return true;
     }
 }

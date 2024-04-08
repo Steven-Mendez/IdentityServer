@@ -6,8 +6,8 @@ namespace IdentityServer.Application.Users.UseCases.SoftDeleteUser;
 
 public class SoftDeleteUserUseCase(IUnitOfWork unitOfWork, IMapper mapper)
 {
-    private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IMapper _mapper = mapper;
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
     public async Task<SoftDeleteUserResponse> ExecuteAsync(Guid userId)
     {

@@ -1,6 +1,6 @@
 ﻿using IdentityServer.Domain.Interfaces;
 using IdentityServer.Domain.Users.Interfaces;
-using IdentityServer.Infrastructure.Data;
+using IdentityServer.Infrastructure.DatabaseContexts;
 
 namespace IdentityServer.Infrastructure.UnitsOfWork;
 

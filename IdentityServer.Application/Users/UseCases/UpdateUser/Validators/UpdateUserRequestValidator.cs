@@ -16,9 +16,9 @@ public class UpdateUserRequestValidator : AbstractValidator<UpdateUserRequest>
             .WithMessage("UserName must only contain letters and digits.");
 
         RuleFor(x => x.Email)
-                .EmailAddress()
-                .When(x => !string.IsNullOrWhiteSpace(x.Email))
-                .WithMessage("Email is not valid.");
+            .EmailAddress()
+            .When(x => !string.IsNullOrWhiteSpace(x.Email))
+            .WithMessage("Email is not valid.");
 
         RuleFor(x => x.FirstName)
             .MaximumLength(50)

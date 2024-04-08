@@ -11,6 +11,6 @@ public class UpdateUserMapProfile : Profile
     {
         CreateMap<User, UpdateUserResponse>();
         CreateMap<UpdateUserRequest, User>()
-            .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember is not null));
+            .ForAllMembers(opt => opt.Condition((_, _, srcMember) => srcMember is not null));
     }
 }

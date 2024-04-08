@@ -3,6 +3,7 @@ using IdentityServer.Application.Authentiacion.UseCase.Authenticate.DTOS.Request
 using Microsoft.AspNetCore.Mvc;
 
 namespace IdentityServer.Presentation.Controllers;
+
 [Route("api/[controller]")]
 [ApiController]
 public class AuthenticationController(IAuthenticationService authenticationService) : ControllerBase

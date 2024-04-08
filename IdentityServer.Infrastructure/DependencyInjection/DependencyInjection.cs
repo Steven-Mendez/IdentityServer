@@ -1,10 +1,9 @@
-﻿using API.Users.Repository;
-using IdentityServer.Application.Authentiacion.Interfaces;
-using IdentityServer.Domain.Interfaces;
+﻿using IdentityServer.Domain.Interfaces;
 using IdentityServer.Domain.Users.Interfaces;
 using IdentityServer.Infrastructure.Cryptography;
-using IdentityServer.Infrastructure.Data;
+using IdentityServer.Infrastructure.DatabaseContexts;
 using IdentityServer.Infrastructure.UnitsOfWork;
+using IdentityServer.Infrastructure.Users.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,25 +21,22 @@ public static class DependencyInjection
         return services;
     }
 
-    public static IServiceCollection AddDataBase(this IServiceCollection services, IConfiguration configuration)
+    private static void AddDataBase(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<IdentityServerContext>(options =>
         {
             options.UseSqlServer(configuration.GetConnectionString("IdentityServerConnection"));
         });
-        return services;
     }
 
-    public static IServiceCollection AddUnitsOfWork(this IServiceCollection services)
+    private static void AddUnitsOfWork(this IServiceCollection services)
     {
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-        return services;
     }
 
-    public static IServiceCollection AddRepositories(this IServiceCollection services)
+    private static void AddRepositories(this IServiceCollection services)
     {
         services.AddScoped<IUserRepository, UserRepository>();
-        return services;
     }
 
     public static void EnsureIdentityServerDatabaseMigrated(this IServiceProvider serviceProvider)

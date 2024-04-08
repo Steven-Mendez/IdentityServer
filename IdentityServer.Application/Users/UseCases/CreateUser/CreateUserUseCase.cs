@@ -5,10 +5,11 @@ using IdentityServer.Domain.Interfaces;
 using IdentityServer.Domain.Users.Entities;
 
 namespace IdentityServer.Application.Users.UseCases.CreateUser;
+
 public class CreateUserUseCase(IUnitOfWork unitOfWork, IMapper mapper)
 {
-    private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IMapper _mapper = mapper;
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
     public async Task<CreateUserResponse> ExecuteAsync(CreateUserRequest createUserRequest)
     {

@@ -4,12 +4,15 @@ using IdentityServer.Domain.Users.Entities;
 
 namespace IdentityServer.Domain.Users.Exceptions;
 
-public class BlockedUserException(string username) : ValidationException(_errorMessage, BuildErrors(username))
+public class BlockedUserException(string username) : ValidationException(ErrorMessage, BuildErrors(username))
 {
-    private static readonly string _errorMessage = "Domain Exception: BlockedUserException.";
+    private const string ErrorMessage = "Domain Exception: BlockedUserException.";
 
-    private static IEnumerable<ValidationFailure> BuildErrors(string username) =>
-    [
-        new(nameof(User.UserName), $"User '{username}' is blocked.")
-    ];
+    private static IEnumerable<ValidationFailure> BuildErrors(string username)
+    {
+        return
+        [
+            new ValidationFailure(nameof(User.UserName), $"User '{username}' is blocked.")
+        ];
+    }
 }

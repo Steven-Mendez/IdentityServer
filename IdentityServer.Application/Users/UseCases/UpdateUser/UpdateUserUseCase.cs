@@ -9,8 +9,8 @@ namespace IdentityServer.Application.Users.UseCases.UpdateUser;
 
 public class UpdateUserUseCase(IUnitOfWork unitOfWork, IMapper mapper, UpdateUserRequestValidator validationRules)
 {
-    private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IMapper _mapper = mapper;
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IValidator<UpdateUserRequest> _validationRules = validationRules;
 
     public async Task<UpdateUserResponse> ExecuteAsync(Guid id, UpdateUserRequest request)

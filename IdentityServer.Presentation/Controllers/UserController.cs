@@ -33,11 +33,13 @@ public class UserController(IUserService userService) : ControllerBase
     [HttpGet("Filter-Sort-Pagination")]
     [ProducesResponseType(typeof(PagedResponse<GetFilteredSortedPaginatedUserResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetWithFilterSortAndPagination([FromQuery] UserFilter? filter, [FromQuery] Sorter? sorter, [FromQuery] Pagination pagination)
+    public async Task<IActionResult> GetWithFilterSortAndPagination([FromQuery] UserFilter? filter,
+        [FromQuery] Sorter? sorter, [FromQuery] Pagination pagination)
     {
         var request = new GetFilteredSortedPaginatedUsersRequest(filter, sorter, pagination);
         var pagedUsers = await _userService.GetFilteredSortedPaginatedUsersAsync(request);
-        var pagedResponse = ApiResponse.CreatePaged(pagedUsers.Users, request.Pagination.Page, request.Pagination.PageSize, pagedUsers.TotalRecords);
+        var pagedResponse = ApiResponse.CreatePaged(pagedUsers.Users, request.Pagination.Page,
+            request.Pagination.PageSize, pagedUsers.TotalRecords);
         return Ok(pagedResponse);
     }
 
@@ -57,7 +59,7 @@ public class UserController(IUserService userService) : ControllerBase
     public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest createUserRequest)
     {
         var user = await _userService.AddUserAsync(createUserRequest);
-        var response = ApiResponse.Create(user);
+        ApiResponse.Create(user);
         return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
     }
 
