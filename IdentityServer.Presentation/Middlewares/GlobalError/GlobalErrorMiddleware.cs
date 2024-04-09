@@ -8,13 +8,11 @@ namespace IdentityServer.Presentation.Middlewares.GlobalError;
 
 public class GlobalErrorMiddleware(RequestDelegate next)
 {
-    private readonly RequestDelegate _next = next;
-
     public async Task Invoke(HttpContext context)
     {
         try
         {
-            await _next(context);
+            await next(context);
         }
         catch (ValidationException exception)
         {

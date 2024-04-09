@@ -8,12 +8,10 @@ namespace IdentityServer.Presentation.Controllers;
 [ApiController]
 public class AuthenticationController(IAuthenticationService authenticationService) : ControllerBase
 {
-    private readonly IAuthenticationService _authenticationService = authenticationService;
-
     [HttpPost]
     public async Task<IActionResult> Authenticate([FromBody] AuthenticateRequest request)
     {
-        var isAuthenticated = await _authenticationService.Authenticate(request);
+        var isAuthenticated = await authenticationService.Authenticate(request);
         return Ok(isAuthenticated);
     }
 }

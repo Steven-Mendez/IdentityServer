@@ -1,6 +1,6 @@
 ﻿namespace IdentityServer.Presentation.Responses;
 
-public class ApiResponse
+public static class ApiResponse
 {
     public static Response<T> Create<T>(T data)
     {
