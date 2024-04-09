@@ -1,4 +1,4 @@
-﻿namespace IdentityServer.Application.Users.UseCases.GetFilteredSortedPaginatedUsers;
+﻿namespace IdentityServer.Application.Users.UseCases.GetFilteredSortedPaginatedUsers.DataTransferObjects.Responses;
 
 public class GetFilteredSortedPaginatedUserResponse
 {

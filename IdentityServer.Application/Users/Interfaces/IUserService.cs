@@ -2,6 +2,8 @@
 using IdentityServer.Application.Users.UseCases.CreateUser.DataTransferObjects.Responses;
 using IdentityServer.Application.Users.UseCases.GetAllUsers.DataTransferObjects.Responses;
 using IdentityServer.Application.Users.UseCases.GetFilteredSortedPaginatedUsers;
+using IdentityServer.Application.Users.UseCases.GetFilteredSortedPaginatedUsers.DataTransferObjects.Requests;
+using IdentityServer.Application.Users.UseCases.GetFilteredSortedPaginatedUsers.DataTransferObjects.Responses;
 using IdentityServer.Application.Users.UseCases.GetUserById.DataTransferObjects.Response;
 using IdentityServer.Application.Users.UseCases.SoftDeleteUser.DataTransferObjects.Responses;
 using IdentityServer.Application.Users.UseCases.UpdateUser.DataTransferObjects.Requests;

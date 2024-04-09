@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using IdentityServer.Application.Users.UseCases.GetFilteredSortedPaginatedUsers.DataTransferObjects.Requests;
+using IdentityServer.Application.Users.UseCases.GetFilteredSortedPaginatedUsers.DataTransferObjects.Responses;
 using IdentityServer.Domain.Interfaces;
 
 namespace IdentityServer.Application.Users.UseCases.GetFilteredSortedPaginatedUsers;

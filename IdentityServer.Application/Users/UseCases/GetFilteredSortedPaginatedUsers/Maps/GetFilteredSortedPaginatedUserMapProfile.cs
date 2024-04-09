@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
+using IdentityServer.Application.Users.UseCases.GetFilteredSortedPaginatedUsers.DataTransferObjects.Responses;
 using IdentityServer.Domain.Users.Entities;
 
-namespace IdentityServer.Application.Users.UseCases.GetFilteredSortedPaginatedUsers;
+namespace IdentityServer.Application.Users.UseCases.GetFilteredSortedPaginatedUsers.Maps;
 
 public class GetFilteredSortedPaginatedUserMapProfile : Profile
 {
