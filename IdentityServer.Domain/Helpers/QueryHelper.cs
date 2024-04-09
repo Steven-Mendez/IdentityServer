@@ -14,15 +14,12 @@ public static class QueryHelper
 
     public static IQueryable<TEntity> ApplySorting<TEntity>(this IQueryable<TEntity> query, ISorter sorting)
     {
-        if (!string.IsNullOrEmpty(sorting.SortBy) && !string.IsNullOrEmpty(sorting.SortOrder))
-        {
-            var sortExpression = ExpressionHelper.GetSortExpression<TEntity>(sorting.SortBy);
+        if (string.IsNullOrEmpty(sorting.SortBy) || string.IsNullOrEmpty(sorting.SortOrder))
+            return query;
+        
+        var sortExpression = ExpressionHelper.GetSortExpression<TEntity>(sorting.SortBy);
 
-            if (sorting.SortOrder.ToLower().Equals("asc"))
-                query = query.OrderBy(sortExpression);
-            else
-                query = query.OrderByDescending(sortExpression);
-        }
+        query = sorting.SortOrder.ToLower().Equals("asc") ? query.OrderBy(sortExpression) : query.OrderByDescending(sortExpression);
 
         return query;
     }
@@ -63,9 +60,6 @@ public static class QueryHelper
                     Expression.AndAlso(predicate.Body, comparisonExpression), parameter);
         }
 
-        if (predicate == null)
-            return query;
-
-        return query.Where(predicate);
+        return predicate == null ? query : query.Where(predicate);
     }
 }

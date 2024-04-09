@@ -5,12 +5,6 @@ namespace IdentityServer.Domain.Helpers;
 
 public static class ExpressionHelper
 {
-    public static Expression<Func<TSource, TKey>> GetExpression<TSource, TKey>(
-        Expression<Func<TSource, TKey>> keySelector)
-    {
-        return keySelector;
-    }
-
     public static Expression<Func<TEntity, object>> GetSortExpression<TEntity>(string sortBy)
     {
         var parameter = Expression.Parameter(typeof(TEntity), "x");

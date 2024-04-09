@@ -8,5 +8,5 @@ public abstract class AuditEntity : BaseEntity
     public DateTime? UpdatedAt { get; set; }
     public Guid? DeletedBy { get; set; }
     public DateTime? DeletedAt { get; set; }
-    public bool IsDeleted { get; set; } = false;
+    public bool IsDeleted { get; set; }
 }
