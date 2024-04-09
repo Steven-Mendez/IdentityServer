@@ -3,7 +3,7 @@ using IdentityServer.Infrastructure.Users.SeedData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace IdentityServer.Infrastructure.Users.Configutarions;
+namespace IdentityServer.Infrastructure.Users.Configurations;
 
 public class UsersConfiguration : IEntityTypeConfiguration<User>
 {
@@ -20,7 +20,7 @@ public class UsersConfiguration : IEntityTypeConfiguration<User>
         ConfigurePrimaryKey(builder);
         ConfigureDefaultValues(builder);
         ConfigureTypes(builder);
-        ConfigureResctrictions(builder);
+        ConfigureRestrictions(builder);
     }
 
     private static void ConfigurePrimaryKey(EntityTypeBuilder<User> builder)
@@ -36,7 +36,7 @@ public class UsersConfiguration : IEntityTypeConfiguration<User>
         builder.Property(x => x.DeletedAt).HasColumnType("datetime");
     }
 
-    private static void ConfigureResctrictions(EntityTypeBuilder<User> builder)
+    private static void ConfigureRestrictions(EntityTypeBuilder<User> builder)
     {
         builder.Property(x => x.FirstName).HasMaxLength(50);
         builder.Property(x => x.LastName).HasMaxLength(50);

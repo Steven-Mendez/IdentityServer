@@ -12,13 +12,12 @@ namespace IdentityServer.Infrastructure.DependencyInjection;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDataBase(configuration);
         services.AddUnitsOfWork();
         services.AddRepositories();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
-        return services;
     }
 
     private static void AddDataBase(this IServiceCollection services, IConfiguration configuration)
