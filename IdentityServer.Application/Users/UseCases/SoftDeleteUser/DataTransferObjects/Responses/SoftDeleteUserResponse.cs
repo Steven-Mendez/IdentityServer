@@ -1,4 +1,4 @@
-﻿namespace IdentityServer.Application.Users.UseCases.SoftDeleteUser.DTO.Response;
+﻿namespace IdentityServer.Application.Users.UseCases.SoftDeleteUser.DataTransferObjects.Responses;
 
 public class SoftDeleteUserResponse
 {

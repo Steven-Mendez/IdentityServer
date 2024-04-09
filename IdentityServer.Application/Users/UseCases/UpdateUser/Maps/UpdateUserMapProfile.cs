@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using IdentityServer.Application.Users.UseCases.UpdateUser.DTO.Requests;
-using IdentityServer.Application.Users.UseCases.UpdateUser.DTO.Responses;
+using IdentityServer.Application.Users.UseCases.UpdateUser.DataTransferObjects.Requests;
+using IdentityServer.Application.Users.UseCases.UpdateUser.DataTransferObjects.Responses;
 using IdentityServer.Domain.Users.Entities;
 
 namespace IdentityServer.Application.Users.UseCases.UpdateUser.Maps;

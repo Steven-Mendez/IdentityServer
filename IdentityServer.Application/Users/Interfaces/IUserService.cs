@@ -1,11 +1,11 @@
-﻿using IdentityServer.Application.Users.UseCases.CreateUser.DTOS.Requests;
-using IdentityServer.Application.Users.UseCases.CreateUser.DTOS.Responses;
-using IdentityServer.Application.Users.UseCases.GetAllUsers.DTO.Responses;
+﻿using IdentityServer.Application.Users.UseCases.CreateUser.DataTransferObjects.Requests;
+using IdentityServer.Application.Users.UseCases.CreateUser.DataTransferObjects.Responses;
+using IdentityServer.Application.Users.UseCases.GetAllUsers.DataTransferObjects.Responses;
 using IdentityServer.Application.Users.UseCases.GetFilteredSortedPaginatedUsers;
-using IdentityServer.Application.Users.UseCases.GetUserById.DTO.Response;
-using IdentityServer.Application.Users.UseCases.SoftDeleteUser.DTO.Response;
-using IdentityServer.Application.Users.UseCases.UpdateUser.DTO.Requests;
-using IdentityServer.Application.Users.UseCases.UpdateUser.DTO.Responses;
+using IdentityServer.Application.Users.UseCases.GetUserById.DataTransferObjects.Response;
+using IdentityServer.Application.Users.UseCases.SoftDeleteUser.DataTransferObjects.Responses;
+using IdentityServer.Application.Users.UseCases.UpdateUser.DataTransferObjects.Requests;
+using IdentityServer.Application.Users.UseCases.UpdateUser.DataTransferObjects.Responses;
 using IdentityServer.Domain.Users.Entities;
 
 namespace IdentityServer.Application.Users.Interfaces;

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using IdentityServer.Application.Users.UseCases.SoftDeleteUser.DTO.Response;
+using IdentityServer.Application.Users.UseCases.SoftDeleteUser.DataTransferObjects.Responses;
 using IdentityServer.Domain.Users.Entities;
 
-namespace IdentityServer.Application.Users.UseCases.SoftDeleteUser.DTO.Maps;
+namespace IdentityServer.Application.Users.UseCases.SoftDeleteUser.Maps;
 
 public class SoftDeleteUserMapProfile : Profile
 {

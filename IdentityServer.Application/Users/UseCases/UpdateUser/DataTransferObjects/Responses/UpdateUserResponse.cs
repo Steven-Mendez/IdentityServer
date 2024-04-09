@@ -1,11 +1,12 @@
-﻿namespace IdentityServer.Application.Users.UseCases.CreateUser.DTOS.Requests;
+﻿namespace IdentityServer.Application.Users.UseCases.UpdateUser.DataTransferObjects.Responses;
 
-public class CreateUserRequest
+public class UpdateUserResponse
 {
+    public Guid Id { get; set; }
     public string UserName { get; set; } = null!;
     public string Email { get; set; } = null!;
-    public string Password { get; set; } = null!;
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public string? Avatar { get; set; }
+    public bool IsBlocked { get; set; }
 }

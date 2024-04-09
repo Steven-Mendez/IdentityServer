@@ -1,4 +1,4 @@
-﻿namespace IdentityServer.Application.Users.UseCases.UpdateUser.DTO.Requests;
+﻿namespace IdentityServer.Application.Users.UseCases.UpdateUser.DataTransferObjects.Requests;
 
 public class UpdateUserRequest
 {

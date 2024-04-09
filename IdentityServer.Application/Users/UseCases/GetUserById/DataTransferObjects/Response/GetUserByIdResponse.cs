@@ -1,6 +1,6 @@
-﻿namespace IdentityServer.Application.Users.UseCases.GetAllUsers.DTO.Responses;
+﻿namespace IdentityServer.Application.Users.UseCases.GetUserById.DataTransferObjects.Response;
 
-public class GetAllUsersResponse
+public class GetUserByIdResponse
 {
     public Guid Id { get; init; }
     public string UserName { get; init; } = null!;

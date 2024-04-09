@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using IdentityServer.Application.Users.UseCases.UpdateUser.DTO.Requests;
+using IdentityServer.Application.Users.UseCases.UpdateUser.DataTransferObjects.Requests;
 
 namespace IdentityServer.Application.Users.UseCases.UpdateUser.Validators;
 
