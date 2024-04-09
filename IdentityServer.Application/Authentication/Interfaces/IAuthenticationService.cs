@@ -6,4 +6,5 @@ namespace IdentityServer.Application.Authentication.Interfaces;
 public interface IAuthenticationService
 {
     Task<AuthenticateResponse> Authenticate(AuthenticateRequest request);
+    string GetAzureAdUrl();
 }

@@ -14,4 +14,15 @@ public class AuthenticationController(IAuthenticationService authenticationServi
         var isAuthenticated = await authenticationService.Authenticate(request);
         return Ok(isAuthenticated);
     }
+
+    [HttpGet("azure-ad")]
+    public IActionResult Get([FromQuery]string? code)
+    {
+        if (!string.IsNullOrWhiteSpace(code))
+            return Ok(code);
+        
+        var url = authenticationService.GetAzureAdUrl();
+        return Redirect(url);
+
+    }
 }
