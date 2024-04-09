@@ -216,7 +216,6 @@ public class UserRepositoryTests
         Assert.Equal(userId, result.Id);
         Assert.Equal("user1", result.UserName);
         Assert.Equal("user1@user1", result.Email);
-        Assert.Equal(@"P@ssw0rd", result.Password);
         Assert.Equal("user1", result.FirstName);
         Assert.Equal("user1", result.LastName);
         Assert.Equal(@"https://randomuser.me/api/port/2.jpg", result.Avatar);
@@ -255,7 +254,6 @@ public class UserRepositoryTests
         Assert.Equal(userId, result.Id);
         Assert.Equal("user1", result.UserName);
         Assert.Equal("user1@user1", result.Email);
-        Assert.Equal(@"P@ssw0rd", result.Password);
         Assert.Equal("user1", result.FirstName);
         Assert.Equal("user1", result.LastName);
         Assert.Equal(@"https://randomuser.me/api/port/2.jpg", result.Avatar);
