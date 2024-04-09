@@ -362,6 +362,11 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-# ingore .idea folder
+# ignore .idea folder
 
 .idea/
+
+# ignore appsettings.json file and appsettings.Development.json file
+
+appsettings.json
+appsettings.Development.json
