@@ -1,4 +1,4 @@
-﻿namespace IdentityServer.Application.Authentiacion.UseCase.Authenticate.DTOS.Requests;
+﻿namespace IdentityServer.Application.Authentication.UseCase.Authenticate.DataTransferObjects.Requests;
 
 public class AuthenticateRequest
 {

@@ -1,5 +1,5 @@
-﻿using IdentityServer.Application.Authentiacion.Interfaces;
-using IdentityServer.Application.Authentiacion.UseCase.Authenticate.DTOS.Requests;
+﻿using IdentityServer.Application.Authentication.Interfaces;
+using IdentityServer.Application.Authentication.UseCase.Authenticate.DataTransferObjects.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IdentityServer.Presentation.Controllers;

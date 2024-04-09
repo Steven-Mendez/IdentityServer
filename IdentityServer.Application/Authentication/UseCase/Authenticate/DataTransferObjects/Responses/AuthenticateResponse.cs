@@ -1,4 +1,4 @@
-﻿namespace IdentityServer.Application.Authentiacion.UseCase.Authenticate.DTOS.Responses;
+﻿namespace IdentityServer.Application.Authentication.UseCase.Authenticate.DataTransferObjects.Responses;
 
 public class AuthenticateResponse
 {
