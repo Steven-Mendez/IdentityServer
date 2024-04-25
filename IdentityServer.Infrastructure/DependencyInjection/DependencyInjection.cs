@@ -43,7 +43,6 @@ public static class DependencyInjection
         using var scope = serviceProvider.CreateScope();
         var services = scope.ServiceProvider;
         var context = services.GetRequiredService<IdentityServerContext>();
-        context.Database.EnsureCreated();
         context.Database.Migrate();
     }
 }
