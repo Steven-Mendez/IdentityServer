@@ -12,9 +12,7 @@ namespace IdentityServer.Application.Users.Interfaces;
 
 public interface IUserService
 {
-    Task<GetUsersResponse> GetFilteredSortedPaginatedUsersAsync(
-        GetUsersRequest request);
-
+    Task<GetUsersResponse> GetFilteredSortedPaginatedUsersAsync(GetUsersRequest request);
     Task<GetUserByIdResponse> GetUserByIdAsync(Guid id);
     Task<CreateUserResponse> AddUserAsync(CreateUserRequest request);
     Task<UpdateUserResponse> UpdateUserAsync(Guid id, UpdateUserRequest request);
