@@ -18,12 +18,12 @@ public class PagedResponse<T>
     }
 
     public IEnumerable<T>? Data { get; init; }
+    public int TotalRecords { get; }
     public int? PageNumber { get; init; }
     public int? PageSize { get; init; }
-    public int TotalRecords { get; }
     public int? TotalPages { get; init; }
-    public bool? HasPrevious { get; init; }
     public bool? HasNext { get; init; }
-    public string? Previous { get; init; }
     public string? Next { get; init; }
+    public bool? HasPrevious { get; init; }
+    public string? Previous { get; init; }
 }
