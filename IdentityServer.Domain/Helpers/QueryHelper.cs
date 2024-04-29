@@ -86,6 +86,10 @@ public static class QueryHelper
                 throw new PageSizeMustHaveValueException();
             case { PageNumber: null, PageSize: not null }:
                 throw new PageNumberMustHaveValueException();
+            case { PageNumber: < 1 }:
+                throw new PageNumberMustBePositiveException();
+            case { PageSize: < 1 }:
+                throw new PageSizeMustBePositiveException();
             default:
                 query = query.Skip((pagination.PageNumber!.Value - 1) * pagination.PageSize!.Value)
                     .Take(pagination.PageSize.Value);
