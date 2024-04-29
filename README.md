@@ -67,6 +67,7 @@ To initiate your journey with IdentityServer, follow these steps:
 **Additional Notes:**
 
 - Check `.gitignore` to understand which files and directories are not tracked by Git.
+- The admin user credentials are `"email": admin@admin.com` and `"password": P@ssw0rd!`.
 
 ## 1.4. Building and Testing
 
