@@ -12,7 +12,7 @@ public class CreateUserUseCase(IUnitOfWork unitOfWork, IMapper mapper, IValidato
     public async Task<CreateUserResponse> ExecuteAsync(CreateUserRequest request)
     {
         await validationRules.ValidateAndThrowAsync(request);
-        
+
         var userToAdd = mapper.Map<User>(request);
 
         var user = await unitOfWork.UserRepository.AddAsync(userToAdd);

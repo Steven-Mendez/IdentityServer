@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
-using IdentityServer.Domain.Interfaces;
 
 namespace IdentityServer.Domain.Exceptions;
 
@@ -12,7 +11,7 @@ public class PageNumberMustHaveValueException() : ValidationException(ErrorMessa
     {
         return
         [
-            new ValidationFailure("pageNumber", $"Page number must have a value.")
+            new ValidationFailure("pageNumber", "Page number must have a value.")
         ];
     }
 }

@@ -74,7 +74,7 @@ public static class QueryHelper
 
         return predicate == null ? query : query.Where(predicate);
     }
-    
+
     public static IQueryable<TEntity> ApplyPagination<TEntity>(this IQueryable<TEntity> query, IPagination pagination)
     {
         if (pagination.PageSize is null || pagination.PageNumber is null)

@@ -7,7 +7,8 @@ public static class ApiResponse
         return new Response<T>(data);
     }
 
-    public static PagedResponse<T> CreatePaged<T>(IEnumerable<T> data, int? pageNumber, int? pageSize, int totalCount, string endPointUrl)
+    public static PagedResponse<T> CreatePaged<T>(IEnumerable<T> data, int? pageNumber, int? pageSize, int totalCount,
+        string endPointUrl)
     {
         return new PagedResponse<T>(data, pageNumber, pageSize, totalCount, endPointUrl);
     }

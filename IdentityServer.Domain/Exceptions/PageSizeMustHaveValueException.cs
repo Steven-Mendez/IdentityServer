@@ -11,7 +11,7 @@ public class PageSizeMustHaveValueException() : ValidationException(ErrorMessage
     {
         return
         [
-            new ValidationFailure("pageSize", $"Page size must have a value.")
+            new ValidationFailure("pageSize", "Page size must have a value.")
         ];
     }
 }

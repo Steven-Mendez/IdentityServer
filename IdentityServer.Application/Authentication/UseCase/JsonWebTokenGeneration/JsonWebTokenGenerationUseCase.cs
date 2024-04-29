@@ -7,18 +7,20 @@ namespace IdentityServer.Application.Authentication.UseCase.JsonWebTokenGenerati
 
 public class JsonWebTokenGenerationUseCase(IConfiguration configuration)
 {
-    private readonly string _issuer = GetValueFromConfiguration(configuration, "JsonWebTokenSettings:Issuer");
     private readonly string _audience = GetValueFromConfiguration(configuration, "JsonWebTokenSettings:Audience");
+
+    private readonly int _expirationMinutes =
+        int.Parse(GetValueFromConfiguration(configuration, "JsonWebTokenSettings:ExpirationMinutes"));
+
+    private readonly string _issuer = GetValueFromConfiguration(configuration, "JsonWebTokenSettings:Issuer");
     private readonly string _signingKey = GetValueFromConfiguration(configuration, "JsonWebTokenSettings:SigningKey");
-    private readonly int _expirationMinutes = int.Parse(GetValueFromConfiguration(configuration, "JsonWebTokenSettings:ExpirationMinutes"));
 
     private static string GetValueFromConfiguration(IConfiguration configuration, string key)
     {
         var value = configuration[key];
         if (string.IsNullOrWhiteSpace(value))
-        {
-            throw new ArgumentNullException(nameof(configuration), $"Configuration value for '{key}' is missing or empty.");
-        }
+            throw new ArgumentNullException(nameof(configuration),
+                $"Configuration value for '{key}' is missing or empty.");
         return value;
     }
 
@@ -29,7 +31,7 @@ public class JsonWebTokenGenerationUseCase(IConfiguration configuration)
             new(JwtRegisteredClaimNames.Sub, id.ToString()),
             new(JwtRegisteredClaimNames.Email, email),
             new(JwtRegisteredClaimNames.GivenName, name),
-            new(JwtRegisteredClaimNames.FamilyName, lastName),
+            new(JwtRegisteredClaimNames.FamilyName, lastName)
         };
         return GenerateToken(claims, _expirationMinutes);
     }
@@ -40,9 +42,9 @@ public class JsonWebTokenGenerationUseCase(IConfiguration configuration)
         var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var jwtSecurityToken = new JwtSecurityToken(
-            issuer: _issuer,
-            audience: _audience,
-            claims: claims,
+            _issuer,
+            _audience,
+            claims,
             expires: DateTime.UtcNow.AddMinutes(expirationMinutes),
             signingCredentials: signingCredentials);
 

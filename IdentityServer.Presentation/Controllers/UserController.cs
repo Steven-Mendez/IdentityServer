@@ -4,7 +4,6 @@ using IdentityServer.Application.Users.Interfaces;
 using IdentityServer.Application.Users.UseCases.CreateUser.DataTransferObjects.Requests;
 using IdentityServer.Application.Users.UseCases.CreateUser.DataTransferObjects.Responses;
 using IdentityServer.Application.Users.UseCases.GetAllUsers.DataTransferObjects.Responses;
-using IdentityServer.Application.Users.UseCases.GetFilteredSortedPaginatedUsers;
 using IdentityServer.Application.Users.UseCases.GetFilteredSortedPaginatedUsers.DataTransferObjects.Requests;
 using IdentityServer.Application.Users.UseCases.GetFilteredSortedPaginatedUsers.DataTransferObjects.Responses;
 using IdentityServer.Application.Users.UseCases.GetUserById.DataTransferObjects.Response;
@@ -20,7 +19,8 @@ namespace IdentityServer.Presentation.Controllers;
 [ApiController]
 public class UserController(IUserService userService, IHttpContextAccessor httpContextAccessor) : ControllerBase
 {
-    private readonly string _baseUrl = $"{httpContextAccessor.HttpContext!.Request.Scheme}://{httpContextAccessor.HttpContext!.Request.Host}";
+    private readonly string _baseUrl =
+        $"{httpContextAccessor.HttpContext!.Request.Scheme}://{httpContextAccessor.HttpContext!.Request.Host}";
 
     [HttpGet("deprecated")]
     [ProducesResponseType(typeof(Response<IEnumerable<GetAllUsersResponse>>), StatusCodes.Status200OK)]
@@ -38,7 +38,8 @@ public class UserController(IUserService userService, IHttpContextAccessor httpC
     public async Task<IActionResult> GetWithFilterSortAndPagination([FromQuery] UserFilter filter,
         [FromQuery] Sorter sorter, [FromQuery] Pagination pagination)
     {
-        var endPointUrl = $"{_baseUrl}/api/{ControllerContext.ActionDescriptor.ControllerName}/{ControllerContext.ActionDescriptor.AttributeRouteInfo!.Template}";
+        var endPointUrl =
+            $"{_baseUrl}/api/{ControllerContext.ActionDescriptor.ControllerName}/{ControllerContext.ActionDescriptor.AttributeRouteInfo!.Template}";
         var request = new GetFilteredSortedPaginatedUsersRequest(filter, sorter, pagination);
         var pagedUsers = await userService.GetFilteredSortedPaginatedUsersAsync(request);
         var pagedResponse = ApiResponse.CreatePaged(pagedUsers.Users, request.Pagination.PageNumber,

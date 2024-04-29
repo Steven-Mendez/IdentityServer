@@ -16,13 +16,12 @@ public class AuthenticationController(IAuthenticationService authenticationServi
     }
 
     [HttpGet("azure-ad")]
-    public IActionResult Get([FromQuery]string? code)
+    public IActionResult Get([FromQuery] string? code)
     {
         if (!string.IsNullOrWhiteSpace(code))
             return Ok(code);
-        
+
         var url = authenticationService.GetAzureAdUrl();
         return Redirect(url);
-
     }
 }

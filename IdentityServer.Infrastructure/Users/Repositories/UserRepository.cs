@@ -23,16 +23,16 @@ public class UserRepository(IdentityServerContext context, IPasswordHasher passw
         ISorter sorting, IPagination pagination)
     {
         var userQuery = context.Users.AsNoTracking().AsSplitQuery();
-        
+
         var filteredQuery = userQuery.ApplyFilters(filter);
-        
+
         userQuery = userQuery
             .ApplyFilters(filter)
             .ApplySorting(sorting)
             .ApplyPagination(pagination);
 
         var users = await userQuery.ToListAsync();
-        
+
         var totalRecords = await filteredQuery.CountAsync();
 
         return (users, totalRecords);

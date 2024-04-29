@@ -13,7 +13,7 @@ public class UpdateUserUseCase(IUnitOfWork unitOfWork, IMapper mapper, IValidato
         await validationRules.ValidateAndThrowAsync(request);
 
         var user = await unitOfWork.UserRepository.GetByIdAsync(id);
-        
+
         user = mapper.Map(request, user);
 
         await unitOfWork.UserRepository.UpdateAsync(id, user);
