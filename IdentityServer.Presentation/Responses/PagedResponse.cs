@@ -13,8 +13,8 @@ public class PagedResponse<T>
             : null;
         HasPrevious = PageNumber.HasValue ? PageNumber.Value > 1 : null;
         HasNext = PageNumber.HasValue && TotalPages.HasValue ? PageNumber.Value < TotalPages.Value : null;
-        Previous = HasPrevious.HasValue && HasPrevious.Value ? endPointUrl : null;
-        Next = HasNext.HasValue && HasNext.Value ? endPointUrl : null;
+        Previous = HasPrevious.HasValue && HasPrevious.Value ? $"{endPointUrl}?PageNumber={PageNumber - 1}&PageSize={PageSize}" : null;
+        Next = HasNext.HasValue && HasNext.Value ? $"{endPointUrl}?PageNumber={PageNumber + 1}&PageSize={PageSize}" : null;
     }
 
     public IEnumerable<T>? Data { get; init; }

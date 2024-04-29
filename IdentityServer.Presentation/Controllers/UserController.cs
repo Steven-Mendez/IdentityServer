@@ -28,7 +28,7 @@ public class UserController(IUserService userService, IHttpContextAccessor httpC
         [FromQuery] Sorter sorter, [FromQuery] Pagination pagination)
     {
         var endPointUrl =
-            $"{_baseUrl}/api/{ControllerContext.ActionDescriptor.ControllerName}/{ControllerContext.ActionDescriptor.AttributeRouteInfo!.Template}";
+            $"{_baseUrl}/{ControllerContext.ActionDescriptor.AttributeRouteInfo!.Template}";
         var request = new GetUsersRequest(filter, sorter, pagination);
         var pagedUsers = await userService.GetFilteredSortedPaginatedUsersAsync(request);
         var pagedResponse = ApiResponse.CreatePaged(pagedUsers.Users, request.Pagination.PageNumber,
