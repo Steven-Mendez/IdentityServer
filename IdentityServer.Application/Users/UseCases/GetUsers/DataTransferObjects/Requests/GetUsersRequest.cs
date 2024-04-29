@@ -1,9 +1,9 @@
 ﻿using IdentityServer.Application.Implementations;
 using IdentityServer.Application.Users.Filters;
 
-namespace IdentityServer.Application.Users.UseCases.GetFilteredSortedPaginatedUsers.DataTransferObjects.Requests;
+namespace IdentityServer.Application.Users.UseCases.GetUsers.DataTransferObjects.Requests;
 
-public class GetFilteredSortedPaginatedUsersRequest(UserFilter filter, Sorter sorter, Pagination pagination)
+public class GetUsersRequest(UserFilter filter, Sorter sorter, Pagination pagination)
 {
     public UserFilter Filter { get; set; } = filter;
 

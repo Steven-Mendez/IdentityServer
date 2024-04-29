@@ -1,6 +1,6 @@
-﻿namespace IdentityServer.Application.Users.UseCases.GetFilteredSortedPaginatedUsers.DataTransferObjects.Responses;
+﻿namespace IdentityServer.Application.Users.UseCases.GetUsers.DataTransferObjects.Responses;
 
-public class GetFilteredSortedPaginatedUserResponse
+public class GetUserResponse
 {
     public Guid Id { get; init; }
     public string UserName { get; init; } = null!;

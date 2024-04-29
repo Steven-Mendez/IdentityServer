@@ -6,9 +6,8 @@ using IdentityServer.Application.Authentication.UseCase.JsonWebTokenGeneration;
 using IdentityServer.Application.Users.Interfaces;
 using IdentityServer.Application.Users.Services;
 using IdentityServer.Application.Users.UseCases.CreateUser;
-using IdentityServer.Application.Users.UseCases.GetAllUsers;
-using IdentityServer.Application.Users.UseCases.GetFilteredSortedPaginatedUsers;
 using IdentityServer.Application.Users.UseCases.GetUserById;
+using IdentityServer.Application.Users.UseCases.GetUsers;
 using IdentityServer.Application.Users.UseCases.SoftDeleteUser;
 using IdentityServer.Application.Users.UseCases.UpdateUser;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,8 +34,7 @@ public static class DependencyInjection
 
     private static void AddUserUseCases(this IServiceCollection services)
     {
-        services.AddScoped<GetAllUsersUseCase>();
-        services.AddScoped<GetFilteredSortedPaginatedUsersUseCase>();
+        services.AddScoped<GetUsersUseCase>();
         services.AddScoped<GetUserByIdUseCase>();
         services.AddScoped<CreateUserUseCase>();
         services.AddScoped<UpdateUserUseCase>();

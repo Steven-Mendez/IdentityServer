@@ -3,10 +3,9 @@ using IdentityServer.Application.Users.Filters;
 using IdentityServer.Application.Users.Interfaces;
 using IdentityServer.Application.Users.UseCases.CreateUser.DataTransferObjects.Requests;
 using IdentityServer.Application.Users.UseCases.CreateUser.DataTransferObjects.Responses;
-using IdentityServer.Application.Users.UseCases.GetAllUsers.DataTransferObjects.Responses;
-using IdentityServer.Application.Users.UseCases.GetFilteredSortedPaginatedUsers.DataTransferObjects.Requests;
-using IdentityServer.Application.Users.UseCases.GetFilteredSortedPaginatedUsers.DataTransferObjects.Responses;
 using IdentityServer.Application.Users.UseCases.GetUserById.DataTransferObjects.Response;
+using IdentityServer.Application.Users.UseCases.GetUsers.DataTransferObjects.Requests;
+using IdentityServer.Application.Users.UseCases.GetUsers.DataTransferObjects.Responses;
 using IdentityServer.Application.Users.UseCases.SoftDeleteUser.DataTransferObjects.Responses;
 using IdentityServer.Application.Users.UseCases.UpdateUser.DataTransferObjects.Requests;
 using IdentityServer.Application.Users.UseCases.UpdateUser.DataTransferObjects.Responses;
@@ -22,25 +21,15 @@ public class UserController(IUserService userService, IHttpContextAccessor httpC
     private readonly string _baseUrl =
         $"{httpContextAccessor.HttpContext!.Request.Scheme}://{httpContextAccessor.HttpContext!.Request.Host}";
 
-    [HttpGet("deprecated")]
-    [ProducesResponseType(typeof(Response<IEnumerable<GetAllUsersResponse>>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllUsers()
-    {
-        var users = await userService.GetAllUsersAsync();
-        var response = ApiResponse.Create(users);
-        return Ok(response);
-    }
-
     [HttpGet]
-    [ProducesResponseType(typeof(PagedResponse<GetFilteredSortedPaginatedUserResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(PagedResponse<GetUserResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetWithFilterSortAndPagination([FromQuery] UserFilter filter,
         [FromQuery] Sorter sorter, [FromQuery] Pagination pagination)
     {
         var endPointUrl =
             $"{_baseUrl}/api/{ControllerContext.ActionDescriptor.ControllerName}/{ControllerContext.ActionDescriptor.AttributeRouteInfo!.Template}";
-        var request = new GetFilteredSortedPaginatedUsersRequest(filter, sorter, pagination);
+        var request = new GetUsersRequest(filter, sorter, pagination);
         var pagedUsers = await userService.GetFilteredSortedPaginatedUsersAsync(request);
         var pagedResponse = ApiResponse.CreatePaged(pagedUsers.Users, request.Pagination.PageNumber,
             request.Pagination.PageSize, pagedUsers.TotalRecords, endPointUrl);

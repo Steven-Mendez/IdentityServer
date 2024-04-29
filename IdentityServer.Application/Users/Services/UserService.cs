@@ -2,13 +2,11 @@
 using IdentityServer.Application.Users.UseCases.CreateUser;
 using IdentityServer.Application.Users.UseCases.CreateUser.DataTransferObjects.Requests;
 using IdentityServer.Application.Users.UseCases.CreateUser.DataTransferObjects.Responses;
-using IdentityServer.Application.Users.UseCases.GetAllUsers;
-using IdentityServer.Application.Users.UseCases.GetAllUsers.DataTransferObjects.Responses;
-using IdentityServer.Application.Users.UseCases.GetFilteredSortedPaginatedUsers;
-using IdentityServer.Application.Users.UseCases.GetFilteredSortedPaginatedUsers.DataTransferObjects.Requests;
-using IdentityServer.Application.Users.UseCases.GetFilteredSortedPaginatedUsers.DataTransferObjects.Responses;
 using IdentityServer.Application.Users.UseCases.GetUserById;
 using IdentityServer.Application.Users.UseCases.GetUserById.DataTransferObjects.Response;
+using IdentityServer.Application.Users.UseCases.GetUsers;
+using IdentityServer.Application.Users.UseCases.GetUsers.DataTransferObjects.Requests;
+using IdentityServer.Application.Users.UseCases.GetUsers.DataTransferObjects.Responses;
 using IdentityServer.Application.Users.UseCases.SoftDeleteUser;
 using IdentityServer.Application.Users.UseCases.SoftDeleteUser.DataTransferObjects.Responses;
 using IdentityServer.Application.Users.UseCases.UpdateUser;
@@ -19,23 +17,16 @@ using IdentityServer.Domain.Users.Entities;
 namespace IdentityServer.Application.Users.Services;
 
 public class UserService(
-    GetAllUsersUseCase getAllUsersUseCase,
-    GetFilteredSortedPaginatedUsersUseCase getFilteredSortedPaginatedUsersUseCase,
+    GetUsersUseCase getUsersUseCase,
     GetUserByIdUseCase getUserByIdUseCase,
     CreateUserUseCase createUserUseCase,
     UpdateUserUseCase updateUserUseCase,
     SoftDeleteUserUseCase softDeleteUserUseCase) : IUserService
 {
-    public async Task<IEnumerable<GetAllUsersResponse>> GetAllUsersAsync()
+    public async Task<GetUsersResponse> GetFilteredSortedPaginatedUsersAsync(
+        GetUsersRequest request)
     {
-        var users = await getAllUsersUseCase.ExecuteAsync();
-        return users;
-    }
-
-    public async Task<GetFilteredSortedPaginatedUsersResponse> GetFilteredSortedPaginatedUsersAsync(
-        GetFilteredSortedPaginatedUsersRequest request)
-    {
-        return await getFilteredSortedPaginatedUsersUseCase.ExecuteAsync(request);
+        return await getUsersUseCase.ExecuteAsync(request);
     }
 
     public async Task<GetUserByIdResponse> GetUserByIdAsync(Guid id)
