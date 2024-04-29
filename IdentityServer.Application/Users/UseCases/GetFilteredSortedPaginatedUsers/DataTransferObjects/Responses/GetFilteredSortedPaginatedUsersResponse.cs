@@ -2,6 +2,7 @@
 
 public class GetFilteredSortedPaginatedUsersResponse
 {
-    public IEnumerable<GetFilteredSortedPaginatedUserResponse> Users { get; set; } = default!;
-    public int TotalRecords { get; set; }
+    public IEnumerable<GetFilteredSortedPaginatedUserResponse> Users { get; init; } = default!;
+    public int TotalRecords { get; init; }
+    public int FilteredRecords { get; init; }
 }

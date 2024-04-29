@@ -19,21 +19,21 @@ public class UserRepository(IdentityServerContext context, IPasswordHasher passw
         return users;
     }
 
-    public async Task<(IEnumerable<User> Users, int TotalRecords)> GetFilteredSortedPaginatedAsync(IUserFilter? filter,
-        ISorter? sorting, IPagination pagination)
+    public async Task<(IEnumerable<User> Users, int TotalRecords)> GetFilteredSortedPaginatedAsync(IUserFilter filter,
+        ISorter sorting, IPagination pagination)
     {
         var userQuery = context.Users.AsNoTracking().AsSplitQuery();
-        var originalQuery = userQuery;
-        if (filter is not null)
-            userQuery = userQuery.ApplyFilters(filter);
-
-        if (sorting is not null)
-            userQuery = userQuery.ApplySorting(sorting);
-
-        userQuery = userQuery.ApplyPagination(pagination);
+        
+        var filteredQuery = userQuery.ApplyFilters(filter);
+        
+        userQuery = userQuery
+            .ApplyFilters(filter)
+            .ApplySorting(sorting)
+            .ApplyPagination(pagination);
 
         var users = await userQuery.ToListAsync();
-        var totalRecords = await originalQuery.CountAsync();
+        
+        var totalRecords = await filteredQuery.CountAsync();
 
         return (users, totalRecords);
     }

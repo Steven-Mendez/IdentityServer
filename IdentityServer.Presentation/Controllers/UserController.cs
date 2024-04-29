@@ -18,9 +18,11 @@ namespace IdentityServer.Presentation.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class UserController(IUserService userService) : ControllerBase
+public class UserController(IUserService userService, IHttpContextAccessor httpContextAccessor) : ControllerBase
 {
-    [HttpGet]
+    private readonly string _baseUrl = $"{httpContextAccessor.HttpContext!.Request.Scheme}://{httpContextAccessor.HttpContext!.Request.Host}";
+
+    [HttpGet("deprecated")]
     [ProducesResponseType(typeof(Response<IEnumerable<GetAllUsersResponse>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetAllUsers()
@@ -30,16 +32,17 @@ public class UserController(IUserService userService) : ControllerBase
         return Ok(response);
     }
 
-    [HttpGet("Filter-Sort-Pagination")]
+    [HttpGet]
     [ProducesResponseType(typeof(PagedResponse<GetFilteredSortedPaginatedUserResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetWithFilterSortAndPagination([FromQuery] UserFilter? filter,
-        [FromQuery] Sorter? sorter, [FromQuery] Pagination pagination)
+    public async Task<IActionResult> GetWithFilterSortAndPagination([FromQuery] UserFilter filter,
+        [FromQuery] Sorter sorter, [FromQuery] Pagination pagination)
     {
+        var endPointUrl = $"{_baseUrl}/api/{ControllerContext.ActionDescriptor.ControllerName}/{ControllerContext.ActionDescriptor.AttributeRouteInfo!.Template}";
         var request = new GetFilteredSortedPaginatedUsersRequest(filter, sorter, pagination);
         var pagedUsers = await userService.GetFilteredSortedPaginatedUsersAsync(request);
-        var pagedResponse = ApiResponse.CreatePaged(pagedUsers.Users, request.Pagination.Page,
-            request.Pagination.PageSize, pagedUsers.TotalRecords);
+        var pagedResponse = ApiResponse.CreatePaged(pagedUsers.Users, request.Pagination.PageNumber,
+            request.Pagination.PageSize, pagedUsers.TotalRecords, endPointUrl);
         return Ok(pagedResponse);
     }
 

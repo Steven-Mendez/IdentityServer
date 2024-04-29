@@ -2,25 +2,28 @@
 
 public class PagedResponse<T>
 {
-    public PagedResponse(IEnumerable<T> data, int pageNumber, int pageSize, int totalRecords)
+    public PagedResponse(IEnumerable<T> data, int? pageNumber, int? pageSize, int totalRecords, string endPointUrl)
     {
-        if (pageNumber < 1)
-            throw new ArgumentOutOfRangeException(nameof(pageNumber), "Page number cannot be less than 1.");
-
-        if (pageSize < 1)
-            throw new ArgumentOutOfRangeException(nameof(pageSize), "Page size cannot be less than 1.");
-
         Data = data;
         PageNumber = pageNumber;
         PageSize = pageSize;
         TotalRecords = totalRecords;
+        TotalPages = PageSize.HasValue && PageSize.Value != 0
+            ? (int)Math.Ceiling(TotalRecords / (double)PageSize.Value)
+            : null;
+        HasPrevious = PageNumber.HasValue ? PageNumber.Value > 1 : null;
+        HasNext = PageNumber.HasValue && TotalPages.HasValue ? PageNumber.Value < TotalPages.Value : null;
+        Previous = HasPrevious.HasValue && HasPrevious.Value ? endPointUrl : null;
+        Next = HasNext.HasValue && HasNext.Value ? endPointUrl : null;
     }
 
-    public IEnumerable<T>? Data { get; set; }
-    public int PageNumber { get; set; }
-    public int PageSize { get; set; }
-    public int TotalRecords { get; set; }
-    public int TotalPages => (int)Math.Ceiling(TotalRecords / (double)PageSize);
-    public bool HasPrevious => PageNumber > 1;
-    public bool HasNext => PageNumber < TotalPages;
+    public IEnumerable<T>? Data { get; init; }
+    public int? PageNumber { get; init; }
+    public int? PageSize { get; init; }
+    public int TotalRecords { get; }
+    public int? TotalPages { get; init; }
+    public bool? HasPrevious { get; init; }
+    public bool? HasNext { get; init; }
+    public string? Previous { get; init; }
+    public string? Next { get; init; }
 }

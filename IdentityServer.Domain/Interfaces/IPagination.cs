@@ -2,6 +2,6 @@
 
 public interface IPagination
 {
-    public int Page { get; init; }
-    public int PageSize { get; init; }
+    public int? PageNumber { get; }
+    public int? PageSize { get; }
 }
