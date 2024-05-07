@@ -1,7 +1,7 @@
 ﻿using IdentityServer.Application.Implementations;
 using IdentityServer.Application.Users.Filters;
 
-namespace IdentityServer.Application.Users.UseCases.GetUsers.DataTransferObjects.Requests;
+namespace IdentityServer.Application.Users.UseCases.GetUsersByCriteria.DataTransferObjects.Requests;
 
 public class GetUsersRequest(UserFilter filter, Sorter sorter, Pagination pagination)
 {

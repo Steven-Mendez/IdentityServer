@@ -11,15 +11,18 @@ public static class QueryHelper
     {
         var parameter = Expression.Parameter(typeof(TEntity), "x");
 
-        var property = typeof(TEntity).GetProperty(sortBy,
-            BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+        var properties = typeof(TEntity).GetProperties(
+            BindingFlags.Public | BindingFlags.Instance);
 
-        property ??=
-            typeof(TEntity).GetProperty("Id", BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+        var defaultProperty = properties.FirstOrDefault();
+
+        var property = properties.FirstOrDefault(prop =>
+            string.Equals(prop.Name, sortBy, StringComparison.OrdinalIgnoreCase)) ?? defaultProperty;
 
         var propertyAccess = Expression.MakeMemberAccess(parameter, property!);
 
-        return Expression.Lambda<Func<TEntity, object>>(Expression.Convert(propertyAccess, typeof(object)), parameter);
+        return Expression.Lambda<Func<TEntity, object>>(
+            Expression.Convert(propertyAccess, typeof(object)), parameter);
     }
 
     public static IQueryable<TEntity> ApplySorting<TEntity>(this IQueryable<TEntity> query, ISorter sorting)
@@ -34,45 +37,6 @@ public static class QueryHelper
             : query.OrderByDescending(sortExpression);
 
         return query;
-    }
-
-    public static IQueryable<T> ApplyFilters<T, TFilter>(this IQueryable<T> query, TFilter filter)
-    {
-        var parameter = Expression.Parameter(typeof(T), "x");
-
-        Expression<Func<T, bool>>? predicate = null;
-
-        foreach (var propertyInfo in typeof(TFilter).GetProperties())
-        {
-            var filterValue = propertyInfo.GetValue(filter);
-
-            if (filterValue == null)
-                continue;
-
-            var entityProperty = typeof(T).GetProperty(propertyInfo.Name);
-
-            if (entityProperty == null)
-                continue;
-
-            var property = Expression.Property(parameter, entityProperty);
-
-            var value = Expression.Constant(filterValue);
-
-            Expression comparisonExpression;
-
-            if (entityProperty.PropertyType == typeof(string))
-                comparisonExpression = Expression.Call(Expression.Call(property, "ToLower", null), "Contains", null,
-                    Expression.Call(value, "ToLower", null));
-            else
-                comparisonExpression = Expression.Equal(property, value);
-
-            predicate = predicate == null
-                ? Expression.Lambda<Func<T, bool>>(comparisonExpression, parameter)
-                : Expression.Lambda<Func<T, bool>>(
-                    Expression.AndAlso(predicate.Body, comparisonExpression), parameter);
-        }
-
-        return predicate == null ? query : query.Where(predicate);
     }
 
     public static IQueryable<TEntity> ApplyPagination<TEntity>(this IQueryable<TEntity> query, IPagination pagination)
@@ -95,5 +59,10 @@ public static class QueryHelper
                     .Take(pagination.PageSize.Value);
                 return query;
         }
+    }
+
+    public static IQueryable<T> ApplyCriteria<T>(this IQueryable<T> query, IEnumerable<ICriteria<T>> criteriaList)
+    {
+        return criteriaList.Aggregate(query, (current, criteria) => current.Where(criteria.Criteria));
     }
 }

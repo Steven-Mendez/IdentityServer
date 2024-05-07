@@ -7,7 +7,7 @@ using IdentityServer.Application.Users.Interfaces;
 using IdentityServer.Application.Users.Services;
 using IdentityServer.Application.Users.UseCases.CreateUser;
 using IdentityServer.Application.Users.UseCases.GetUserById;
-using IdentityServer.Application.Users.UseCases.GetUsers;
+using IdentityServer.Application.Users.UseCases.GetUsersByCriteria;
 using IdentityServer.Application.Users.UseCases.SoftDeleteUser;
 using IdentityServer.Application.Users.UseCases.UpdateUser;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,7 +34,7 @@ public static class DependencyInjection
 
     private static void AddUserUseCases(this IServiceCollection services)
     {
-        services.AddScoped<GetUsersUseCase>();
+        services.AddScoped<GetUsersByCriteriaUseCase>();
         services.AddScoped<GetUserByIdUseCase>();
         services.AddScoped<CreateUserUseCase>();
         services.AddScoped<UpdateUserUseCase>();

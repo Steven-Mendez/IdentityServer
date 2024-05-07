@@ -4,9 +4,9 @@ using IdentityServer.Application.Users.UseCases.CreateUser.DataTransferObjects.R
 using IdentityServer.Application.Users.UseCases.CreateUser.DataTransferObjects.Responses;
 using IdentityServer.Application.Users.UseCases.GetUserById;
 using IdentityServer.Application.Users.UseCases.GetUserById.DataTransferObjects.Response;
-using IdentityServer.Application.Users.UseCases.GetUsers;
-using IdentityServer.Application.Users.UseCases.GetUsers.DataTransferObjects.Requests;
-using IdentityServer.Application.Users.UseCases.GetUsers.DataTransferObjects.Responses;
+using IdentityServer.Application.Users.UseCases.GetUsersByCriteria;
+using IdentityServer.Application.Users.UseCases.GetUsersByCriteria.DataTransferObjects.Requests;
+using IdentityServer.Application.Users.UseCases.GetUsersByCriteria.DataTransferObjects.Responses;
 using IdentityServer.Application.Users.UseCases.SoftDeleteUser;
 using IdentityServer.Application.Users.UseCases.SoftDeleteUser.DataTransferObjects.Responses;
 using IdentityServer.Application.Users.UseCases.UpdateUser;
@@ -17,16 +17,16 @@ using IdentityServer.Domain.Users.Entities;
 namespace IdentityServer.Application.Users.Services;
 
 public class UserService(
-    GetUsersUseCase getUsersUseCase,
+    GetUsersByCriteriaUseCase getUsersByCriteriaByCriteriaUseCase,
     GetUserByIdUseCase getUserByIdUseCase,
     CreateUserUseCase createUserUseCase,
     UpdateUserUseCase updateUserUseCase,
     SoftDeleteUserUseCase softDeleteUserUseCase) : IUserService
 {
-    public async Task<GetUsersResponse> GetFilteredSortedPaginatedUsersAsync(
+    public async Task<GetUsersResponse> GetUsersByCriteriaAsync(
         GetUsersRequest request)
     {
-        return await getUsersUseCase.ExecuteAsync(request);
+        return await getUsersByCriteriaByCriteriaUseCase.ExecuteAsync(request);
     }
 
     public async Task<GetUserByIdResponse> GetUserByIdAsync(Guid id)

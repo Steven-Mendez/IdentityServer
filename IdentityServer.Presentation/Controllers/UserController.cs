@@ -4,8 +4,8 @@ using IdentityServer.Application.Users.Interfaces;
 using IdentityServer.Application.Users.UseCases.CreateUser.DataTransferObjects.Requests;
 using IdentityServer.Application.Users.UseCases.CreateUser.DataTransferObjects.Responses;
 using IdentityServer.Application.Users.UseCases.GetUserById.DataTransferObjects.Response;
-using IdentityServer.Application.Users.UseCases.GetUsers.DataTransferObjects.Requests;
-using IdentityServer.Application.Users.UseCases.GetUsers.DataTransferObjects.Responses;
+using IdentityServer.Application.Users.UseCases.GetUsersByCriteria.DataTransferObjects.Requests;
+using IdentityServer.Application.Users.UseCases.GetUsersByCriteria.DataTransferObjects.Responses;
 using IdentityServer.Application.Users.UseCases.SoftDeleteUser.DataTransferObjects.Responses;
 using IdentityServer.Application.Users.UseCases.UpdateUser.DataTransferObjects.Requests;
 using IdentityServer.Application.Users.UseCases.UpdateUser.DataTransferObjects.Responses;
@@ -24,13 +24,13 @@ public class UserController(IUserService userService, IHttpContextAccessor httpC
     [HttpGet]
     [ProducesResponseType(typeof(PagedResponse<GetUserResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetWithFilterSortAndPagination([FromQuery] UserFilter filter,
+    public async Task<IActionResult> GetUsers([FromQuery] UserFilter filter,
         [FromQuery] Sorter sorter, [FromQuery] Pagination pagination)
     {
         var endPointUrl =
             $"{_baseUrl}/{ControllerContext.ActionDescriptor.AttributeRouteInfo!.Template}";
         var request = new GetUsersRequest(filter, sorter, pagination);
-        var pagedUsers = await userService.GetFilteredSortedPaginatedUsersAsync(request);
+        var pagedUsers = await userService.GetUsersByCriteriaAsync(request);
         var pagedResponse = ApiResponse.CreatePaged(pagedUsers.Users, request.Pagination.PageNumber,
             request.Pagination.PageSize, pagedUsers.TotalRecords, endPointUrl);
         return Ok(pagedResponse);

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using IdentityServer.Application.Users.UseCases.GetUsers.DataTransferObjects.Responses;
+using IdentityServer.Application.Users.UseCases.GetUsersByCriteria.DataTransferObjects.Responses;
 using IdentityServer.Domain.Users.Entities;
 
-namespace IdentityServer.Application.Users.UseCases.GetUsers.Maps;
+namespace IdentityServer.Application.Users.UseCases.GetUsersByCriteria.Maps;
 
 public class GetUserMapProfile : Profile
 {

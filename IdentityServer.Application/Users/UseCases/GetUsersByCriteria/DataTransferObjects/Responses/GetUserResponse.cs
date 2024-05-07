@@ -1,4 +1,4 @@
-﻿namespace IdentityServer.Application.Users.UseCases.GetUsers.DataTransferObjects.Responses;
+﻿namespace IdentityServer.Application.Users.UseCases.GetUsersByCriteria.DataTransferObjects.Responses;
 
 public class GetUserResponse
 {
