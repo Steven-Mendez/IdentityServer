@@ -94,6 +94,24 @@ public class UserRepository(IdentityServerContext context, IPasswordHasher passw
         userToDelete.IsDeleted = true;
     }
 
+    public async Task<User> AuthenticateAsync(string userNameOrEmail, string password)
+    {
+        var user = await GetByUserNameOrEmailAsync(userNameOrEmail);
+
+        var userNotExists = user is null;
+        var propertyName = userNameOrEmail.Contains('@') ? "Email" : "UserName";
+
+        if (userNotExists)
+            throw new AuthenticationFailedException(propertyName);
+
+        var passwordNotMatch = !passwordHasher.Verify(password, user!.Password);
+
+        if (passwordNotMatch)
+            throw new AuthenticationFailedException(propertyName);
+
+        return user;
+    }
+
     public async Task<User?> GetByEmailAsync(string email)
     {
         var user = await context.Users.FirstOrDefaultAsync(u => u.Email == email);
@@ -172,23 +190,5 @@ public class UserRepository(IdentityServerContext context, IPasswordHasher passw
     {
         var user = await GetByIdAsync(userId);
         user.IsBlocked = blockStatus;
-    }
-
-    public async Task<User> AuthenticateAsync(string userNameOrEmail, string password)
-    {
-        var user = await GetByUserNameOrEmailAsync(userNameOrEmail);
-
-        var userNotExists = user is null;
-        var propertyName = userNameOrEmail.Contains('@') ? "Email" : "UserName";
-
-        if (userNotExists)
-            throw new AuthenticationFailedException(propertyName);
-
-        var passwordNotMatch = !passwordHasher.Verify(password, user!.Password);
-
-        if (passwordNotMatch)
-            throw new AuthenticationFailedException(propertyName);
-
-        return user;
     }
 }

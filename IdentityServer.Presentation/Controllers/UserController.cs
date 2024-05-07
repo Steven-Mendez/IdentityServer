@@ -22,14 +22,14 @@ public class UserController(IUserService userService, IHttpContextAccessor httpC
         $"{httpContextAccessor.HttpContext!.Request.Scheme}://{httpContextAccessor.HttpContext!.Request.Host}";
 
     [HttpGet]
-    [ProducesResponseType(typeof(PagedResponse<GetUserResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(PagedResponse<GetUserByCriteriaResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetUsers([FromQuery] UserFilter filter,
         [FromQuery] Sorter sorter, [FromQuery] Pagination pagination)
     {
         var endPointUrl =
             $"{_baseUrl}/{ControllerContext.ActionDescriptor.AttributeRouteInfo!.Template}";
-        var request = new GetUsersRequest(filter, sorter, pagination);
+        var request = new GetUsersByCriteriaRequest(filter, sorter, pagination);
         var pagedUsers = await userService.GetUsersByCriteriaAsync(request);
         var pagedResponse = ApiResponse.CreatePaged(pagedUsers.Users, request.Pagination.PageNumber,
             request.Pagination.PageSize, pagedUsers.TotalRecords, endPointUrl);

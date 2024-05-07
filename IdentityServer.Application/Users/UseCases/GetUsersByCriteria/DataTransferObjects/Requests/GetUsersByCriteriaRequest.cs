@@ -3,7 +3,7 @@ using IdentityServer.Application.Users.Filters;
 
 namespace IdentityServer.Application.Users.UseCases.GetUsersByCriteria.DataTransferObjects.Requests;
 
-public class GetUsersRequest(UserFilter filter, Sorter sorter, Pagination pagination)
+public class GetUsersByCriteriaRequest(UserFilter filter, Sorter sorter, Pagination pagination)
 {
     public UserFilter Filter { get; set; } = filter;
 

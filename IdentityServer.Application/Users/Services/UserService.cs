@@ -23,10 +23,10 @@ public class UserService(
     UpdateUserUseCase updateUserUseCase,
     SoftDeleteUserUseCase softDeleteUserUseCase) : IUserService
 {
-    public async Task<GetUsersResponse> GetUsersByCriteriaAsync(
-        GetUsersRequest request)
+    public async Task<GetUsersByCriteriaResponse> GetUsersByCriteriaAsync(
+        GetUsersByCriteriaRequest byCriteriaRequest)
     {
-        return await getUsersByCriteriaByCriteriaUseCase.ExecuteAsync(request);
+        return await getUsersByCriteriaByCriteriaUseCase.ExecuteAsync(byCriteriaRequest);
     }
 
     public async Task<GetUserByIdResponse> GetUserByIdAsync(Guid id)

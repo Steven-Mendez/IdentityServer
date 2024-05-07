@@ -9,12 +9,12 @@ namespace IdentityServer.Application.Users.UseCases.GetUsersByCriteria;
 
 public class GetUsersByCriteriaUseCase(IUnitOfWork unitOfWork, IMapper mapper)
 {
-    public async Task<GetUsersResponse> ExecuteAsync(
-        GetUsersRequest request)
+    public async Task<GetUsersByCriteriaResponse> ExecuteAsync(
+        GetUsersByCriteriaRequest byCriteriaRequest)
     {
-        var filter = request.Filter;
-        var sorter = request.Sorter;
-        var pagination = request.Pagination;
+        var filter = byCriteriaRequest.Filter;
+        var sorter = byCriteriaRequest.Sorter;
+        var pagination = byCriteriaRequest.Pagination;
 
         var criteriaList = new List<ICriteria<User>>
         {
@@ -23,11 +23,12 @@ public class GetUsersByCriteriaUseCase(IUnitOfWork unitOfWork, IMapper mapper)
             new UserEmailCriteria(filter.Email),
             new UserFirstNameCriteria(filter.FirstName),
             new UserLastNameCriteria(filter.LastName),
-            new UserIsBlockedCriteria(filter.IsBlocked)
+            new UserIsBlockedCriteria(filter.IsBlocked),
+            new UserDateRangeCriteria(filter.StartDate, filter.EndDate)
         };
 
         var users = await unitOfWork.UserRepository.GetByCriteriaAsync(criteriaList, sorter, pagination);
-        var response = mapper.Map<GetUsersResponse>(users);
+        var response = mapper.Map<GetUsersByCriteriaResponse>(users);
         return response;
     }
 }

@@ -4,6 +4,8 @@ namespace IdentityServer.Application.Users.Filters;
 
 public class UserFilter : IUserFilter
 {
+    public DateTime? StartDate { get; set; }
+    public DateTime? EndDate { get; set; }
     public Guid? Id { get; set; }
     public string? UserName { get; set; }
     public string? Email { get; set; }

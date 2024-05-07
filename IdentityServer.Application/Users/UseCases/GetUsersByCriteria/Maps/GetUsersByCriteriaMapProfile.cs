@@ -4,13 +4,13 @@ using IdentityServer.Domain.Users.Entities;
 
 namespace IdentityServer.Application.Users.UseCases.GetUsersByCriteria.Maps;
 
-public class GetUserMapProfile : Profile
+public class GetUsersByCriteriaMapProfile : Profile
 {
-    public GetUserMapProfile()
+    public GetUsersByCriteriaMapProfile()
     {
-        CreateMap<User, GetUserResponse>();
+        CreateMap<User, GetUserByCriteriaResponse>();
         CreateMap<(IEnumerable<User> Users, int TotalRecords),
-                GetUsersResponse>()
+                GetUsersByCriteriaResponse>()
             .ForMember(dest => dest.Users, opt => opt.MapFrom(src => src.Users))
             .ForMember(dest => dest.TotalRecords, opt => opt.MapFrom(src => src.TotalRecords));
     }
