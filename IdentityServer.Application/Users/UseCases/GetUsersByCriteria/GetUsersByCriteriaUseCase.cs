@@ -18,7 +18,6 @@ public class GetUsersByCriteriaUseCase(IUnitOfWork unitOfWork, IMapper mapper)
         var paginationOptions = request.PaginationOptions;
 
         var specification = new Specification<User>(
-            filters:
             [
                 new UserIdCriteria(filter.Id), new UsernameCriteria(filter.UserName),
                 new UserEmailCriteria(filter.Email), new UserFirstNameCriteria(filter.FirstName),

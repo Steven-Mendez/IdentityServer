@@ -1,5 +1,4 @@
 ﻿using IdentityServer.Application.Commons.DataTransferObjects.Requests;
-using IdentityServer.Application.Implementations;
 using IdentityServer.Application.Users.Interfaces;
 using IdentityServer.Application.Users.UseCases.CreateUser.DataTransferObjects.Requests;
 using IdentityServer.Application.Users.UseCases.CreateUser.DataTransferObjects.Responses;

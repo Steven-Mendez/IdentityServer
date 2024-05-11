@@ -1,5 +1,4 @@
 ﻿using IdentityServer.Domain.Abstractions;
-using IdentityServer.Domain.Users.Entities;
 
 namespace IdentityServer.Domain.Interfaces;
 
