@@ -39,7 +39,7 @@ namespace IdentityServer.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Avatar", "CreatedBy", "DeletedAt", "DeletedBy", "Email", "FirstName", "LastName", "Password", "UpdatedAt", "UpdatedBy", "UserName" },
-                values: new object[] { new Guid("6e7f4c0b-3b45-4a1c-a48d-9e531dd6931f"), "https://randomuser.me/api/portraits/men/1.jpg", new Guid("6e7f4c0b-3b45-4a1c-a48d-9e531dd6931f"), null, null, "admin@admin.com", "Admin", "Admin", "3qgXD8CJJvw+H4DkENHDqQ==;zbm8kyh0QCLHoKBgut6mtT8jqCIRcv9vNEKTnbtTGaE=", null, null, "admin" });
+                values: new object[] { new Guid("6e7f4c0b-3b45-4a1c-a48d-9e531dd6931f"), "https://randomuser.me/api/portraits/men/1.jpg", new Guid("6e7f4c0b-3b45-4a1c-a48d-9e531dd6931f"), null, null, "admin@admin.com", "Admin", "Admin", "nbihqOino63MOiNFy4ZH4A==;caLe4MmMpO+Vg1HYlsV5kPmbIGPLO6LJwOvd3D51BCA=", null, null, "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Email",
