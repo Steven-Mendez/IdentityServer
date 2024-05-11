@@ -7,8 +7,7 @@ public interface IRepository<T> where T : BaseEntity
 {
     Task<IEnumerable<T>> GetAllAsync();
 
-    Task<(IEnumerable<User> Users, int TotalRecords)> GetByCriteriaAsync(List<ICriteria<T>> criteriaList,
-        ISorter sorting, IPagination pagination);
+    Task<(IEnumerable<T> Items, int TotalRecords)> GetByCriteriaAsync(ISpecification<T> specification);
 
     Task<T> GetByIdAsync(Guid id);
     Task<T> AddAsync(T entity);

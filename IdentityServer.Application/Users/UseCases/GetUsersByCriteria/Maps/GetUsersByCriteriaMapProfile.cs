@@ -9,9 +9,9 @@ public class GetUsersByCriteriaMapProfile : Profile
     public GetUsersByCriteriaMapProfile()
     {
         CreateMap<User, GetUserByCriteriaResponse>();
-        CreateMap<(IEnumerable<User> Users, int TotalRecords),
+        CreateMap<(IEnumerable<User> Items, int TotalRecords),
                 GetUsersByCriteriaResponse>()
-            .ForMember(dest => dest.Users, opt => opt.MapFrom(src => src.Users))
+            .ForMember(dest => dest.Users, opt => opt.MapFrom(src => src.Items))
             .ForMember(dest => dest.TotalRecords, opt => opt.MapFrom(src => src.TotalRecords));
     }
 }
