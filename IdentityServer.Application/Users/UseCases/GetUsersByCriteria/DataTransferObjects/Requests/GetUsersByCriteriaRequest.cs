@@ -1,13 +1,15 @@
-﻿using IdentityServer.Application.Implementations;
-using IdentityServer.Application.Users.Filters;
+﻿using IdentityServer.Application.Commons.DataTransferObjects.Requests;
 
 namespace IdentityServer.Application.Users.UseCases.GetUsersByCriteria.DataTransferObjects.Requests;
 
-public class GetUsersByCriteriaRequest(UserFilter filter, Sorter sorter, Pagination pagination)
+public class GetUsersByCriteriaRequest(
+    GetUserByCriteriaFilterRequest filter,
+    SortingOptionsRequest sortingOptions,
+    PaginationOptionsRequest paginationOptions)
 {
-    public UserFilter Filter { get; set; } = filter;
+    public GetUserByCriteriaFilterRequest Filter { get; } = filter;
 
-    public Sorter Sorter { get; set; } = sorter;
+    public SortingOptionsRequest SortingOptions { get; } = sortingOptions;
 
-    public Pagination Pagination { get; set; } = pagination;
+    public PaginationOptionsRequest PaginationOptions { get; } = paginationOptions;
 }

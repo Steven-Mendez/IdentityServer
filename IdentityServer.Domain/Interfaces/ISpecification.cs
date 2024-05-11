@@ -3,6 +3,6 @@
 public interface ISpecification<T>
 {
     IReadOnlyList<ICriteria<T>> Filters { get; init; }
-    ISorter SortingOptions { get; init; }
-    IPagination PaginationOptions { get; init; }
+    ISortingOptions SortingOptions { get; init; }
+    IPaginationOptions PaginationOptionsOptions { get; init; }
 }

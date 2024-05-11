@@ -4,10 +4,10 @@ namespace IdentityServer.Application.Implementations;
 
 public class Specification<T>(
     IReadOnlyList<ICriteria<T>> filters,
-    ISorter sortingOptions,
-    IPagination paginationOptions) : ISpecification<T>
+    ISortingOptions sortingOptions,
+    IPaginationOptions paginationOptionsOptions) : ISpecification<T>
 {
     public IReadOnlyList<ICriteria<T>> Filters { get; init; } = filters;
-    public ISorter SortingOptions { get; init; } = sortingOptions;
-    public IPagination PaginationOptions { get; init; } = paginationOptions;
+    public ISortingOptions SortingOptions { get; init; } = sortingOptions;
+    public IPaginationOptions PaginationOptionsOptions { get; init; } = paginationOptionsOptions;
 }

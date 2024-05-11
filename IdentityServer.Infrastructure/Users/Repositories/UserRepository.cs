@@ -31,7 +31,7 @@ public class UserRepository(IdentityServerContext context, IPasswordHasher passw
 
         var users = await query
             .ApplySorting(specification.SortingOptions)
-            .ApplyPagination(specification.PaginationOptions)
+            .ApplyPagination(specification.PaginationOptionsOptions)
             .ToListAsync();
 
         return (users, totalRecords);

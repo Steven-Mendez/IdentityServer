@@ -1,5 +1,5 @@
-﻿using IdentityServer.Application.Implementations;
-using IdentityServer.Application.Users.Filters;
+﻿using IdentityServer.Application.Commons.DataTransferObjects.Requests;
+using IdentityServer.Application.Implementations;
 using IdentityServer.Application.Users.Interfaces;
 using IdentityServer.Application.Users.UseCases.CreateUser.DataTransferObjects.Requests;
 using IdentityServer.Application.Users.UseCases.CreateUser.DataTransferObjects.Responses;
@@ -24,15 +24,15 @@ public class UserController(IUserService userService, IHttpContextAccessor httpC
     [HttpGet]
     [ProducesResponseType(typeof(PagedResponse<GetUserByCriteriaResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetUsers([FromQuery] UserFilter filter,
-        [FromQuery] Sorter sorter, [FromQuery] Pagination pagination)
+    public async Task<IActionResult> GetUsers([FromQuery] GetUserByCriteriaFilterRequest byCriteriaFilterRequest,
+        [FromQuery] SortingOptionsRequest sortingOptions, [FromQuery] PaginationOptionsRequest paginationOptions)
     {
         var endPointUrl =
             $"{_baseUrl}/{ControllerContext.ActionDescriptor.AttributeRouteInfo!.Template}";
-        var request = new GetUsersByCriteriaRequest(filter, sorter, pagination);
+        var request = new GetUsersByCriteriaRequest(byCriteriaFilterRequest, sortingOptions, paginationOptions);
         var pagedUsers = await userService.GetUsersByCriteriaAsync(request);
-        var pagedResponse = ApiResponse.CreatePaged(pagedUsers.Users, request.Pagination.PageNumber,
-            request.Pagination.PageSize, pagedUsers.TotalRecords, endPointUrl);
+        var pagedResponse = ApiResponse.CreatePaged(pagedUsers.Users, request.PaginationOptions.PageNumber,
+            request.PaginationOptions.PageSize, pagedUsers.TotalRecords, endPointUrl);
         return Ok(pagedResponse);
     }
 

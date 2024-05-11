@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using System.Reflection;
+using IdentityServer.Domain.Enums;
 using IdentityServer.Domain.Exceptions;
 using IdentityServer.Domain.Interfaces;
 
@@ -25,26 +26,25 @@ public static class QueryHelper
             Expression.Convert(propertyAccess, typeof(object)), parameter);
     }
 
-    public static IQueryable<TEntity> ApplySorting<TEntity>(this IQueryable<TEntity> query, ISorter sorting)
+    public static IQueryable<TEntity> ApplySorting<TEntity>(this IQueryable<TEntity> query, ISortingOptions sorting)
     {
-        if (string.IsNullOrEmpty(sorting.SortBy) || string.IsNullOrEmpty(sorting.SortOrder))
+        if (string.IsNullOrEmpty(sorting.OrderBy))
             return query;
 
-        var sortExpression = GetSortExpression<TEntity>(sorting.SortBy);
+        var sortExpression = GetSortExpression<TEntity>(sorting.OrderBy);
 
-        query = sorting.SortOrder.ToLower().Equals("asc")
+        return sorting.OrderType.Equals(SortOrderType.Ascending)
             ? query.OrderBy(sortExpression)
             : query.OrderByDescending(sortExpression);
-
-        return query;
     }
 
-    public static IQueryable<TEntity> ApplyPagination<TEntity>(this IQueryable<TEntity> query, IPagination pagination)
+    public static IQueryable<TEntity> ApplyPagination<TEntity>(this IQueryable<TEntity> query,
+        IPaginationOptions paginationOptions)
     {
-        if (pagination.PageSize is null || pagination.PageNumber is null)
+        if (paginationOptions.PageSize is null || paginationOptions.PageNumber is null)
             return query;
 
-        switch (pagination)
+        switch (paginationOptions)
         {
             case { PageNumber: not null, PageSize: null }:
                 throw new PageSizeMustHaveValueException();
@@ -55,8 +55,8 @@ public static class QueryHelper
             case { PageSize: < 1 }:
                 throw new PageSizeMustBePositiveException();
             default:
-                query = query.Skip((pagination.PageNumber!.Value - 1) * pagination.PageSize!.Value)
-                    .Take(pagination.PageSize.Value);
+                query = query.Skip((paginationOptions.PageNumber!.Value - 1) * paginationOptions.PageSize!.Value)
+                    .Take(paginationOptions.PageSize.Value);
                 return query;
         }
     }

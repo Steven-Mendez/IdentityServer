@@ -14,8 +14,8 @@ public class GetUsersByCriteriaUseCase(IUnitOfWork unitOfWork, IMapper mapper)
         GetUsersByCriteriaRequest request)
     {
         var filter = request.Filter;
-        var sortingOptions = request.Sorter;
-        var paginationOptions = request.Pagination;
+        var sortingOptions = request.SortingOptions;
+        var paginationOptions = request.PaginationOptions;
 
         var specification = new Specification<User>(
             filters:
@@ -25,8 +25,8 @@ public class GetUsersByCriteriaUseCase(IUnitOfWork unitOfWork, IMapper mapper)
                 new UserLastNameCriteria(filter.LastName), new UserIsBlockedCriteria(filter.IsBlocked),
                 new UserDateRangeCriteria(filter.StartDate, filter.EndDate)
             ],
-            sortingOptions,
-            paginationOptions
+            new SortingOptions(sortingOptions.OrderBy, sortingOptions.OrderType),
+            new PaginationOptions(paginationOptions.PageSize, paginationOptions.PageNumber)
         );
 
         var users = await unitOfWork.UserRepository.GetByCriteriaAsync(specification);

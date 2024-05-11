@@ -1,6 +1,6 @@
 ﻿namespace IdentityServer.Domain.Interfaces;
 
-public interface IPagination
+public interface IPaginationOptions
 {
     public int? PageNumber { get; }
     public int? PageSize { get; }

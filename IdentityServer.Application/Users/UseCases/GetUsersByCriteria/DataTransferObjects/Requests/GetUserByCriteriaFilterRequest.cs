@@ -1,8 +1,10 @@
-﻿namespace IdentityServer.Domain.Users.Interfaces;
+﻿namespace IdentityServer.Application.Users.UseCases.GetUsersByCriteria.DataTransferObjects.Requests;
 
-public interface IUserFilter
+public class GetUserByCriteriaFilterRequest
 {
     public Guid? Id { get; set; }
+    public DateTime? StartDate { get; set; }
+    public DateTime? EndDate { get; set; }
     public string? UserName { get; set; }
     public string? Email { get; set; }
     public string? Password { get; set; }
