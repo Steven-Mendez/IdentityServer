@@ -15,13 +15,17 @@ public class AuthenticationController(IAuthenticationService authenticationServi
         return Ok(isAuthenticated);
     }
 
-    [HttpGet("azure-ad")]
-    public IActionResult Get([FromQuery] string? code)
+    [HttpGet("Oauth2.0/azure-ad/redirect")]
+    public IActionResult Get()
     {
-        if (!string.IsNullOrWhiteSpace(code))
-            return Ok(code);
-
         var url = authenticationService.GetAzureAdUrl();
         return Redirect(url);
+    }
+
+    [HttpGet("Oauth2.0/azure-ad/callback")]
+    public IActionResult GetCallback([FromQuery] string code)
+    {
+        var url = authenticationService.GetFrontendUrl("TODO:GenerateJwtForOauth");
+        return Ok(new {url, code});
     }
 }

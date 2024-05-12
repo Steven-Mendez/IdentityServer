@@ -7,4 +7,5 @@ public interface IAuthenticationService
 {
     Task<AuthenticateResponse> Authenticate(AuthenticateRequest request);
     string GetAzureAdUrl();
+    string GetFrontendUrl(string jwt);
 }
