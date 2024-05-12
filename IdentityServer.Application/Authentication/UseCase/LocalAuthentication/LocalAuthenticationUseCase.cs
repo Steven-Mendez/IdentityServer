@@ -5,10 +5,12 @@ using IdentityServer.Domain.Interfaces;
 
 namespace IdentityServer.Application.Authentication.UseCase.LocalAuthentication;
 
-public class LocalAuthenticationUseCase(IUnitOfWork unitOfWork, JsonWebTokenGenerationUseCase jsonWebTokenGenerationUseCase)
+public class LocalAuthenticationUseCase(
+    IUnitOfWork unitOfWork,
+    JsonWebTokenGenerationUseCase jsonWebTokenGenerationUseCase)
 {
     private const string TokenType = "Bearer";
-    
+
     public async Task<LocalAuthenticationResponse> ExecuteAsync(LocalAuthenticationRequest request)
     {
         var user = await unitOfWork.UserRepository.AuthenticateAsync(request.Login, request.Password);

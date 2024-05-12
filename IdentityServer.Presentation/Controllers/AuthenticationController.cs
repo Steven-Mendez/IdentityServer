@@ -26,6 +26,6 @@ public class AuthenticationController(IAuthenticationService authenticationServi
     public IActionResult GetCallback([FromQuery] string code)
     {
         var url = authenticationService.GetFrontendUrl("TODO:GenerateJwtForOauth");
-        return Ok(new {url, code});
+        return Ok(new { url, code });
     }
 }

@@ -14,9 +14,9 @@ public class AuthenticationService(LocalAuthenticationUseCase localAuthenticatio
     private const string ResponseTypeParam = "response_type=code";
     private const string ScopeParam = "scope=user.read";
     private const string OptionsUrl = $"&{ResponseTypeParam}&{ScopeParam}";
+    private readonly string _clientId = GetValueFromConfiguration(configuration, "AzureAd:ClientId");
 
     private readonly string _frontEndUrl = GetValueFromConfiguration(configuration, "FrontendUrl");
-    private readonly string _clientId = GetValueFromConfiguration(configuration, "AzureAd:ClientId");
     private readonly string _redirectUrl = GetValueFromConfiguration(configuration, "IdentityServerSettings:Url");
     private readonly string _tenantId = GetValueFromConfiguration(configuration, "AzureAd:TenantId");
 
@@ -33,10 +33,10 @@ public class AuthenticationService(LocalAuthenticationUseCase localAuthenticatio
 
         var mainUrl = $"{BaseUrl}{_tenantId}{AuthorizeEndpoint}?";
         var paramsUrl = $"{clientIdParam}&{redirectUriParam}";
-        
+
 
         var url = $"{mainUrl}{paramsUrl}{OptionsUrl}";
-        
+
         return url;
     }
 
