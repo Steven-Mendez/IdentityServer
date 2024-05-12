@@ -3,9 +3,7 @@ using IdentityServer.Application.Authentication.UseCase.LocalAuthentication.Data
 
 namespace IdentityServer.Application.Authentication.Interfaces;
 
-public interface IAuthenticationService
+public interface ILocalAuthenticationService
 {
     Task<LocalAuthenticationResponse> Authenticate(LocalAuthenticationRequest request);
-    string GetAzureAdUrl();
-    string GetFrontendUrl(string jwt);
 }

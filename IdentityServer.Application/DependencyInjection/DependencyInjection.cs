@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using IdentityServer.Application.Authentication.Interfaces;
 using IdentityServer.Application.Authentication.Services;
+using IdentityServer.Application.Authentication.UseCase.AzureAdAuthentication;
 using IdentityServer.Application.Authentication.UseCase.JsonWebTokenGeneration;
 using IdentityServer.Application.Authentication.UseCase.LocalAuthentication;
 using IdentityServer.Application.Users.Interfaces;
@@ -29,6 +30,8 @@ public static class DependencyInjection
     private static void AddAuthenticationUseCases(this IServiceCollection services)
     {
         services.AddScoped<LocalAuthenticationUseCase>();
+        services.AddScoped<AzureAdAuthenticationRedirectUseCase>();
+        services.AddScoped<AzureAdAuthenticationCallbackUseCase>();
         services.AddScoped<JsonWebTokenGenerationUseCase>();
     }
 
@@ -44,6 +47,7 @@ public static class DependencyInjection
     private static void AddServices(this IServiceCollection services)
     {
         services.AddScoped<IUserService, UserService>();
-        services.AddScoped<IAuthenticationService, AuthenticationService>();
+        services.AddScoped<ILocalAuthenticationService, LocalLocalAuthenticationService>();
+        services.AddScoped<IAzureAuthenticationService, AzureAdAuthenticationServiceService>();
     }
 }

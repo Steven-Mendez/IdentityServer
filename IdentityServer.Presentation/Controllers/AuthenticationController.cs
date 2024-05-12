@@ -6,26 +6,25 @@ namespace IdentityServer.Presentation.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AuthenticationController(IAuthenticationService authenticationService) : ControllerBase
+public class AuthenticationController(ILocalAuthenticationService localAuthenticationService, IAzureAuthenticationService azureAuthenticationService) : ControllerBase
 {
     [HttpPost]
     public async Task<IActionResult> Authenticate([FromBody] LocalAuthenticationRequest request)
     {
-        var isAuthenticated = await authenticationService.Authenticate(request);
+        var isAuthenticated = await localAuthenticationService.Authenticate(request);
         return Ok(isAuthenticated);
     }
 
     [HttpGet("Oauth2.0/azure-ad/redirect")]
     public IActionResult Get()
     {
-        var url = authenticationService.GetAzureAdUrl();
-        return Redirect(url);
+        return Redirect(azureAuthenticationService.Redirect());
     }
 
     [HttpGet("Oauth2.0/azure-ad/callback")]
     public IActionResult GetCallback([FromQuery] string code)
     {
-        var url = authenticationService.GetFrontendUrl("TODO:GenerateJwtForOauth");
+        var url = azureAuthenticationService.Callback("TODO:GenerateJwtForOauth");
         return Ok(new { url, code });
     }
 }
