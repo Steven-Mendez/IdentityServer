@@ -1,6 +1,6 @@
-﻿namespace IdentityServer.Application.Authentication.UseCase.Authenticate.DataTransferObjects.Responses;
+﻿namespace IdentityServer.Application.Authentication.UseCase.LocalAuthentication.DataTransferObjects.Responses;
 
-public class AuthenticateResponse
+public class LocalAuthenticationResponse
 {
     public string Token { get; set; } = null!;
     public string RefreshToken { get; set; } = null!;

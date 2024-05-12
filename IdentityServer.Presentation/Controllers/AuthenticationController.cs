@@ -1,5 +1,5 @@
 ﻿using IdentityServer.Application.Authentication.Interfaces;
-using IdentityServer.Application.Authentication.UseCase.Authenticate.DataTransferObjects.Requests;
+using IdentityServer.Application.Authentication.UseCase.LocalAuthentication.DataTransferObjects.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IdentityServer.Presentation.Controllers;
@@ -9,7 +9,7 @@ namespace IdentityServer.Presentation.Controllers;
 public class AuthenticationController(IAuthenticationService authenticationService) : ControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> Authenticate([FromBody] AuthenticateRequest request)
+    public async Task<IActionResult> Authenticate([FromBody] LocalAuthenticationRequest request)
     {
         var isAuthenticated = await authenticationService.Authenticate(request);
         return Ok(isAuthenticated);

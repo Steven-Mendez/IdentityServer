@@ -1,12 +1,12 @@
 ﻿using IdentityServer.Application.Authentication.Interfaces;
-using IdentityServer.Application.Authentication.UseCase.Authenticate;
-using IdentityServer.Application.Authentication.UseCase.Authenticate.DataTransferObjects.Requests;
-using IdentityServer.Application.Authentication.UseCase.Authenticate.DataTransferObjects.Responses;
+using IdentityServer.Application.Authentication.UseCase.LocalAuthentication;
+using IdentityServer.Application.Authentication.UseCase.LocalAuthentication.DataTransferObjects.Requests;
+using IdentityServer.Application.Authentication.UseCase.LocalAuthentication.DataTransferObjects.Responses;
 using Microsoft.Extensions.Configuration;
 
 namespace IdentityServer.Application.Authentication.Services;
 
-public class AuthenticationService(AuthenticateUseCase authenticateUseCase, IConfiguration configuration)
+public class AuthenticationService(LocalAuthenticationUseCase localAuthenticationUseCase, IConfiguration configuration)
     : IAuthenticationService
 {
     private const string BaseUrl = "https://login.microsoftonline.com/";
@@ -20,9 +20,9 @@ public class AuthenticationService(AuthenticateUseCase authenticateUseCase, ICon
     private readonly string _redirectUrl = GetValueFromConfiguration(configuration, "IdentityServerSettings:Url");
     private readonly string _tenantId = GetValueFromConfiguration(configuration, "AzureAd:TenantId");
 
-    public async Task<AuthenticateResponse> Authenticate(AuthenticateRequest request)
+    public async Task<LocalAuthenticationResponse> Authenticate(LocalAuthenticationRequest request)
     {
-        var result = await authenticateUseCase.ExecuteAsync(request);
+        var result = await localAuthenticationUseCase.ExecuteAsync(request);
         return result;
     }
 
@@ -38,9 +38,6 @@ public class AuthenticationService(AuthenticateUseCase authenticateUseCase, ICon
         var url = $"{mainUrl}{paramsUrl}{OptionsUrl}";
         
         return url;
-
-        // return
-        //     $"https://login.microsoftonline.com/{_tenantId}/oauth2/v2.0/authorize?client_id={_clientId}&redirect_uri={_redirectUri}/api/Authentication/Oauth2.0/azure-ad/callback&response_type=code&scope=user.read";
     }
 
     public string GetFrontendUrl(string jwt)

@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
 using IdentityServer.Application.Authentication.Interfaces;
 using IdentityServer.Application.Authentication.Services;
-using IdentityServer.Application.Authentication.UseCase.Authenticate;
 using IdentityServer.Application.Authentication.UseCase.JsonWebTokenGeneration;
+using IdentityServer.Application.Authentication.UseCase.LocalAuthentication;
 using IdentityServer.Application.Users.Interfaces;
 using IdentityServer.Application.Users.Services;
 using IdentityServer.Application.Users.UseCases.CreateUser;
@@ -28,7 +28,7 @@ public static class DependencyInjection
 
     private static void AddAuthenticationUseCases(this IServiceCollection services)
     {
-        services.AddScoped<AuthenticateUseCase>();
+        services.AddScoped<LocalAuthenticationUseCase>();
         services.AddScoped<JsonWebTokenGenerationUseCase>();
     }
 
