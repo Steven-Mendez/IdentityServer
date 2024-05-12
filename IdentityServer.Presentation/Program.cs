@@ -1,5 +1,7 @@
 using IdentityServer.Application.DependencyInjection;
+using IdentityServer.Application.Options;
 using IdentityServer.Infrastructure.DependencyInjection;
+using IdentityServer.Presentation.DependencyInjections;
 using IdentityServer.Presentation.Middlewares.GlobalError;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +14,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructure(configuration);
 builder.Services.AddApplication();
+builder.Services.AddSettings(configuration);
 
 var app = builder.Build();
 

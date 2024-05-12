@@ -1,29 +1,19 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using IdentityServer.Application.Options;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace IdentityServer.Application.Authentication.UseCase.JsonWebTokenGeneration;
 
-public class JsonWebTokenGenerationUseCase(IConfiguration configuration)
+public class JsonWebTokenGenerationUseCase(IOptions<JsonWebTokenSettings> options)
 {
-    private readonly string _audience = GetValueFromConfiguration(configuration, "JsonWebTokenSettings:Audience");
-
-    private readonly int _expirationMinutes =
-        int.Parse(GetValueFromConfiguration(configuration, "JsonWebTokenSettings:ExpirationMinutes"));
-
-    private readonly string _issuer = GetValueFromConfiguration(configuration, "JsonWebTokenSettings:Issuer");
-    private readonly string _signingKey = GetValueFromConfiguration(configuration, "JsonWebTokenSettings:SigningKey");
-
-    private static string GetValueFromConfiguration(IConfiguration configuration, string key)
-    {
-        var value = configuration[key];
-        if (string.IsNullOrWhiteSpace(value))
-            throw new ArgumentNullException(nameof(configuration),
-                $"Configuration value for '{key}' is missing or empty.");
-        return value;
-    }
-
+    private readonly string _sigIngKey = options.Value.SigningKey;
+    private readonly string _issuer = options.Value.Issuer;
+    private readonly string _audience = options.Value.Audience;
+    private readonly int _expirationMinutes = options.Value.ExpirationMinutes;
+    
     public (string token, int expirationMinutes) Execute(Guid id, string email, string name, string lastName)
     {
         var claims = new List<Claim>
@@ -33,23 +23,25 @@ public class JsonWebTokenGenerationUseCase(IConfiguration configuration)
             new(JwtRegisteredClaimNames.GivenName, name),
             new(JwtRegisteredClaimNames.FamilyName, lastName)
         };
-        return GenerateToken(claims, _expirationMinutes);
+        return GenerateToken(claims);
     }
 
-    private (string token, int expireMinutes) GenerateToken(IEnumerable<Claim> claims, int expirationMinutes)
+    private (string token, int expireMinutes) GenerateToken(IEnumerable<Claim> claims)
     {
-        var key = new SymmetricSecurityKey(Convert.FromBase64String(_signingKey));
+        var settings = options.Value;
+
+        var key = new SymmetricSecurityKey(Convert.FromBase64String(_sigIngKey));
         var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var jwtSecurityToken = new JwtSecurityToken(
             _issuer,
             _audience,
             claims,
-            expires: DateTime.UtcNow.AddMinutes(expirationMinutes),
+            expires: DateTime.UtcNow.AddMinutes(_expirationMinutes),
             signingCredentials: signingCredentials);
 
         var token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
 
-        return (token, expirationMinutes);
+        return (token, settings.ExpirationMinutes);
     }
 }

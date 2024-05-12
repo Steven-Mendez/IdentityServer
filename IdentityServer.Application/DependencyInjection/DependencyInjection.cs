@@ -4,6 +4,7 @@ using IdentityServer.Application.Authentication.Services;
 using IdentityServer.Application.Authentication.UseCase.AzureAdAuthentication;
 using IdentityServer.Application.Authentication.UseCase.JsonWebTokenGeneration;
 using IdentityServer.Application.Authentication.UseCase.LocalAuthentication;
+using IdentityServer.Application.Options;
 using IdentityServer.Application.Users.Interfaces;
 using IdentityServer.Application.Users.Services;
 using IdentityServer.Application.Users.UseCases.CreateUser;
@@ -11,6 +12,7 @@ using IdentityServer.Application.Users.UseCases.GetUserById;
 using IdentityServer.Application.Users.UseCases.GetUsersByCriteria;
 using IdentityServer.Application.Users.UseCases.SoftDeleteUser;
 using IdentityServer.Application.Users.UseCases.UpdateUser;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace IdentityServer.Application.DependencyInjection;
