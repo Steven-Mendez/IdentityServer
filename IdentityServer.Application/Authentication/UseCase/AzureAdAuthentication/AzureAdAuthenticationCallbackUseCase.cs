@@ -1,4 +1,4 @@
-﻿using IdentityServer.Application.Authentication.UseCase.JsonWebTokenGeneration;
+﻿using IdentityServer.Application.Authentication.Services;
 using IdentityServer.Application.Options;
 using Microsoft.Extensions.Options;
 
@@ -6,13 +6,14 @@ namespace IdentityServer.Application.Authentication.UseCase.AzureAdAuthenticatio
 
 public class AzureAdAuthenticationCallbackUseCase(
     IOptions<FrontendSettings> options,
-    JsonWebTokenGenerationUseCase jsonWebTokenGenerationUseCase)
+    AzureAdService azureAdService)
 {
     private readonly string _frontEndUrl = options.Value.Url;
 
-    public string Execute(string code)
+    public async Task<string> Execute(string code)
     {
-        var jwtParam = $"jwt={code}";
+        var user = await azureAdService.GetUser(code, "authorization_code");
+        var jwtParam = $"jwt={user!.mail}";
         var url = $"{_frontEndUrl}?{jwtParam}";
         return url;
     }

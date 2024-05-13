@@ -22,9 +22,9 @@ public class AuthenticationController(ILocalAuthenticationService localAuthentic
     }
 
     [HttpGet("Oauth2.0/azure-ad/callback")]
-    public IActionResult GetCallback([FromQuery] string code)
+    public async Task<IActionResult> GetCallback([FromQuery] string code)
     {
-        var url = azureAuthenticationService.Callback("TODO:GenerateJwtForOauth");
+        var url = await azureAuthenticationService.Callback(code);
         return Ok(new { url, code });
     }
 }

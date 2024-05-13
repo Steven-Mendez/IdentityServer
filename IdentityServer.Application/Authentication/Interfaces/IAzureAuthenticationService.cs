@@ -3,5 +3,5 @@
 public interface IAzureAuthenticationService
 {
     string Redirect();
-    string Callback(string code);
+    Task<string> Callback(string code);
 }

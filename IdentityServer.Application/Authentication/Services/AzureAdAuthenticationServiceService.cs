@@ -14,9 +14,9 @@ public class AzureAdAuthenticationServiceService(
         return url;
     }
 
-    public string Callback(string code)
+    public async Task<string> Callback(string code)
     {
-        var url = azureAdAuthenticationCallbackUseCase.Execute(code);
+        var url = await azureAdAuthenticationCallbackUseCase.Execute(code);
         return url;
     }
 }
