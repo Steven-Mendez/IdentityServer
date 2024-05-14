@@ -1,9 +1,10 @@
 ﻿using IdentityServer.Application.Authentication.Interfaces;
-using IdentityServer.Application.Authentication.UseCase.AzureAdAuthentication;
+using IdentityServer.Application.Authentication.UseCase.AzureAd.AzureAdAuthenticationCallback;
+using IdentityServer.Application.Authentication.UseCase.AzureAd.AzureAdAuthenticationRedirect;
 
 namespace IdentityServer.Application.Authentication.Services;
 
-public class AzureAdAuthenticationServiceService(
+public class AzureAdAuthenticationService(
     AzureAdAuthenticationRedirectUseCase azureAdAuthenticationRedirectUseCase,
     AzureAdAuthenticationCallbackUseCase azureAdAuthenticationCallbackUseCase)
     : IAzureAuthenticationService

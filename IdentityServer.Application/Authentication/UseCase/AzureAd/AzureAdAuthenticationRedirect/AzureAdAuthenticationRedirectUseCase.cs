@@ -1,7 +1,7 @@
 ﻿using IdentityServer.Application.Options;
 using Microsoft.Extensions.Options;
 
-namespace IdentityServer.Application.Authentication.UseCase.AzureAdAuthentication;
+namespace IdentityServer.Application.Authentication.UseCase.AzureAd.AzureAdAuthenticationRedirect;
 
 public class AzureAdAuthenticationRedirectUseCase(IOptions<AzureAdSettings> azureOptions)
 {
@@ -20,7 +20,6 @@ public class AzureAdAuthenticationRedirectUseCase(IOptions<AzureAdSettings> azur
         var redirectUriParam = $"redirect_uri={_redirectUrl}";
         var mainUrl = $"{BaseUrl}{_tenantId}{AuthorizeEndpoint}?";
         var paramsUrl = $"{clientIdParam}&{redirectUriParam}";
-
         var url = $"{mainUrl}{paramsUrl}{OptionsUrl}";
         return url;
     }

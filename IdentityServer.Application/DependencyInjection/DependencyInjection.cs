@@ -1,7 +1,10 @@
 ﻿using FluentValidation;
 using IdentityServer.Application.Authentication.Interfaces;
 using IdentityServer.Application.Authentication.Services;
-using IdentityServer.Application.Authentication.UseCase.AzureAdAuthentication;
+using IdentityServer.Application.Authentication.UseCase.AzureAd.AzureAdAuthenticationCallback;
+using IdentityServer.Application.Authentication.UseCase.AzureAd.AzureAdAuthenticationRedirect;
+using IdentityServer.Application.Authentication.UseCase.AzureAd.AzureAdGetToken;
+using IdentityServer.Application.Authentication.UseCase.AzureAd.AzureAdGetUserInformation;
 using IdentityServer.Application.Authentication.UseCase.JsonWebTokenGeneration;
 using IdentityServer.Application.Authentication.UseCase.LocalAuthentication;
 using IdentityServer.Application.Users.Interfaces;
@@ -32,6 +35,8 @@ public static class DependencyInjection
         services.AddScoped<LocalAuthenticationUseCase>();
         services.AddScoped<AzureAdAuthenticationRedirectUseCase>();
         services.AddScoped<AzureAdAuthenticationCallbackUseCase>();
+        services.AddScoped<AzureAdGetTokenUseCase>();
+        services.AddScoped<AzureAdGetUserInformationUseCase>();
         services.AddScoped<JsonWebTokenGenerationUseCase>();
     }
 
@@ -47,7 +52,7 @@ public static class DependencyInjection
     private static void AddServices(this IServiceCollection services)
     {
         services.AddScoped<IUserService, UserService>();
-        services.AddScoped<ILocalAuthenticationService, LocalLocalAuthenticationService>();
-        services.AddScoped<IAzureAuthenticationService, AzureAdAuthenticationServiceService>();
+        services.AddScoped<ILocalAuthenticationService, LocalAuthenticationService>();
+        services.AddScoped<IAzureAuthenticationService, AzureAdAuthenticationService>();
     }
 }
