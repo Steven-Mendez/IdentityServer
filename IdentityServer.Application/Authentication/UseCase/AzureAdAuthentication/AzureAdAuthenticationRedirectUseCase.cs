@@ -13,14 +13,14 @@ public class AzureAdAuthenticationRedirectUseCase(IOptions<AzureAdSettings> azur
     private readonly string _clientId = azureOptions.Value.ClientId;
     private readonly string _redirectUrl = azureOptions.Value.RedirectUrl;
     private readonly string _tenantId = azureOptions.Value.TenantId;
-    
+
     public string Execute()
     {
         var clientIdParam = $"client_id={_clientId}";
         var redirectUriParam = $"redirect_uri={_redirectUrl}";
         var mainUrl = $"{BaseUrl}{_tenantId}{AuthorizeEndpoint}?";
         var paramsUrl = $"{clientIdParam}&{redirectUriParam}";
-        
+
         var url = $"{mainUrl}{paramsUrl}{OptionsUrl}";
         return url;
     }

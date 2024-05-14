@@ -6,7 +6,9 @@ namespace IdentityServer.Presentation.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AuthenticationController(ILocalAuthenticationService localAuthenticationService, IAzureAuthenticationService azureAuthenticationService) : ControllerBase
+public class AuthenticationController(
+    ILocalAuthenticationService localAuthenticationService,
+    IAzureAuthenticationService azureAuthenticationService) : ControllerBase
 {
     [HttpPost]
     public async Task<IActionResult> Authenticate([FromBody] LocalAuthenticationRequest request)

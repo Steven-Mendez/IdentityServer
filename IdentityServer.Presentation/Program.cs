@@ -1,5 +1,4 @@
 using IdentityServer.Application.DependencyInjection;
-using IdentityServer.Application.Options;
 using IdentityServer.Infrastructure.DependencyInjection;
 using IdentityServer.Presentation.DependencyInjections;
 using IdentityServer.Presentation.Middlewares.GlobalError;

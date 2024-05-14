@@ -6,7 +6,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace IdentityServer.Application.Authentication.Services;
 
-public class LocalLocalAuthenticationService(LocalAuthenticationUseCase localAuthenticationUseCase, IConfiguration configuration)
+public class LocalLocalAuthenticationService(
+    LocalAuthenticationUseCase localAuthenticationUseCase,
+    IConfiguration configuration)
     : ILocalAuthenticationService
 {
     public async Task<LocalAuthenticationResponse> Authenticate(LocalAuthenticationRequest request)

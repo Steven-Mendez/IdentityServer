@@ -1,20 +1,22 @@
-﻿using System.Net.Http.Json;
+﻿using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using IdentityServer.Application.Options;
 using Microsoft.Extensions.Options;
-using System.Net.Http.Headers;
-using System.Text;
 using Newtonsoft.Json;
 using RestSharp;
 
 namespace IdentityServer.Application.Authentication.Services;
 
-public class AzureAdService(HttpClient azureClient, IOptions<AzureAdSettings> options, IHttpClientFactory httpClientFactory)
+public class AzureAdService(
+    HttpClient azureClient,
+    IOptions<AzureAdSettings> options,
+    IHttpClientFactory httpClientFactory)
 {
+    private const string GrantType = "authorization_code";
     private readonly string _clientId = options.Value.ClientId;
-    private readonly string _tenantId = options.Value.TenantId;
     private readonly string _clientSecret = options.Value.ClientSecret;
     private readonly string _redirectUrl = options.Value.RedirectUrl;
-    private const string GrantType = "authorization_code";
+    private readonly string _tenantId = options.Value.TenantId;
 
     public async Task<AzureUser?> GetUser(string code)
     {
@@ -37,9 +39,9 @@ public class AzureAdService(HttpClient azureClient, IOptions<AzureAdSettings> op
         var response = await client.ExecuteAsync(request);
 
         var content = response.Content;
-        
+
         var token = JsonConvert.DeserializeObject<AzureToken>(content!);
-        
+
         return token;
     }
 }
