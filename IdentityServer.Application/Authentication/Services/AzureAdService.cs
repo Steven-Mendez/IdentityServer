@@ -16,15 +16,15 @@ public class AzureAdService(HttpClient azureClient, IOptions<AzureAdSettings> op
     private readonly string _redirectUrl = options.Value.RedirectUrl;
     private const string GrantType = "authorization_code";
 
-    public async Task<AzureUser?> GetUser(string code, string grant)
+    public async Task<AzureUser?> GetUser(string code)
     {
-        var token = await GetToken(code, grant);
+        var token = await GetToken(code);
         azureClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token!.access_token);
         var content = await azureClient.GetFromJsonAsync<AzureUser>("v1.0/me");
         return content;
     }
 
-    private async Task<AzureToken?> GetToken(string code, string grant)
+    private async Task<AzureToken?> GetToken(string code)
     {
         using var client = new RestClient($"https://login.microsoftonline.com/{_tenantId}/oauth2/v2.0/token");
         var request = new RestRequest { Method = Method.Post };
