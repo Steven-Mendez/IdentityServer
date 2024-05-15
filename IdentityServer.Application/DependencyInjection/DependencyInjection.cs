@@ -10,6 +10,7 @@ using IdentityServer.Application.Authentication.UseCase.LocalAuthentication;
 using IdentityServer.Application.Users.Interfaces;
 using IdentityServer.Application.Users.Services;
 using IdentityServer.Application.Users.UseCases.CreateUser;
+using IdentityServer.Application.Users.UseCases.GetUserByEmail;
 using IdentityServer.Application.Users.UseCases.GetUserById;
 using IdentityServer.Application.Users.UseCases.GetUsersByCriteria;
 using IdentityServer.Application.Users.UseCases.SoftDeleteUser;
@@ -44,6 +45,7 @@ public static class DependencyInjection
     {
         services.AddScoped<GetUsersByCriteriaUseCase>();
         services.AddScoped<GetUserByIdUseCase>();
+        services.AddScoped<GetUserByEmailUseCase>();
         services.AddScoped<CreateUserUseCase>();
         services.AddScoped<UpdateUserUseCase>();
         services.AddScoped<SoftDeleteUserUseCase>();

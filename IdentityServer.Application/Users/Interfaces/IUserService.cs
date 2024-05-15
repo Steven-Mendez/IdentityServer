@@ -1,5 +1,6 @@
 ﻿using IdentityServer.Application.Users.UseCases.CreateUser.DataTransferObjects.Requests;
 using IdentityServer.Application.Users.UseCases.CreateUser.DataTransferObjects.Responses;
+using IdentityServer.Application.Users.UseCases.GetUserByEmail.DataTransferObjects;
 using IdentityServer.Application.Users.UseCases.GetUserById.DataTransferObjects.Response;
 using IdentityServer.Application.Users.UseCases.GetUsersByCriteria.DataTransferObjects.Requests;
 using IdentityServer.Application.Users.UseCases.GetUsersByCriteria.DataTransferObjects.Responses;
@@ -17,7 +18,7 @@ public interface IUserService
     Task<CreateUserResponse> AddUserAsync(CreateUserRequest request);
     Task<UpdateUserResponse> UpdateUserAsync(Guid id, UpdateUserRequest request);
     Task<SoftDeleteUserResponse> SoftDeleteUserAsync(Guid id);
-    Task<User?> GetByEmailAsync(string email);
+    Task<GetUserByEmailResponse?> GetByEmailAsync(string email);
     Task<User?> GetByUserNameAsync(string userName);
     Task<User?> GetByUserNameOrEmailAsync(string userNameOrEmail);
     Task<IEnumerable<User>> GetActiveUsersAsync();

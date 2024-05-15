@@ -2,6 +2,8 @@
 using IdentityServer.Application.Users.UseCases.CreateUser;
 using IdentityServer.Application.Users.UseCases.CreateUser.DataTransferObjects.Requests;
 using IdentityServer.Application.Users.UseCases.CreateUser.DataTransferObjects.Responses;
+using IdentityServer.Application.Users.UseCases.GetUserByEmail;
+using IdentityServer.Application.Users.UseCases.GetUserByEmail.DataTransferObjects;
 using IdentityServer.Application.Users.UseCases.GetUserById;
 using IdentityServer.Application.Users.UseCases.GetUserById.DataTransferObjects.Response;
 using IdentityServer.Application.Users.UseCases.GetUsersByCriteria;
@@ -19,6 +21,7 @@ namespace IdentityServer.Application.Users.Services;
 public class UserService(
     GetUsersByCriteriaUseCase getUsersByCriteriaByCriteriaUseCase,
     GetUserByIdUseCase getUserByIdUseCase,
+    GetUserByEmailUseCase getUserByEmailUseCase,
     CreateUserUseCase createUserUseCase,
     UpdateUserUseCase updateUserUseCase,
     SoftDeleteUserUseCase softDeleteUserUseCase) : IUserService
@@ -74,9 +77,9 @@ public class UserService(
         throw new NotImplementedException();
     }
 
-    public Task<User?> GetByEmailAsync(string email)
+    public async Task<GetUserByEmailResponse?> GetByEmailAsync(string email)
     {
-        throw new NotImplementedException();
+        return await getUserByEmailUseCase.ExecuteAsync(email);
     }
 
     public Task<bool> UserExistsAsync(string userNameOrEmail)
