@@ -2,6 +2,7 @@
 using IdentityServer.Application.Authentication.UseCase.JsonWebTokenGeneration;
 using IdentityServer.Application.Options;
 using IdentityServer.Application.Users.UseCases.GetUserByEmail;
+using IdentityServer.Domain.Users.Entities;
 using Microsoft.Extensions.Options;
 
 namespace IdentityServer.Application.Authentication.UseCase.AzureAd.AzureAdAuthenticationCallback;
@@ -23,7 +24,14 @@ public class AzureAdAuthenticationCallbackUseCase(
 
         if (user is null)
         {
-            // Todo: Code CreateUserByAzureUserUse
+            var newUser = new User()
+            {
+                Id = new Guid(),
+                UserName = "Test",
+                Email = azureUser.mail,
+                FirstName = azureUser.givenName,
+                LastName = azureUser.surname,
+            };
         }
         
         var (token, _) = jsonWebTokenGenerationUseCase.Execute(user!.Id, user.Email, user.FirstName!, user.LastName!);
