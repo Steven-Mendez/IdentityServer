@@ -16,7 +16,8 @@ public static class UserSeedData
             LastName = "Admin",
             Avatar = @"https://randomuser.me/api/portraits/men/1.jpg",
             IsBlocked = false,
-            CreatedBy = Guid.Parse("6e7f4c0b-3b45-4a1c-a48d-9e531dd6931f")
+            UserTypeId = Guid.Parse("19e1ccc0-c3c3-4161-b0c3-b1086d3d97aa"),
+            CreatedBy = Guid.Parse("6e7f4c0b-3b45-4a1c-a48d-9e531dd6931f"),
         }
     ];
 }

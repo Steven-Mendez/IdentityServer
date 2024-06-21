@@ -11,5 +11,6 @@ public class User : AuditEntity
     public string? LastName { get; set; }
     public string? Avatar { get; set; }
     public bool IsBlocked { get; set; }
-    // public virtual UserType UserType { get; set; } = null!;
+    public Guid UserTypeId { get; set; }
+    public UserType UserType { get; set; } = null!;
 }
