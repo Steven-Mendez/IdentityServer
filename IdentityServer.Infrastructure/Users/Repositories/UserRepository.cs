@@ -10,9 +10,14 @@ namespace IdentityServer.Infrastructure.Users.Repositories;
 
 public class UserRepository(IdentityServerContext context, IPasswordHasher passwordHasher) : IUserRepository
 {
+    private IQueryable<User> GetUsersQuery => context.Users
+        .Include(user => user.UserType)
+        .AsNoTracking()
+        .AsSplitQuery();
+
     public async Task<IEnumerable<User>> GetAllAsync()
     {
-        var users = await context.Users
+        var users = await GetUsersQuery
             .OrderBy(u => u.FirstName)
             .ThenBy(u => u.LastName)
             .ToListAsync();
@@ -22,9 +27,7 @@ public class UserRepository(IdentityServerContext context, IPasswordHasher passw
     public async Task<(IEnumerable<User> Items, int TotalRecords)> GetByCriteriaAsync(
         ISpecification<User> specification)
     {
-        var query = context.Users
-            .AsNoTracking()
-            .AsSplitQuery()
+        var query = GetUsersQuery
             .ApplyCriteria(specification.Filters);
 
         var totalRecords = await query.CountAsync();
@@ -59,9 +62,10 @@ public class UserRepository(IdentityServerContext context, IPasswordHasher passw
         var isUserNameUnique = await IsUserNameUniqueAsync(entity.UserName);
 
         if (!isUserNameUnique)
-            throw new UserNameAlreadyExistsException(entity.UserName);
+            throw new UserNameAlreadyExistsException(entity.UserName!);
 
-        entity.Password = passwordHasher.Hash(entity.Password);
+        if (entity.Password is not null)
+            entity.Password = passwordHasher.Hash(entity.Password);
 
         var entityEntry = await context.Users.AddAsync(entity);
         var addedUser = entityEntry.Entity;
@@ -78,7 +82,7 @@ public class UserRepository(IdentityServerContext context, IPasswordHasher passw
         var anotherUserExistsWithSameUserName = await AnotherUserExistsWithSameUserNameAsync(id, entity.UserName);
 
         if (anotherUserExistsWithSameUserName)
-            throw new UserNameAlreadyExistsException(entity.UserName);
+            throw new UserNameAlreadyExistsException(entity.UserName!);
 
         context.Users.Update(entity);
     }
@@ -103,7 +107,7 @@ public class UserRepository(IdentityServerContext context, IPasswordHasher passw
         if (userNotExists)
             throw new AuthenticationFailedException(propertyName);
 
-        var passwordNotMatch = !passwordHasher.Verify(password, user!.Password);
+        var passwordNotMatch = !passwordHasher.Verify(password, user!.Password!);
 
         if (passwordNotMatch)
             throw new AuthenticationFailedException(propertyName);
@@ -117,13 +121,13 @@ public class UserRepository(IdentityServerContext context, IPasswordHasher passw
         return user;
     }
 
-    public async Task<User?> GetByUserNameAsync(string userName)
+    private async Task<User?> GetByUserNameAsync(string userName)
     {
         var user = await context.Users.FirstOrDefaultAsync(u => u.UserName == userName);
         return user;
     }
 
-    public async Task<User?> GetByUserNameOrEmailAsync(string userNameOrEmail)
+    private async Task<User?> GetByUserNameOrEmailAsync(string userNameOrEmail)
     {
         var user = await context.Users.FirstOrDefaultAsync(u =>
             u.UserName == userNameOrEmail || u.Email == userNameOrEmail);
@@ -151,19 +155,23 @@ public class UserRepository(IdentityServerContext context, IPasswordHasher passw
         return userExists;
     }
 
-    public async Task<bool> IsEmailUniqueAsync(string email)
+    private async Task<bool> IsEmailUniqueAsync(string email)
     {
         var emailExists = await context.Users.AnyAsync(u => u.Email == email);
         return !emailExists;
     }
 
-    public async Task<bool> IsUserNameUniqueAsync(string userName)
+    private async Task<bool> IsUserNameUniqueAsync(string? userName)
     {
+        if (userName is null)
+            return true;
+
         var userNameExists = await context.Users.AnyAsync(u => u.UserName == userName);
+
         return !userNameExists;
     }
 
-    public async Task<bool> AnotherUserExistsWithSameEmailAsync(Guid userId, string email)
+    private async Task<bool> AnotherUserExistsWithSameEmailAsync(Guid userId, string email)
     {
         var user = await GetByEmailAsync(email);
 
@@ -174,8 +182,11 @@ public class UserRepository(IdentityServerContext context, IPasswordHasher passw
         return anotherUserExists;
     }
 
-    public async Task<bool> AnotherUserExistsWithSameUserNameAsync(Guid userId, string userName)
+    private async Task<bool> AnotherUserExistsWithSameUserNameAsync(Guid userId, string? userName)
     {
+        if (userName is null)
+            return false;
+
         var user = await GetByUserNameAsync(userName);
 
         var userExists = user is not null;
