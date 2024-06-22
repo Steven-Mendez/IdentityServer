@@ -38,9 +38,9 @@ public class UsersConfiguration : IEntityTypeConfiguration<User>
 
     private static void ConfigureRestrictions(EntityTypeBuilder<User> builder)
     {
-        builder.Property(x => x.FirstName).HasMaxLength(255);
-        builder.Property(x => x.LastName).HasMaxLength(255);
-        builder.Property(x => x.Email).HasMaxLength(255).IsRequired();
+        builder.Property(x => x.FirstName).HasMaxLength(255).IsRequired();
+        builder.Property(x => x.LastName).HasMaxLength(255).IsRequired();
+        builder.Property(x => x.Email).HasMaxLength(255);
         builder.Property(x => x.Password).HasMaxLength(255);
         builder.Property(x => x.CreatedBy).IsRequired();
         builder.Property(x => x.UserName).HasMaxLength(255);
@@ -58,7 +58,7 @@ public class UsersConfiguration : IEntityTypeConfiguration<User>
     {
         builder.HasIndex(x => x.UserName).IsUnique();
         builder.HasIndex(x => x.Email).IsUnique();
-        builder.HasIndex(x => x.IsDeleted);
+        builder.HasIndex(x => x.IsDeleted).HasFilter("IsDeleted = 0");
     }
 
     private static void ConfigureQueryFilter(EntityTypeBuilder<User> builder)
