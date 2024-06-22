@@ -11,7 +11,6 @@ namespace IdentityServer.Infrastructure.Users.Repositories;
 public class UserRepository(IdentityServerContext context, IPasswordHasher passwordHasher) : IUserRepository
 {
     private IQueryable<User> GetUsersQuery => context.Users
-        .Include(user => user.UserType)
         .AsNoTracking()
         .AsSplitQuery();
 

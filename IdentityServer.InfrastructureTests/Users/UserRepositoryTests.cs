@@ -24,11 +24,7 @@ public class UserRepositoryTests
         SetupUnitOfWorkWithUsersAsync(List<User> users)
     {
         var context = GetInMemoryDbContext();
-        context.UserTypes.Add(new UserType
-        {
-            Id = Guid.Parse("6e7f4c0b-3b45-4a1c-a48d-9e531dd6931f"),
-            Name = "LocalUser"
-        });
+       
         context.Users.AddRange(users);
         
         await context.SaveChangesAsync();
@@ -49,7 +45,6 @@ public class UserRepositoryTests
             new User
             {
                 Id = Guid.Parse("aa435ca3-4924-4433-88de-f27758f05a64"),
-                UserTypeId = Guid.Parse("6e7f4c0b-3b45-4a1c-a48d-9e531dd6931f"),
                 UserName = "user1",
                 Email = "user1@user1.com",
                 Password = @"P@ssw0rd",
@@ -62,7 +57,6 @@ public class UserRepositoryTests
             new User
             {
                 Id = Guid.Parse("6e7f4c0b-3b45-4a1c-a48d-9e531dd6931f"),
-                UserTypeId = Guid.Parse("6e7f4c0b-3b45-4a1c-a48d-9e531dd6931f"),
                 UserName = "admin",
                 Email = "admin@admin.com",
                 Password = @"P@ssw0rd",
@@ -96,7 +90,6 @@ public class UserRepositoryTests
             new User
             {
                 Id = Guid.Parse("aa435ca3-4924-4433-88de-f27758f05a64"),
-                UserTypeId = Guid.Parse("6e7f4c0b-3b45-4a1c-a48d-9e531dd6931f"),
                 UserName = "user1",
                 Email = "user1@user1.com",
                 Password = @"P@ssw0rd",
@@ -109,7 +102,6 @@ public class UserRepositoryTests
             new User
             {
                 Id = Guid.Parse("6e7f4c0b-3b45-4a1c-a48d-9e531dd6931f"),
-                UserTypeId = Guid.Parse("6e7f4c0b-3b45-4a1c-a48d-9e531dd6931f"),
                 UserName = "admin",
                 Email = "admin@admin.com",
                 Password = @"P@ssw0rd",
@@ -152,7 +144,6 @@ public class UserRepositoryTests
             new User
             {
                 Id = Guid.Parse("aa435ca3-4924-4433-88de-f27758f05a64"),
-                UserTypeId = Guid.Parse("6e7f4c0b-3b45-4a1c-a48d-9e531dd6931f"),
                 UserName = "user1",
                 Email = "user1@user1.com",
                 Password = @"P@ssw0rd",
@@ -165,7 +156,6 @@ public class UserRepositoryTests
             new User
             {
                 Id = Guid.Parse("6e7f4c0b-3b45-4a1c-a48d-9e531dd6931f"),
-                UserTypeId = Guid.Parse("6e7f4c0b-3b45-4a1c-a48d-9e531dd6931f"),
                 UserName = "admin",
                 Email = "admin@admin.com",
                 Password = @"P@ssw0rd",
@@ -202,7 +192,6 @@ public class UserRepositoryTests
         var user = new User
         {
             Id = userId,
-            UserTypeId = Guid.Parse("6e7f4c0b-3b45-4a1c-a48d-9e531dd6931f"),
             UserName = "user1",
             Email = "user1@user1",
             Password = @"P@ssw0rd",
@@ -246,7 +235,6 @@ public class UserRepositoryTests
         var user = new User
         {
             Id = userId,
-            UserTypeId = Guid.Parse("6e7f4c0b-3b45-4a1c-a48d-9e531dd6931f"),
             UserName = "user1",
             Email = "user1@user1",
             Password = @"P@ssw0rd",
@@ -285,7 +273,6 @@ public class UserRepositoryTests
         var user = new User
         {
             Id = userId,
-            UserTypeId = Guid.Parse("6e7f4c0b-3b45-4a1c-a48d-9e531dd6931f"),
             UserName = "user1",
             Email = "user1@user1",
             Password = @"P@ssw0rd",
@@ -319,7 +306,6 @@ public class UserRepositoryTests
         var user = new User
         {
             Id = userId,
-            UserTypeId = Guid.Parse("6e7f4c0b-3b45-4a1c-a48d-9e531dd6931f"),
             UserName = "user1",
             Email = "user1@user1",
             Password = @"P@ssw0rd",
@@ -336,7 +322,6 @@ public class UserRepositoryTests
         var newUser = new User
         {
             Id = Guid.NewGuid(),
-            UserTypeId = Guid.Parse("6e7f4c0b-3b45-4a1c-a48d-9e531dd6931f"),
             UserName = "user1",
             Email = "user2@user2",
             Password = @"P@ssw0rd",
