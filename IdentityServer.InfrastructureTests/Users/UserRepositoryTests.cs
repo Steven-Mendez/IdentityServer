@@ -24,9 +24,9 @@ public class UserRepositoryTests
         SetupUnitOfWorkWithUsersAsync(List<User> users)
     {
         var context = GetInMemoryDbContext();
-       
+
         context.Users.AddRange(users);
-        
+
         await context.SaveChangesAsync();
 
         var passwordHasher = new PasswordHasher();

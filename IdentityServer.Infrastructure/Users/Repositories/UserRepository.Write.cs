@@ -24,7 +24,7 @@ public partial class UserRepository
         var addedUser = entityEntry.Entity;
         return addedUser;
     }
-    
+
     public async Task UpdateAsync(Guid id, User entity)
     {
         var anotherUserExistsWithTheSameEmail = await AnotherUserExistsWithSameEmailAsync(id, entity.Email!);

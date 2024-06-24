@@ -5,11 +5,13 @@ using IdentityServer.Application.Authentication.UseCase.AzureAd.AzureAdGetUserIn
 
 namespace IdentityServer.Application.Authentication.UseCase.AzureAd.AzureAdGetUserInformation;
 
-public class AzureAdGetUserInformationUseCase(IHttpClientFactory  httpClient, AzureAdGetTokenUseCase azureAdGetTokenUseCase)
+public class AzureAdGetUserInformationUseCase(
+    IHttpClientFactory httpClient,
+    AzureAdGetTokenUseCase azureAdGetTokenUseCase)
 {
     private const string Scheme = "Bearer";
     private const string MicrosoftApiUrl = "https://graph.microsoft.com/v1.0/me";
-    
+
     public async Task<AzureAdUserDto> Execute(string code)
     {
         var token = await azureAdGetTokenUseCase.Execute(code);

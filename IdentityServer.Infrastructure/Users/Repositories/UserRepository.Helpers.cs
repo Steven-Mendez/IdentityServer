@@ -27,7 +27,7 @@ public partial class UserRepository
     {
         if (email is null)
             return false;
-        
+
         var user = await GetByEmailAsync(email);
 
         var userExists = user is not null;

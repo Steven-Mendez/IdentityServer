@@ -13,7 +13,7 @@ public class AzureAdGetTokenUseCase(IOptions<AzureAdSettings> options)
     private readonly string _clientSecret = options.Value.ClientSecret;
     private readonly string _redirectUrl = options.Value.RedirectUrl;
     private readonly string _tenantId = options.Value.TenantId;
-    
+
     public async Task<AzureAdTokenDto> Execute(string code)
     {
         using var client = new RestClient($"https://login.microsoftonline.com/{_tenantId}/oauth2/v2.0/token");

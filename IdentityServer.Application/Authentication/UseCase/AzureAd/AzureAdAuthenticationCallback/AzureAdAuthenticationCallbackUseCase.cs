@@ -29,7 +29,7 @@ public class AzureAdAuthenticationCallbackUseCase(
         if (userByMicrosoftId is not null)
             return GetJwtToken(userByMicrosoftId!.Id, userByMicrosoftId.Email, userByMicrosoftId.FirstName!,
                 userByMicrosoftId.LastName!);
-        
+
         // Check if the user is already registered with the email
         var userByEmail = await getUserByEmailUseCase.ExecuteAsync(azureUser.mail);
 
@@ -39,12 +39,13 @@ public class AzureAdAuthenticationCallbackUseCase(
         // Otherwise, we need to create a new user
         else
             await createUserByAzureAdUseCase.ExecuteAsync(azureUser);
-            
+
         userByMicrosoftId = await getUserByMicrosoftId.ExecuteAsync(azureUser.id);
 
-        return GetJwtToken(userByMicrosoftId!.Id, userByMicrosoftId.Email, userByMicrosoftId.FirstName!, userByMicrosoftId.LastName!);
+        return GetJwtToken(userByMicrosoftId!.Id, userByMicrosoftId.Email, userByMicrosoftId.FirstName!,
+            userByMicrosoftId.LastName!);
     }
-    
+
     private string GetJwtToken(Guid id, string email, string name, string lastName)
     {
         var (token, _) = jsonWebTokenGenerationUseCase.Execute(id, email, name, lastName);
