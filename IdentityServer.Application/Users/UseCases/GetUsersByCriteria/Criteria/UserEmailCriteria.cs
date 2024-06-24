@@ -8,5 +8,5 @@ namespace IdentityServer.Application.Users.UseCases.GetUsersByCriteria.Criteria;
 public class UserEmailCriteria(string? email) : ICriteria<User>
 {
     public Expression<Func<User, bool>> Criteria => user =>
-        email.IsNullOrEmpty() || user.Email.Contains(email!);
+        email.IsNullOrEmpty() || user.Email!.Contains(email!);
 }

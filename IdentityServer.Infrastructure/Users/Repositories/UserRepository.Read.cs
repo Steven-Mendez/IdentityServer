@@ -85,4 +85,10 @@ public partial class UserRepository
 
         return user;
     }
+    
+    public async Task<User?> GetByMicrosoftIdAsync(string microsoftId)
+    {
+        var user = await context.Users.FirstOrDefaultAsync(u => u.MicrosoftId == microsoftId);
+        return user;
+    }
 }

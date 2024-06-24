@@ -15,7 +15,7 @@ public class LocalAuthenticationUseCase(
     {
         var user = await unitOfWork.UserRepository.AuthenticateAsync(request.Login, request.Password);
 
-        var jwt = jsonWebTokenGenerationUseCase.Execute(user.Id, user.Email, user.FirstName!, user.LastName!);
+        var jwt = jsonWebTokenGenerationUseCase.Execute(user.Id, user.Email!, user.FirstName!, user.LastName!);
 
         var response = new LocalAuthenticationResponse
         {

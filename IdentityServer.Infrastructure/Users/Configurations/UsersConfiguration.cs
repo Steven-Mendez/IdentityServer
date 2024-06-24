@@ -38,6 +38,7 @@ public class UsersConfiguration : IEntityTypeConfiguration<User>
 
     private static void ConfigureRestrictions(EntityTypeBuilder<User> builder)
     {
+        builder.Property(x => x.MicrosoftId).HasMaxLength(255);
         builder.Property(x => x.FirstName).HasMaxLength(255).IsRequired();
         builder.Property(x => x.LastName).HasMaxLength(255).IsRequired();
         builder.Property(x => x.Email).HasMaxLength(255);

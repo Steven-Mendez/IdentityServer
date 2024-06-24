@@ -10,10 +10,13 @@ using IdentityServer.Application.Authentication.UseCase.LocalAuthentication;
 using IdentityServer.Application.Users.Interfaces;
 using IdentityServer.Application.Users.Services;
 using IdentityServer.Application.Users.UseCases.CreateUser;
+using IdentityServer.Application.Users.UseCases.CreateUserByAzureAd;
 using IdentityServer.Application.Users.UseCases.GetUserByEmail;
 using IdentityServer.Application.Users.UseCases.GetUserById;
+using IdentityServer.Application.Users.UseCases.GetUserByMicrosoftId;
 using IdentityServer.Application.Users.UseCases.GetUsersByCriteria;
 using IdentityServer.Application.Users.UseCases.SoftDeleteUser;
+using IdentityServer.Application.Users.UseCases.UpdateMicrosoftId;
 using IdentityServer.Application.Users.UseCases.UpdateUser;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -46,8 +49,11 @@ public static class DependencyInjection
         services.AddScoped<GetUsersByCriteriaUseCase>();
         services.AddScoped<GetUserByIdUseCase>();
         services.AddScoped<GetUserByEmailUseCase>();
+        services.AddScoped<GetUserByMicrosoftId>();
         services.AddScoped<CreateUserUseCase>();
+        services.AddScoped<CreateUserByAzureAdUseCase>();
         services.AddScoped<UpdateUserUseCase>();
+        services.AddScoped<UpdateMicrosoftIdUseCase>();
         services.AddScoped<SoftDeleteUserUseCase>();
     }
 

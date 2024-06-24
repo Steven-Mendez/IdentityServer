@@ -7,4 +7,5 @@ public interface IUserRepository : IRepository<User>
 {
     Task<User> AuthenticateAsync(string userNameOrEmail, string password);
     Task<User?> GetByEmailAsync(string email);
+    Task<User?> GetByMicrosoftIdAsync(string microsoftId);
 }
