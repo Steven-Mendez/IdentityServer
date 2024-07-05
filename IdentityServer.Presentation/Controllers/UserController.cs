@@ -5,6 +5,7 @@ using IdentityServer.Application.Users.UseCases.CreateUser.DataTransferObjects.R
 using IdentityServer.Application.Users.UseCases.GetUserById.DataTransferObjects.Response;
 using IdentityServer.Application.Users.UseCases.GetUsersByCriteria.DataTransferObjects.Requests;
 using IdentityServer.Application.Users.UseCases.GetUsersByCriteria.DataTransferObjects.Responses;
+using IdentityServer.Application.Users.UseCases.SelfRegistrationUser.DataTransferObjects.Requests;
 using IdentityServer.Application.Users.UseCases.SoftDeleteUser.DataTransferObjects.Responses;
 using IdentityServer.Application.Users.UseCases.UpdateUser.DataTransferObjects.Requests;
 using IdentityServer.Application.Users.UseCases.UpdateUser.DataTransferObjects.Responses;
@@ -73,5 +74,14 @@ public class UserController(IUserService userService, IHttpContextAccessor httpC
         var user = await userService.SoftDeleteUserAsync(id);
         var response = ApiResponse.Create(user);
         return Ok(response);
+    }
+    
+    [HttpPost("self-registration")]
+    [ProducesResponseType(typeof(Response<CreateUserResponse>), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> SelfRegistrationUser([FromBody] SelfRegistrationUserRequest createUserRequest)
+    {
+        var user = await userService.SelfRegistrationUserAsync(createUserRequest);
+        return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
     }
 }

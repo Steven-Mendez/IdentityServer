@@ -6,6 +6,8 @@ using IdentityServer.Application.Users.UseCases.GetUserById.DataTransferObjects.
 using IdentityServer.Application.Users.UseCases.GetUserByMicrosoftId.DataTransferObjects;
 using IdentityServer.Application.Users.UseCases.GetUsersByCriteria.DataTransferObjects.Requests;
 using IdentityServer.Application.Users.UseCases.GetUsersByCriteria.DataTransferObjects.Responses;
+using IdentityServer.Application.Users.UseCases.SelfRegistrationUser.DataTransferObjects.Requests;
+using IdentityServer.Application.Users.UseCases.SelfRegistrationUser.DataTransferObjects.Responses;
 using IdentityServer.Application.Users.UseCases.SoftDeleteUser.DataTransferObjects.Responses;
 using IdentityServer.Application.Users.UseCases.UpdateMicrosoftId.DataTransferObjects;
 using IdentityServer.Application.Users.UseCases.UpdateUser.DataTransferObjects.Requests;
@@ -34,4 +36,5 @@ public interface IUserService
     Task<User> ToggleBlockStatusAsync(Guid userId, bool blockStatus);
     Task<User> AuthenticateAsync(string userNameOrEmail, string password);
     Task<UpdateMicrosoftIdResponse> UpdateMicrosoftIdAsync(Guid id, string microsoftId);
+    Task<SelfRegistrationUserResponse> SelfRegistrationUserAsync(SelfRegistrationUserRequest request);
 }

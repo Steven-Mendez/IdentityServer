@@ -13,6 +13,9 @@ using IdentityServer.Application.Users.UseCases.GetUserByMicrosoftId.DataTransfe
 using IdentityServer.Application.Users.UseCases.GetUsersByCriteria;
 using IdentityServer.Application.Users.UseCases.GetUsersByCriteria.DataTransferObjects.Requests;
 using IdentityServer.Application.Users.UseCases.GetUsersByCriteria.DataTransferObjects.Responses;
+using IdentityServer.Application.Users.UseCases.SelfRegistrationUser;
+using IdentityServer.Application.Users.UseCases.SelfRegistrationUser.DataTransferObjects.Requests;
+using IdentityServer.Application.Users.UseCases.SelfRegistrationUser.DataTransferObjects.Responses;
 using IdentityServer.Application.Users.UseCases.SoftDeleteUser;
 using IdentityServer.Application.Users.UseCases.SoftDeleteUser.DataTransferObjects.Responses;
 using IdentityServer.Application.Users.UseCases.UpdateMicrosoftId;
@@ -32,6 +35,7 @@ public class UserService(
     CreateUserUseCase createUserUseCase,
     CreateUserByAzureAdUseCase createUserByAzureAdUseCase,
     UpdateUserUseCase updateUserUseCase,
+    SelfRegistrationUserUseCase selfRegistrationUserUseCase,
     UpdateMicrosoftIdUseCase updateMicrosoftIdUseCase,
     SoftDeleteUserUseCase softDeleteUserUseCase) : IUserService
 {
@@ -99,6 +103,11 @@ public class UserService(
     public async Task<UpdateMicrosoftIdResponse> UpdateMicrosoftIdAsync(Guid id, string microsoftId)
     {
         return await updateMicrosoftIdUseCase.ExecuteAsync(id, microsoftId);
+    }
+
+    public async Task<SelfRegistrationUserResponse> SelfRegistrationUserAsync(SelfRegistrationUserRequest request)
+    {
+        return await selfRegistrationUserUseCase.ExecuteAsync(request);
     }
 
     public async Task<GetUserByEmailResponse?> GetByEmailAsync(string email)
