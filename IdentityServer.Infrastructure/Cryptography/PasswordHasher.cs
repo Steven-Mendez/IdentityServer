@@ -3,6 +3,9 @@ using IdentityServer.Domain.Interfaces;
 
 namespace IdentityServer.Infrastructure.Cryptography;
 
+/// <summary>
+/// Provides functionality for hashing passwords and verifying hashed passwords.
+/// </summary>
 public class PasswordHasher : IPasswordHasher
 {
     private const int SaltSize = 128 / 8;
@@ -11,6 +14,11 @@ public class PasswordHasher : IPasswordHasher
     private const char Delimiter = ';';
     private static readonly HashAlgorithmName HashAlgorithmName = HashAlgorithmName.SHA256;
 
+    /// <summary>
+    /// Hashes a password using PBKDF2 with a randomly generated salt.
+    /// </summary>
+    /// <param name="password">The password to hash.</param>
+    /// <returns>A hashed password string containing the salt and hash, separated by a delimiter.</returns>
     public string Hash(string password)
     {
         var salt = RandomNumberGenerator.GetBytes(SaltSize);
@@ -19,6 +27,12 @@ public class PasswordHasher : IPasswordHasher
         return result;
     }
 
+    /// <summary>
+    /// Verifies a password against a hashed password.
+    /// </summary>
+    /// <param name="password">The password to verify.</param>
+    /// <param name="passwordHash">The hashed password string containing the salt and hash, separated by a delimiter.</param>
+    /// <returns>True if the password matches the hashed password; otherwise, false.</returns>
     public bool Verify(string password, string passwordHash)
     {
         var parts = passwordHash.Split(Delimiter);
