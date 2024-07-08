@@ -15,5 +15,5 @@ public class UserFirstNameCriteria(string? firstName) : ICriteria<User>
     ///     Gets the LINQ expression that represents the criteria for filtering users by first name.
     /// </summary>
     public Expression<Func<User, bool>> Criteria => user =>
-        firstName.IsNullOrEmpty() || user.FirstName!.Contains(firstName!);
+        firstName.IsNullOrEmpty() || user.FirstName.Contains(firstName!);
 }
