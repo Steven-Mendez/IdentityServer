@@ -28,7 +28,8 @@ using IdentityServer.Domain.Users.Entities;
 namespace IdentityServer.Application.Users.Services;
 
 /// <summary>
-/// Implements the <see cref="IUserService"/> interface, providing concrete functionalities for user-related operations.
+///     Implements the <see cref="IUserService" /> interface, providing concrete functionalities for user-related
+///     operations.
 /// </summary>
 /// <param name="getUsersByCriteriaByCriteriaUseCase">Use case for retrieving users by criteria.</param>
 /// <param name="getUserByIdUseCase">Use case for retrieving a user by ID.</param>

@@ -7,7 +7,7 @@ using RestSharp;
 namespace IdentityServer.Application.Authentication.UseCase.AzureAd.AzureAdGetToken;
 
 /// <summary>
-/// Handles the process of obtaining an Azure AD token using an authorization code.
+///     Handles the process of obtaining an Azure AD token using an authorization code.
 /// </summary>
 /// <param name="options">The Azure AD settings.</param>
 public class AzureAdGetTokenUseCase(IOptions<AzureAdSettings> options)
@@ -19,7 +19,7 @@ public class AzureAdGetTokenUseCase(IOptions<AzureAdSettings> options)
     private readonly string _tenantId = options.Value.TenantId;
 
     /// <summary>
-    /// Executes the use case to obtain an Azure AD token using the provided authorization code.
+    ///     Executes the use case to obtain an Azure AD token using the provided authorization code.
     /// </summary>
     /// <param name="code">The authorization code.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the Azure AD token.</returns>

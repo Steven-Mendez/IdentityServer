@@ -6,9 +6,9 @@ using IdentityServer.Application.Authentication.UseCase.AzureAd.AzureAdGetUserIn
 namespace IdentityServer.Application.Authentication.UseCase.AzureAd.AzureAdGetUserInformation;
 
 /// <summary>
-/// Provides functionality to obtain user information from Azure AD using an access token.
+///     Provides functionality to obtain user information from Azure AD using an access token.
 /// </summary>
-/// <param name="httpClient">The factory to create instances of <see cref="HttpClient"/>.</param>
+/// <param name="httpClient">The factory to create instances of <see cref="HttpClient" />.</param>
 /// <param name="azureAdGetTokenUseCase">The use case to obtain an Azure AD token.</param>
 public class AzureAdGetUserInformationUseCase(
     IHttpClientFactory httpClient,
@@ -18,7 +18,7 @@ public class AzureAdGetUserInformationUseCase(
     private const string MicrosoftApiUrl = "https://graph.microsoft.com/v1.0/me";
 
     /// <summary>
-    /// Asynchronously retrieves user information from Azure AD.
+    ///     Asynchronously retrieves user information from Azure AD.
     /// </summary>
     /// <param name="code">The authorization code to exchange for an access token.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the Azure AD user information.</returns>
@@ -30,7 +30,7 @@ public class AzureAdGetUserInformationUseCase(
     }
 
     /// <summary>
-    /// Asynchronously retrieves user information from Azure AD using the provided access token.
+    ///     Asynchronously retrieves user information from Azure AD using the provided access token.
     /// </summary>
     /// <param name="token">The access token for Azure AD.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the Azure AD user information.</returns>

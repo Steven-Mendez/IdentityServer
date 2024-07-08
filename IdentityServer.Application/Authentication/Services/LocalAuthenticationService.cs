@@ -6,14 +6,15 @@ using IdentityServer.Application.Authentication.UseCase.LocalAuthentication.Data
 namespace IdentityServer.Application.Authentication.Services;
 
 /// <summary>
-/// Provides services for authenticating users through local credentials.
+///     Provides services for authenticating users through local credentials.
 /// </summary>
-/// /// <param name="localAuthenticationUseCase">The use case for local authentication.</param>
+/// ///
+/// <param name="localAuthenticationUseCase">The use case for local authentication.</param>
 public class LocalAuthenticationService(LocalAuthenticationUseCase localAuthenticationUseCase)
     : ILocalAuthenticationService
 {
     /// <summary>
-    /// Authenticates a user based on the provided local authentication request.
+    ///     Authenticates a user based on the provided local authentication request.
     /// </summary>
     /// <param name="request">The local authentication request containing user credentials.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the authentication response.</returns>

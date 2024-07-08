@@ -1,56 +1,56 @@
 ﻿namespace IdentityServer.Application.Users.UseCases.UpdateMicrosoftId.DataTransferObjects;
 
 /// <summary>
-/// Represents the response returned after updating a user's Microsoft ID.
-/// This response includes the unique identifier of the user, their Microsoft ID, username, email,
-/// optional first name, last name, and avatar, along with a flag indicating whether the user is blocked.
+///     Represents the response returned after updating a user's Microsoft ID.
+///     This response includes the unique identifier of the user, their Microsoft ID, username, email,
+///     optional first name, last name, and avatar, along with a flag indicating whether the user is blocked.
 /// </summary>
 public class UpdateMicrosoftIdResponse
 {
     /// <summary>
-    /// Gets the unique identifier of the user.
+    ///     Gets the unique identifier of the user.
     /// </summary>
     /// <value>The unique identifier of the user.</value>
     public Guid Id { get; init; }
 
     /// <summary>
-    /// Gets or sets the Microsoft ID of the user. This is optional.
+    ///     Gets or sets the Microsoft ID of the user. This is optional.
     /// </summary>
     /// <value>The Microsoft ID of the user, if any.</value>
     public string? MicrosoftId { get; init; }
 
     /// <summary>
-    /// Gets the username of the user.
+    ///     Gets the username of the user.
     /// </summary>
     /// <value>The username of the user.</value>
     public string UserName { get; init; } = null!;
 
     /// <summary>
-    /// Gets the email of the user.
+    ///     Gets the email of the user.
     /// </summary>
     /// <value>The email of the user.</value>
     public string Email { get; init; } = null!;
 
     /// <summary>
-    /// Gets the first name of the user. This is optional.
+    ///     Gets the first name of the user. This is optional.
     /// </summary>
     /// <value>The first name of the user, if any.</value>
     public string? FirstName { get; init; }
 
     /// <summary>
-    /// Gets the last name of the user. This is optional.
+    ///     Gets the last name of the user. This is optional.
     /// </summary>
     /// <value>The last name of the user, if any.</value>
     public string? LastName { get; init; }
 
     /// <summary>
-    /// Gets the avatar of the user. This is optional.
+    ///     Gets the avatar of the user. This is optional.
     /// </summary>
     /// <value>The avatar of the user, if any.</value>
     public string? Avatar { get; init; }
 
     /// <summary>
-    /// Gets a value indicating whether the user is blocked.
+    ///     Gets a value indicating whether the user is blocked.
     /// </summary>
     /// <value><c>true</c> if the user is blocked; otherwise, <c>false</c>.</value>
     public bool IsBlocked { get; init; }

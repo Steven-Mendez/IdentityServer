@@ -4,13 +4,13 @@ using IdentityServer.Application.Users.UseCases.CreateUser.DataTransferObjects.R
 namespace IdentityServer.Application.Users.UseCases.CreateUser.Validators;
 
 /// <summary>
-/// Validates the properties of a CreateUserRequest object.
+///     Validates the properties of a CreateUserRequest object.
 /// </summary>
 public class CreateUserRequestValidator : AbstractValidator<CreateUserRequest>
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="CreateUserRequestValidator"/> class.
-    /// Sets up validation rules for CreateUserRequest properties.
+    ///     Initializes a new instance of the <see cref="CreateUserRequestValidator" /> class.
+    ///     Sets up validation rules for CreateUserRequest properties.
     /// </summary>
     public CreateUserRequestValidator()
     {

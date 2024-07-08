@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace IdentityServer.Presentation.Controllers;
 
 /// <summary>
-/// Handles user-related operations such as creation, deletion, and querying of user information.
+///     Handles user-related operations such as creation, deletion, and querying of user information.
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
@@ -25,7 +25,7 @@ public class UserController(IUserService userService, IHttpContextAccessor httpC
         $"{httpContextAccessor.HttpContext!.Request.Scheme}://{httpContextAccessor.HttpContext!.Request.Host}";
 
     /// <summary>
-    /// Retrieves a paginated list of users based on criteria.
+    ///     Retrieves a paginated list of users based on criteria.
     /// </summary>
     /// <param name="byCriteriaFilterRequest">Filtering criteria.</param>
     /// <param name="sortingOptions">Sorting options.</param>
@@ -47,7 +47,7 @@ public class UserController(IUserService userService, IHttpContextAccessor httpC
     }
 
     /// <summary>
-    /// Retrieves a single user by their unique identifier.
+    ///     Retrieves a single user by their unique identifier.
     /// </summary>
     /// <param name="id">The unique identifier of the user.</param>
     /// <returns>The requested user if found.</returns>
@@ -62,7 +62,7 @@ public class UserController(IUserService userService, IHttpContextAccessor httpC
     }
 
     /// <summary>
-    /// Creates a new user with the provided information.
+    ///     Creates a new user with the provided information.
     /// </summary>
     /// <param name="createUserRequest">The information to create a new user.</param>
     /// <returns>The created user.</returns>
@@ -77,7 +77,7 @@ public class UserController(IUserService userService, IHttpContextAccessor httpC
     }
 
     /// <summary>
-    /// Updates an existing user's information.
+    ///     Updates an existing user's information.
     /// </summary>
     /// <param name="id">The unique identifier of the user to update.</param>
     /// <param name="updateUserRequest">The new information for the user.</param>
@@ -93,7 +93,7 @@ public class UserController(IUserService userService, IHttpContextAccessor httpC
     }
 
     /// <summary>
-    /// Soft deletes a user, marking them as deleted without actually removing their record.
+    ///     Soft deletes a user, marking them as deleted without actually removing their record.
     /// </summary>
     /// <param name="id">The unique identifier of the user to delete.</param>
     /// <returns>A confirmation of the deletion.</returns>
@@ -106,9 +106,9 @@ public class UserController(IUserService userService, IHttpContextAccessor httpC
         var response = ApiResponse.Create(user);
         return Ok(response);
     }
-    
+
     /// <summary>
-    /// Allows a new user to register themselves.
+    ///     Allows a new user to register themselves.
     /// </summary>
     /// <param name="createUserRequest">The information for the new user.</param>
     /// <returns>The created user.</returns>

@@ -3,16 +3,16 @@
 namespace IdentityServer.Infrastructure.Users.SeedData;
 
 /// <summary>
-/// Provides seed data for users to be used in the application's data store.
-/// This class contains a static property that holds a collection of initial users.
+///     Provides seed data for users to be used in the application's data store.
+///     This class contains a static property that holds a collection of initial users.
 /// </summary>
 public static class UserSeedData
 {
     /// <summary>
-    /// Gets a collection of users to be seeded into the application's data store.
+    ///     Gets a collection of users to be seeded into the application's data store.
     /// </summary>
     /// <value>
-    /// The collection of <see cref="User"/> objects to be seeded.
+    ///     The collection of <see cref="User" /> objects to be seeded.
     /// </value>
     public static IEnumerable<User> Users =>
     [

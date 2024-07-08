@@ -1,19 +1,19 @@
 ﻿namespace IdentityServer.Domain.Interfaces;
 
 /// <summary>
-/// Represents an interface for hashing and verifying passwords.
+///     Represents an interface for hashing and verifying passwords.
 /// </summary>
 public interface IPasswordHasher
 {
     /// <summary>
-    /// Computes the hash value of a password.
+    ///     Computes the hash value of a password.
     /// </summary>
     /// <param name="password">The password to hash.</param>
     /// <returns>The hashed password as a string.</returns>
     string Hash(string password);
-    
+
     /// <summary>
-    /// Verifies whether a password matches a given hashed password.
+    ///     Verifies whether a password matches a given hashed password.
     /// </summary>
     /// <param name="password">The password to verify.</param>
     /// <param name="passwordHash">The hashed password to compare against.</param>

@@ -6,12 +6,18 @@ namespace IdentityServer.Infrastructure.Users.Repositories;
 public partial class UserRepository
 {
     /// <summary>
-    /// Adds a new user to the repository.
+    ///     Adds a new user to the repository.
     /// </summary>
     /// <param name="entity">The user entity to add.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the added user entity.</returns>
-    /// <exception cref="EmailAlreadyExistsException">Thrown when the email associated with the user already exists in the repository.</exception>
-    /// <exception cref="UserNameAlreadyExistsException">Thrown when the username associated with the user already exists in the repository.</exception>
+    /// <exception cref="EmailAlreadyExistsException">
+    ///     Thrown when the email associated with the user already exists in the
+    ///     repository.
+    /// </exception>
+    /// <exception cref="UserNameAlreadyExistsException">
+    ///     Thrown when the username associated with the user already exists in
+    ///     the repository.
+    /// </exception>
     public async Task<User> AddAsync(User entity)
     {
         var isEmailUnique = await IsEmailUniqueAsync(entity.Email);
@@ -31,9 +37,9 @@ public partial class UserRepository
         var addedUser = entityEntry.Entity;
         return addedUser;
     }
-    
+
     /// <summary>
-    /// Updates an existing user in the repository.
+    ///     Updates an existing user in the repository.
     /// </summary>
     /// <param name="id">The unique identifier of the user to update.</param>
     /// <param name="entity">The user entity with updated information.</param>
@@ -54,9 +60,9 @@ public partial class UserRepository
 
         context.Users.Update(entity);
     }
-    
+
     /// <summary>
-    /// Marks a user as deleted in the repository.
+    ///     Marks a user as deleted in the repository.
     /// </summary>
     /// <param name="id">The unique identifier of the user to delete.</param>
     /// <returns>A task that represents the asynchronous operation.</returns>

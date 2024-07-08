@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using System.Text.Json;
 using FluentValidation;
 using IdentityServer.Presentation.Middlewares.GlobalError.ExtensionMethods;
 using IdentityServer.Presentation.Responses;
@@ -7,17 +6,17 @@ using IdentityServer.Presentation.Responses;
 namespace IdentityServer.Presentation.Middlewares.GlobalError;
 
 /// <summary>
-/// Middleware for handling global errors across the application.
-/// This class provides a centralized error handling mechanism, catching exceptions thrown from downstream middleware
-/// and converting them into appropriate HTTP responses.
+///     Middleware for handling global errors across the application.
+///     This class provides a centralized error handling mechanism, catching exceptions thrown from downstream middleware
+///     and converting them into appropriate HTTP responses.
 /// </summary>
 /// <param name="next">The next middleware in the pipeline.</param>
 public class GlobalErrorMiddleware(RequestDelegate next)
 {
     /// <summary>
-    /// Invokes the middleware.
-    /// This method tries to execute the next middleware and catches any exceptions thrown,
-    /// converting them into structured HTTP responses.
+    ///     Invokes the middleware.
+    ///     This method tries to execute the next middleware and catches any exceptions thrown,
+    ///     converting them into structured HTTP responses.
     /// </summary>
     /// <param name="context">The HttpContext for the current request.</param>
     /// <returns>A Task representing the asynchronous operation of this middleware.</returns>
@@ -40,9 +39,9 @@ public class GlobalErrorMiddleware(RequestDelegate next)
             await WriteErrorResponse(context, HttpStatusCode.InternalServerError, response);
         }
     }
-    
+
     /// <summary>
-    /// Writes an error response to the HttpContext.
+    ///     Writes an error response to the HttpContext.
     /// </summary>
     /// <param name="context">The HttpContext to write the error response to.</param>
     /// <param name="statusCode">The HTTP status code to set for the error response.</param>

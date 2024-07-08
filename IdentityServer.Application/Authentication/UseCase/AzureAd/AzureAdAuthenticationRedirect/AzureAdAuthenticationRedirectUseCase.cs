@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 namespace IdentityServer.Application.Authentication.UseCase.AzureAd.AzureAdAuthenticationRedirect;
 
 /// <summary>
-/// Handles the construction of the Azure AD authentication redirect URL.
+///     Handles the construction of the Azure AD authentication redirect URL.
 /// </summary>
 /// <param name="azureOptions">The configuration options for Azure AD.</param>
 public class AzureAdAuthenticationRedirectUseCase(IOptions<AzureAdSettings> azureOptions)
@@ -19,7 +19,7 @@ public class AzureAdAuthenticationRedirectUseCase(IOptions<AzureAdSettings> azur
     private readonly string _tenantId = azureOptions.Value.TenantId;
 
     /// <summary>
-    /// Constructs and returns the URL to redirect users for Azure AD authentication.
+    ///     Constructs and returns the URL to redirect users for Azure AD authentication.
     /// </summary>
     /// <returns>The URL to redirect users to Azure AD for authentication.</returns>
     public string Execute()

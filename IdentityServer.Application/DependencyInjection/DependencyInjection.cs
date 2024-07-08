@@ -24,12 +24,12 @@ using Microsoft.Extensions.DependencyInjection;
 namespace IdentityServer.Application.DependencyInjection;
 
 /// <summary>
-/// Provides extension methods for IServiceCollection to add application services and use cases.
+///     Provides extension methods for IServiceCollection to add application services and use cases.
 /// </summary>
 public static class DependencyInjection
 {
     /// <summary>
-    /// Adds application services, use cases, and AutoMapper configurations to the IServiceCollection.
+    ///     Adds application services, use cases, and AutoMapper configurations to the IServiceCollection.
     /// </summary>
     /// <param name="services">The IServiceCollection to add services to.</param>
     public static void AddApplication(this IServiceCollection services)
@@ -43,7 +43,7 @@ public static class DependencyInjection
     }
 
     /// <summary>
-    /// Adds authentication-related use cases to the IServiceCollection.
+    ///     Adds authentication-related use cases to the IServiceCollection.
     /// </summary>
     /// <param name="services">The IServiceCollection to add services to.</param>
     private static void AddAuthenticationUseCases(this IServiceCollection services)
@@ -57,7 +57,7 @@ public static class DependencyInjection
     }
 
     /// <summary>
-    /// Adds user-related use cases to the IServiceCollection.
+    ///     Adds user-related use cases to the IServiceCollection.
     /// </summary>
     /// <param name="services">The IServiceCollection to add services to.</param>
     private static void AddUserUseCases(this IServiceCollection services)
@@ -75,7 +75,7 @@ public static class DependencyInjection
     }
 
     /// <summary>
-    /// Adds scoped services to the IServiceCollection.
+    ///     Adds scoped services to the IServiceCollection.
     /// </summary>
     /// <param name="services">The IServiceCollection to add services to.</param>
     private static void AddServices(this IServiceCollection services)

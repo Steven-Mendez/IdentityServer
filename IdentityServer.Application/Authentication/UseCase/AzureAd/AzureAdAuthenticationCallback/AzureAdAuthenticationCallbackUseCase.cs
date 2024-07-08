@@ -10,8 +10,8 @@ using Microsoft.Extensions.Options;
 namespace IdentityServer.Application.Authentication.UseCase.AzureAd.AzureAdAuthenticationCallback;
 
 /// <summary>
-/// Handles the callback from Azure AD authentication, managing user information retrieval,
-/// user creation or update, and JWT token generation.
+///     Handles the callback from Azure AD authentication, managing user information retrieval,
+///     user creation or update, and JWT token generation.
 /// </summary>
 /// <param name="options">Configuration options for frontend settings.</param>
 /// <param name="createUserByAzureAdUseCase">The use case for creating a user by Azure AD information.</param>
@@ -33,7 +33,7 @@ public class AzureAdAuthenticationCallbackUseCase(
     private readonly string _frontEndUrl = options.Value.Url;
 
     /// <summary>
-    /// Executes the use case with the given authorization code to authenticate a user via Azure AD.
+    ///     Executes the use case with the given authorization code to authenticate a user via Azure AD.
     /// </summary>
     /// <param name="code">The authorization code from Azure AD.</param>
     /// <returns>A URL redirecting to the frontend with the JWT token as a parameter.</returns>
@@ -63,14 +63,13 @@ public class AzureAdAuthenticationCallbackUseCase(
     }
 
     /// <summary>
-    /// Generates a JWT token for the authenticated user and constructs a URL to the frontend with the token.
+    ///     Generates a JWT token for the authenticated user and constructs a URL to the frontend with the token.
     /// </summary>
     /// <param name="id">The user's unique identifier.</param>
     /// <param name="email">The user's email address.</param>
     /// <param name="name">The user's first name.</param>
     /// <param name="lastName">The user's last name.</param>
     /// <returns>A URL to the frontend with the JWT token as a parameter.</returns>
-
     private string GetJwtToken(Guid id, string email, string name, string lastName)
     {
         var (token, _) = jsonWebTokenGenerationUseCase.Execute(id, email, name, lastName);

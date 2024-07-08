@@ -5,12 +5,12 @@ using IdentityServer.Domain.Users.Entities;
 namespace IdentityServer.Application.Users.UseCases.CreateUserByAzureAd.Maps;
 
 /// <summary>
-/// Defines the mapping profile for creating a user from Azure Active Directory user data.
+///     Defines the mapping profile for creating a user from Azure Active Directory user data.
 /// </summary>
 public class CreateUserByAzureAdMapProfile : Profile
 {
     /// <summary>
-    /// Configures the mappings between AzureAdUserDto and User domain entity.
+    ///     Configures the mappings between AzureAdUserDto and User domain entity.
     /// </summary>
     public CreateUserByAzureAdMapProfile()
     {

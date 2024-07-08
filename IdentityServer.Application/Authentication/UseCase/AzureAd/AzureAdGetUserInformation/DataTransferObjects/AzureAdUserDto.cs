@@ -1,7 +1,7 @@
 ﻿namespace IdentityServer.Application.Authentication.UseCase.AzureAd.AzureAdGetUserInformation.DataTransferObjects;
 
 /// <summary>
-/// Represents the data transfer object for a user's information obtained from Azure AD.
+///     Represents the data transfer object for a user's information obtained from Azure AD.
 /// </summary>
 /// <param name="businessPhones">The list of business phone numbers associated with the user.</param>
 /// <param name="displayName">The display name of the user.</param>

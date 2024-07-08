@@ -7,7 +7,7 @@ using IdentityServer.Domain.Interfaces;
 namespace IdentityServer.Application.Users.UseCases.UpdateUser;
 
 /// <summary>
-/// Represents the use case for updating a user.
+///     Represents the use case for updating a user.
 /// </summary>
 /// <param name="unitOfWork">The unit of work for database operations.</param>
 /// <param name="mapper">The AutoMapper instance for object-to-object mapping.</param>
@@ -15,7 +15,7 @@ namespace IdentityServer.Application.Users.UseCases.UpdateUser;
 public class UpdateUserUseCase(IUnitOfWork unitOfWork, IMapper mapper, IValidator<UpdateUserRequest> validationRules)
 {
     /// <summary>
-    /// Executes the update user use case asynchronously.
+    ///     Executes the update user use case asynchronously.
     /// </summary>
     /// <param name="id">The unique identifier of the user to update.</param>
     /// <param name="request">The request containing the user update information.</param>

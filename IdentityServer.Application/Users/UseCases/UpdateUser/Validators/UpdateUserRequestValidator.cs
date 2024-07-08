@@ -4,13 +4,13 @@ using IdentityServer.Application.Users.UseCases.UpdateUser.DataTransferObjects.R
 namespace IdentityServer.Application.Users.UseCases.UpdateUser.Validators;
 
 /// <summary>
-/// Provides validation for updating user requests, ensuring that all user input meets the application's requirements.
-/// This class leverages FluentValidation to define and enforce the rules for user input validation.
+///     Provides validation for updating user requests, ensuring that all user input meets the application's requirements.
+///     This class leverages FluentValidation to define and enforce the rules for user input validation.
 /// </summary>
 public class UpdateUserRequestValidator : AbstractValidator<UpdateUserRequest>
 {
     /// <summary>
-    /// Configures validation rules for <see cref="UpdateUserRequest"/>.
+    ///     Configures validation rules for <see cref="UpdateUserRequest" />.
     /// </summary>
     public UpdateUserRequestValidator()
     {

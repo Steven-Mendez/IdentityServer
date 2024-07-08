@@ -9,17 +9,20 @@ using IdentityServer.Domain.Users.Entities;
 namespace IdentityServer.Application.Users.UseCases.GetUsersByCriteria;
 
 /// <summary>
-/// Represents the use case for retrieving users based on various criteria.
+///     Represents the use case for retrieving users based on various criteria.
 /// </summary>
 /// <param name="unitOfWork">The unit of work for database operations.</param>
 /// <param name="mapper">The AutoMapper instance for object mapping.</param>
 public class GetUsersByCriteriaUseCase(IUnitOfWork unitOfWork, IMapper mapper)
 {
     /// <summary>
-    /// Executes the use case asynchronously, retrieving users based on the provided criteria.
+    ///     Executes the use case asynchronously, retrieving users based on the provided criteria.
     /// </summary>
     /// <param name="request">The request containing the criteria for user retrieval.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains the <see cref="GetUsersByCriteriaResponse"/>.</returns>
+    /// <returns>
+    ///     A task that represents the asynchronous operation. The task result contains the
+    ///     <see cref="GetUsersByCriteriaResponse" />.
+    /// </returns>
     public async Task<GetUsersByCriteriaResponse> ExecuteAsync(
         GetUsersByCriteriaRequest request)
     {

@@ -4,7 +4,7 @@ using IdentityServer.Domain.Interfaces;
 namespace IdentityServer.Infrastructure.Cryptography;
 
 /// <summary>
-/// Provides functionality for hashing passwords and verifying hashed passwords.
+///     Provides functionality for hashing passwords and verifying hashed passwords.
 /// </summary>
 public class PasswordHasher : IPasswordHasher
 {
@@ -15,7 +15,7 @@ public class PasswordHasher : IPasswordHasher
     private static readonly HashAlgorithmName HashAlgorithmName = HashAlgorithmName.SHA256;
 
     /// <summary>
-    /// Hashes a password using PBKDF2 with a randomly generated salt.
+    ///     Hashes a password using PBKDF2 with a randomly generated salt.
     /// </summary>
     /// <param name="password">The password to hash.</param>
     /// <returns>A hashed password string containing the salt and hash, separated by a delimiter.</returns>
@@ -28,7 +28,7 @@ public class PasswordHasher : IPasswordHasher
     }
 
     /// <summary>
-    /// Verifies a password against a hashed password.
+    ///     Verifies a password against a hashed password.
     /// </summary>
     /// <param name="password">The password to verify.</param>
     /// <param name="passwordHash">The hashed password string containing the salt and hash, separated by a delimiter.</param>

@@ -6,7 +6,7 @@ using IdentityServer.Domain.Interfaces;
 namespace IdentityServer.Application.Authentication.UseCase.LocalAuthentication;
 
 /// <summary>
-/// Handles the local authentication process.
+///     Handles the local authentication process.
 /// </summary>
 /// <param name="unitOfWork">The unit of work for database operations.</param>
 /// <param name="jsonWebTokenGenerationUseCase">The use case for generating JSON Web Tokens.</param>
@@ -17,7 +17,7 @@ public class LocalAuthenticationUseCase(
     private const string TokenType = "Bearer";
 
     /// <summary>
-    /// Executes the local authentication process asynchronously.
+    ///     Executes the local authentication process asynchronously.
     /// </summary>
     /// <param name="request">The local authentication request containing login and password.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the local authentication response.</returns>
