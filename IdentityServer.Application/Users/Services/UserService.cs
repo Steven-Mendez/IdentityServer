@@ -27,6 +27,19 @@ using IdentityServer.Domain.Users.Entities;
 
 namespace IdentityServer.Application.Users.Services;
 
+/// <summary>
+/// Implements the <see cref="IUserService"/> interface, providing concrete functionalities for user-related operations.
+/// </summary>
+/// <param name="getUsersByCriteriaByCriteriaUseCase">Use case for retrieving users by criteria.</param>
+/// <param name="getUserByIdUseCase">Use case for retrieving a user by ID.</param>
+/// <param name="getUserByEmailUseCase">Use case for retrieving a user by email.</param>
+/// <param name="getUserByMicrosoftId">Use case for retrieving a user by Microsoft ID.</param>
+/// <param name="createUserUseCase">Use case for creating a new user.</param>
+/// <param name="createUserByAzureAdUseCase">Use case for creating a user based on Azure AD information.</param>
+/// <param name="updateUserUseCase">Use case for updating user information.</param>
+/// <param name="selfRegistrationUserUseCase">Use case for self-registering a new user.</param>
+/// <param name="updateMicrosoftIdUseCase">Use case for updating a user's Microsoft ID.</param>
+/// <param name="softDeleteUserUseCase">Use case for soft deleting a user.</param>
 public class UserService(
     GetUsersByCriteriaUseCase getUsersByCriteriaByCriteriaUseCase,
     GetUserByIdUseCase getUserByIdUseCase,

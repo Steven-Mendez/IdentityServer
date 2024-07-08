@@ -23,8 +23,15 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace IdentityServer.Application.DependencyInjection;
 
+/// <summary>
+/// Provides extension methods for IServiceCollection to add application services and use cases.
+/// </summary>
 public static class DependencyInjection
 {
+    /// <summary>
+    /// Adds application services, use cases, and AutoMapper configurations to the IServiceCollection.
+    /// </summary>
+    /// <param name="services">The IServiceCollection to add services to.</param>
     public static void AddApplication(this IServiceCollection services)
     {
         var assembly = typeof(DependencyInjection).Assembly;
@@ -35,6 +42,10 @@ public static class DependencyInjection
         services.AddServices();
     }
 
+    /// <summary>
+    /// Adds authentication-related use cases to the IServiceCollection.
+    /// </summary>
+    /// <param name="services">The IServiceCollection to add services to.</param>
     private static void AddAuthenticationUseCases(this IServiceCollection services)
     {
         services.AddScoped<LocalAuthenticationUseCase>();
@@ -45,6 +56,10 @@ public static class DependencyInjection
         services.AddScoped<JsonWebTokenGenerationUseCase>();
     }
 
+    /// <summary>
+    /// Adds user-related use cases to the IServiceCollection.
+    /// </summary>
+    /// <param name="services">The IServiceCollection to add services to.</param>
     private static void AddUserUseCases(this IServiceCollection services)
     {
         services.AddScoped<GetUsersByCriteriaUseCase>();
@@ -59,6 +74,10 @@ public static class DependencyInjection
         services.AddScoped<SoftDeleteUserUseCase>();
     }
 
+    /// <summary>
+    /// Adds scoped services to the IServiceCollection.
+    /// </summary>
+    /// <param name="services">The IServiceCollection to add services to.</param>
     private static void AddServices(this IServiceCollection services)
     {
         services.AddScoped<IUserService, UserService>();

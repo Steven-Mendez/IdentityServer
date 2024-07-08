@@ -6,6 +6,10 @@ using RestSharp;
 
 namespace IdentityServer.Application.Authentication.UseCase.AzureAd.AzureAdGetToken;
 
+/// <summary>
+/// Handles the process of obtaining an Azure AD token using an authorization code.
+/// </summary>
+/// <param name="options">The Azure AD settings.</param>
 public class AzureAdGetTokenUseCase(IOptions<AzureAdSettings> options)
 {
     private const string GrantType = "authorization_code";
@@ -14,6 +18,11 @@ public class AzureAdGetTokenUseCase(IOptions<AzureAdSettings> options)
     private readonly string _redirectUrl = options.Value.RedirectUrl;
     private readonly string _tenantId = options.Value.TenantId;
 
+    /// <summary>
+    /// Executes the use case to obtain an Azure AD token using the provided authorization code.
+    /// </summary>
+    /// <param name="code">The authorization code.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the Azure AD token.</returns>
     public async Task<AzureAdTokenDto> Execute(string code)
     {
         using var client = new RestClient($"https://login.microsoftonline.com/{_tenantId}/oauth2/v2.0/token");

@@ -4,8 +4,14 @@ using IdentityServer.Domain.Users.Entities;
 
 namespace IdentityServer.Application.Users.UseCases.GetUsersByCriteria.Maps;
 
+/// <summary>
+/// Provides mapping configurations for user-related data transfer objects in the context of retrieving users by criteria.
+/// </summary>
 public class GetUsersByCriteriaMapProfile : Profile
 {
+    /// <summary>
+    /// Configures AutoMapper profiles for mapping between User domain entities and DTOs for user retrieval by criteria.
+    /// </summary>
     public GetUsersByCriteriaMapProfile()
     {
         CreateMap<User, GetUserByCriteriaResponse>();
